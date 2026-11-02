@@ -1,10 +1,16 @@
+import { Accordion, Anchor, Badge, Button, Group, List, Paper, SimpleGrid, Stack, Text, ThemeIcon, Timeline, Title } from '@mantine/core';
+import { IconDownload, IconFileText, IconMail, IconMinus, IconPlus } from '@tabler/icons-react';
+import type { TFunction } from 'i18next';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CheckField, Notice, TextField } from '../components/fields';
+import { CheckField, Help, Notice, Question, TextField } from '../components/fields';
 import { formatDateDe, refundRule, todayIso } from '../data/logic';
 import { photoCredits } from '../data/media';
 import type { FormVersion } from '../data/types';
+import { CHAPTER_ICONS, ChapterIntro } from '../flow/chapters';
+import type { Screen } from '../flow/types';
 import { featureText } from '../i18n';
+import type { Answers } from '../state/answers';
 import { useAnswers } from '../state/AnswersContext';
 import { groupStats } from '../state/derive';
 
@@ -20,15 +26,86 @@ function download(bytes: Uint8Array, filename: string) {
   setTimeout(() => URL.revokeObjectURL(url), 10_000);
 }
 
-export function SummaryStep({ form }: { form: FormVersion }) {
+function Deadline() {
+  const { t } = useTranslation();
+  const { a } = useAnswers();
+  const rule = a.contractDate ? refundRule(a.contractDate, a.rentStart, todayIso()) : undefined;
+  if (rule?.kind === 'fromStart') return <Notice kind="ok">{t('summary.deadlineFromStart', { date: formatDateDe(rule.deadline) })}</Notice>;
+  if (rule?.kind === 'fromRuegeLate') return <Notice kind="warn">{t('summary.deadlineLate', { date: formatDateDe(rule.deadline) })}</Notice>;
+  if (rule?.kind === 'fromRuegeOld') return <Notice kind="warn">{t('summary.deadlineOld')}</Notice>;
+  return null;
+}
+
+function Result({ form }: { form: FormVersion }) {
   const { t, i18n } = useTranslation();
-  const { a, set } = useAnswers();
-  const [busy, setBusy] = useState<'form' | 'ruege' | null>(null);
-  const today = todayIso();
+  const { a } = useAnswers();
   const stats = groupStats(form, a);
   const unsure = stats.reduce((n, s) => n + s.unsure.length, 0);
-  const rule = a.contractDate ? refundRule(a.contractDate, a.rentStart, today) : undefined;
+  return (
+    <ChapterIntro chapter="summary" title={t('summary.title')}>
+      <Stack gap="md" w="100%" ta="start">
+        <Deadline />
+        <Title order={2} size="h4">
+          {t('summary.groupsTitle')}
+        </Title>
+        <Accordion variant="separated" radius="lg" chevronPosition="right" className="result-groups">
+          {stats.map((s) => {
+            const Icon = CHAPTER_ICONS[s.group.id];
+            const items = [...s.minus, ...s.plus];
+            return (
+              <Accordion.Item key={s.group.id} value={s.group.id}>
+                <Accordion.Control disabled={items.length === 0} icon={<ThemeIcon variant="light" radius="md" size="lg"><Icon size={20} /></ThemeIcon>}>
+                  <Group justify="space-between" wrap="nowrap" gap="xs">
+                    <div>
+                      <Text fw={600}>{t(`steps.${s.group.id}`)}</Text>
+                      <Text size="sm" c={s.tendency === 'minus' ? 'orange.6' : s.tendency === 'plus' ? 'teal.6' : 'dimmed'}>
+                        {s.tendency === 'minus' ? t('summary.tendencyMinus') : s.tendency === 'plus' ? t('summary.tendencyPlus') : t('summary.tendencyNeutral')}
+                      </Text>
+                    </div>
+                    <Group gap={4} wrap="nowrap">
+                      <Badge color="orange" variant="light" leftSection={<IconMinus size={12} />}>{s.minus.length}</Badge>
+                      <Badge color="teal" variant="light" leftSection={<IconPlus size={12} />}>{s.plus.length}</Badge>
+                    </Group>
+                  </Group>
+                </Accordion.Control>
+                <Accordion.Panel>
+                  <List spacing={6} size="sm">
+                    {items.map((m) => (
+                      <List.Item key={m.id} icon={m.sign === '+' ? <IconPlus size={14} color="var(--mantine-color-teal-7)" /> : <IconMinus size={14} color="var(--mantine-color-orange-7)" />}>
+                        {featureText(i18n.language, m.id, m.de).q}
+                      </List.Item>
+                    ))}
+                  </List>
+                </Accordion.Panel>
+              </Accordion.Item>
+            );
+          })}
+        </Accordion>
+        <Help>{t('summary.tendencyExplain')}</Help>
+        {unsure > 0 && <Notice>{t('summary.unsureCount', { count: unsure })}</Notice>}
+      </Stack>
+    </ChapterIntro>
+  );
+}
 
+function LetterOptions() {
+  const { t } = useTranslation();
+  const { a, set } = useAnswers();
+  return (
+    <Question title={t('summary.lettersTitle')}>
+      <TextField label={`${t('summary.maxRent')} (${t('common.optional')})`} inputMode="decimal" suffix="€" value={a.maxRent} onChange={(v) => set({ maxRent: v })} />
+      <Text size="sm" c="dimmed" mt={-8}>
+        {t('summary.maxRentHelp')}
+      </Text>
+      <CheckField label={t('summary.demandInfo')} checked={a.demandInfo} onChange={(v) => set({ demandInfo: v })} />
+    </Question>
+  );
+}
+
+function Downloads({ form }: { form: FormVersion }) {
+  const { t } = useTranslation();
+  const { a } = useAnswers();
+  const [busy, setBusy] = useState<'form' | 'ruege' | null>(null);
   const missing = [
     !a.rent && t('contract.rent'),
     !a.area && t('flat.area'),
@@ -37,104 +114,94 @@ export function SummaryStep({ form }: { form: FormVersion }) {
     !a.landlord.name && t('persons.landlordName'),
   ].filter(Boolean) as string[];
 
-  async function makeForm() {
-    setBusy('form');
+  async function make(kind: 'form' | 'ruege') {
+    setBusy(kind);
+    const today = todayIso();
     try {
-      const { buildPruefbogen } = await import('../pdf/pruefbogen');
-      download(await buildPruefbogen(form, a, today), `Pruefbogen-169A-Mietspiegel-${form.id}.pdf`);
+      if (kind === 'form') {
+        const { buildPruefbogen } = await import('../pdf/pruefbogen');
+        download(await buildPruefbogen(form, a, today), `Pruefbogen-169A-Mietspiegel-${form.id}.pdf`);
+      } else {
+        const { buildRuege } = await import('../pdf/ruege');
+        download(await buildRuege(form, a, today), `Ruege-556g-BGB-${today}.pdf`);
+      }
     } finally {
       setBusy(null);
     }
   }
 
-  async function makeRuege() {
-    setBusy('ruege');
-    try {
-      const { buildRuege } = await import('../pdf/ruege');
-      download(await buildRuege(form, a, today), `Ruege-556g-BGB-${today}.pdf`);
-    } finally {
-      setBusy(null);
-    }
-  }
-
-  const credits = photoCredits();
+  const card = (kind: 'form' | 'ruege', Icon: typeof IconFileText, title: string, text: string) => (
+    <Paper withBorder radius="xl" p="lg" className="download-card">
+      <Stack gap="sm" align="flex-start" h="100%">
+        <ThemeIcon size={48} radius="md" variant="light">
+          <Icon size={26} />
+        </ThemeIcon>
+        <div style={{ flex: 1 }}>
+          <Text fw={700} size="lg">
+            {title}
+          </Text>
+          <Text size="sm" c="dimmed">
+            {text}
+          </Text>
+        </div>
+        <Button fullWidth size="md" leftSection={<IconDownload size={18} />} loading={busy === kind} disabled={busy !== null && busy !== kind} onClick={() => void make(kind)}>
+          PDF
+        </Button>
+      </Stack>
+    </Paper>
+  );
 
   return (
-    <section className="step">
-      <h2>{t('summary.title')}</h2>
-
-      {rule?.kind === 'fromStart' && <Notice kind="ok">{t('summary.deadlineFromStart', { date: formatDateDe(rule.deadline) })}</Notice>}
-      {rule?.kind === 'fromRuegeLate' && <Notice kind="warn">{t('summary.deadlineLate', { date: formatDateDe(rule.deadline) })}</Notice>}
-      {rule?.kind === 'fromRuegeOld' && <Notice kind="warn">{t('summary.deadlineOld')}</Notice>}
-
-      <h3>{t('summary.groupsTitle')}</h3>
-      <div className="stats">
-        {stats.map((s) => (
-          <div key={s.group.id} className={`stat tendency-${s.tendency}`}>
-            <h4>{t(`steps.${s.group.id}`)}</h4>
-            <p className="stat-numbers">
-              <span className="n-minus">− {s.minus.length}</span> <span className="n-plus">+ {s.plus.length}</span>
-            </p>
-            <p className="stat-tendency">
-              {s.tendency === 'minus' ? t('summary.tendencyMinus') : s.tendency === 'plus' ? t('summary.tendencyPlus') : t('summary.tendencyNeutral')}
-            </p>
-            {(s.minus.length > 0 || s.plus.length > 0) && (
-              <ul>
-                {[...s.minus, ...s.plus].map((m) => (
-                  <li key={m.id} className={m.sign === '+' ? 'plus' : 'minus'}>
-                    {featureText(i18n.language, m.id, m.de).q}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        ))}
-      </div>
-      <p className="small">{t('summary.tendencyExplain')}</p>
-      {unsure > 0 && <Notice>{t('summary.unsureCount', { count: unsure })}</Notice>}
-
-      <TextField label={`${t('summary.maxRent')} (${t('common.optional')})`} help={t('summary.maxRentHelp')} inputMode="decimal" suffix="€" value={a.maxRent} onChange={(v) => set({ maxRent: v })} />
-      <CheckField label={t('summary.demandInfo')} checked={a.demandInfo} onChange={(v) => set({ demandInfo: v })} />
-
+    <Question title={t('summary.downloadTitle')} lead={t('summary.downloadLead')}>
       {missing.length > 0 && <Notice kind="warn">{t('summary.missing', { fields: missing.join(' · ') })}</Notice>}
+      <SimpleGrid cols={{ base: 1, xs: 2 }} spacing="md">
+        {card('form', IconFileText, t('summary.downloadForm', { year: form.id }), t('summary.formCardText'))}
+        {card('ruege', IconMail, t('summary.downloadRuege'), t('summary.ruegeCardText'))}
+      </SimpleGrid>
+    </Question>
+  );
+}
 
-      <div className="downloads">
-        <button type="button" className="primary big" disabled={busy !== null} onClick={makeForm}>
-          📄 {busy === 'form' ? t('summary.generating') : t('summary.downloadForm', { year: form.id })}
-        </button>
-        <button type="button" className="primary big" disabled={busy !== null} onClick={makeRuege}>
-          ✉️ {busy === 'ruege' ? t('summary.generating') : t('summary.downloadRuege')}
-        </button>
-      </div>
-
-      <h3>{t('summary.nextTitle')}</h3>
-      <ol className="next-steps">
-        <li>{t('summary.next1', { address: form.sendTo.post.join(', '), email: form.sendTo.email ? ` · ${form.sendTo.email}` : '' })}</li>
-        <li>{t('summary.next2')}</li>
-        <li>{t('summary.next3')}</li>
-        <li>{t('summary.next4')}</li>
-      </ol>
-
+function NextSteps({ form }: { form: FormVersion }) {
+  const { t } = useTranslation();
+  const credits = photoCredits();
+  return (
+    <Question title={t('summary.nextTitle')}>
+      <Timeline active={-1} bulletSize={28} lineWidth={2}>
+        {(['next1', 'next2', 'next3', 'next4'] as const).map((k, i) => (
+          <Timeline.Item key={k} bullet={<Text size="xs" fw={700}>{i + 1}</Text>}>
+            <Text>{t(`summary.${k}`, { address: form.sendTo.post.join(', '), email: form.sendTo.email ? ` · ${form.sendTo.email}` : '' })}</Text>
+          </Timeline.Item>
+        ))}
+      </Timeline>
       {credits.length > 0 && (
-        <details className="credits">
-          <summary>{t('credits.open')}</summary>
-          <p className="small">{t('credits.intro')}</p>
+        <Help label={t('credits.open')}>
+          <p>{t('credits.intro')}</p>
           <ul>
             {credits.map((c) => (
               <li key={c.src}>
                 {c.alt} – {c.author},{' '}
-                <a href={c.licenseUrl ?? c.sourceUrl} target="_blank" rel="noopener noreferrer">
+                <Anchor href={c.licenseUrl ?? c.sourceUrl} target="_blank" rel="noopener noreferrer" size="sm">
                   {c.license}
-                </a>
+                </Anchor>
                 ,{' '}
-                <a href={c.sourceUrl} target="_blank" rel="noopener noreferrer">
+                <Anchor href={c.sourceUrl} target="_blank" rel="noopener noreferrer" size="sm">
                   Wikimedia Commons
-                </a>
+                </Anchor>
               </li>
             ))}
           </ul>
-        </details>
+        </Help>
       )}
-    </section>
+    </Question>
   );
+}
+
+export function summaryScreens(form: FormVersion, _a: Answers, t: TFunction): Screen[] {
+  return [
+    { id: 'summary.result', chapter: 'summary', intro: true, nextLabel: t('common.next'), element: <Result form={form} /> },
+    { id: 'summary.letter', chapter: 'summary', answered: true, element: <LetterOptions /> },
+    { id: 'summary.download', chapter: 'summary', answered: true, element: <Downloads form={form} /> },
+    { id: 'summary.next', chapter: 'summary', answered: true, element: <NextSteps form={form} /> },
+  ];
 }

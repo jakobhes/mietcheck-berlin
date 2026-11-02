@@ -6,6 +6,17 @@ const en: UiStrings = {
     tagline: 'Check the rent cap & object',
   },
   common: {
+    pageOf: 'Page {{n}} of {{total}}',
+    darkMode: 'Dark mode',
+    lightMode: 'Light mode',
+    skip: 'Skip',
+    overview: 'Overview',
+    questionOf: 'Question {{n}} of {{total}}',
+    questionsCount: '{{count}} questions',
+    menu: 'Menu',
+    cancel: 'Cancel',
+    progress: 'Progress',
+    continue: 'Let’s go',
     next: 'Next',
     back: 'Back',
     yes: 'yes',
@@ -27,6 +38,9 @@ const en: UiStrings = {
     latinWarning: 'Please use Latin letters – the PDF is in German and cannot display other scripts.',
   },
   start: {
+    lead: 'Find out step by step whether your rent is too high – and get the right letters.',
+    pillPdf: '2 ready-made PDFs',
+    pillPrivate: 'Stays in your browser',
     title: 'Are you paying too much rent?',
     intro:
       'Since June 2015 Berlin has a rent cap (Mietpreisbremse): for a new tenancy, the rent may generally be at most 10 % above the local comparative rent. This assistant guides you step by step through all questions of the Berliner Mieterverein (Berlin Tenants’ Association) form and creates two PDFs:',
@@ -194,6 +208,8 @@ const en: UiStrings = {
     wistgHelp: 'Relevant for § 5 of the Economic Crimes Act (excessive rent): if the rent is more than 20 % above the comparative rent and you searched for a long time without success, further claims may be possible.',
   },
   persons: {
+    tenantQ: 'What is your name and address?',
+    contactQ: 'How can you be reached for questions?',
     title: 'Your details',
     intro: 'These details appear in the form and in the objection letter. They stay in your browser.',
     tenant: 'Tenant',
@@ -212,6 +228,11 @@ const en: UiStrings = {
     landlordName: 'Name / company',
   },
   summary: {
+    lettersTitle: 'Your objection letter',
+    downloadTitle: 'Your documents are ready',
+    downloadLead: 'Download both PDFs. You can go back and change your answers at any time.',
+    formCardText: 'For the Berliner Mieterverein',
+    ruegeCardText: 'For your landlord',
     title: 'Your result',
     groupsTitle: 'Overview of your answers',
     tendencyMinus: 'mostly value-reducing',

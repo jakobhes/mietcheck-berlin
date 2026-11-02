@@ -4,6 +4,17 @@ const de = {
     tagline: 'Mietpreisbremse prüfen & rügen',
   },
   common: {
+    pageOf: 'Seite {{n}} von {{total}}',
+    darkMode: 'Dunkles Design',
+    lightMode: 'Helles Design',
+    skip: 'Überspringen',
+    overview: 'Übersicht',
+    questionOf: 'Frage {{n}} von {{total}}',
+    questionsCount: '{{count}} Fragen',
+    menu: 'Menü',
+    cancel: 'Abbrechen',
+    progress: 'Fortschritt',
+    continue: 'Los geht’s',
     next: 'Weiter',
     back: 'Zurück',
     yes: 'ja',
@@ -25,6 +36,9 @@ const de = {
     latinWarning: 'Bitte in lateinischen Buchstaben schreiben – das PDF ist auf Deutsch und kann andere Schriften nicht darstellen.',
   },
   start: {
+    lead: 'Finden Sie Schritt für Schritt heraus, ob Ihre Miete zu hoch ist – und erhalten Sie die passenden Schreiben.',
+    pillPdf: '2 fertige PDFs',
+    pillPrivate: 'Bleibt in Ihrem Browser',
     title: 'Zahlen Sie zu viel Miete?',
     intro:
       'Seit Juni 2015 gilt in Berlin die Mietpreisbremse: Bei einem neuen Mietvertrag darf die Miete in der Regel höchstens 10 % über der ortsüblichen Vergleichsmiete liegen. Dieser Assistent führt Sie Schritt für Schritt durch alle Fragen des Prüfbogens des Berliner Mietervereins und erstellt zwei PDFs:',
@@ -192,6 +206,8 @@ const de = {
     wistgHelp: 'Wichtig im Hinblick auf § 5 Wirtschaftsstrafgesetz (Mietpreisüberhöhung): Liegt die Miete mehr als 20 % über der Vergleichsmiete und haben Sie lange erfolglos gesucht, kommen weitere Ansprüche in Betracht.',
   },
   persons: {
+    tenantQ: 'Wie heißen Sie und wo wohnen Sie?',
+    contactQ: 'Wie erreicht man Sie bei Rückfragen?',
     title: 'Ihre Daten',
     intro: 'Diese Angaben erscheinen im Prüfbogen und im Rügeschreiben. Sie bleiben in Ihrem Browser.',
     tenant: 'Mieter:in',
@@ -210,6 +226,11 @@ const de = {
     landlordName: 'Name / Firma',
   },
   summary: {
+    lettersTitle: 'Ihr Rügeschreiben',
+    downloadTitle: 'Ihre Dokumente sind bereit',
+    downloadLead: 'Laden Sie beide PDFs herunter. Sie können jederzeit zurückgehen und Angaben ändern.',
+    formCardText: 'Für den Berliner Mieterverein',
+    ruegeCardText: 'Für Ihre Vermieterin bzw. Ihren Vermieter',
     title: 'Ihr Ergebnis',
     groupsTitle: 'Ihre Angaben im Überblick',
     tendencyMinus: 'überwiegend wohnwertmindernd',

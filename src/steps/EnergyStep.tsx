@@ -1,8 +1,12 @@
+import { Image } from '@mantine/core';
+import type { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { CheckField, Choice, Notice, TextField } from '../components/fields';
+import { CheckField, Notice, OptionList, Question, TextField } from '../components/fields';
 import { parseNumber, suggestEnergyMerkmal, type EnergyKind } from '../data/logic';
 import { MEDIA } from '../data/media';
 import type { FormVersion } from '../data/types';
+import { ChapterIntro } from '../flow/chapters';
+import type { Screen } from '../flow/types';
 import { featureText } from '../i18n';
 import type { Answers } from '../state/answers';
 import { useAnswers } from '../state/AnswersContext';
@@ -19,32 +23,35 @@ function applySuggestion(form: FormVersion, a: Answers): Partial<Answers> {
   return { features };
 }
 
-export function EnergyStep({ form }: { form: FormVersion }) {
-  const { t, i18n } = useTranslation();
+function useEnergy(form: FormVersion) {
   const { a, set } = useAnswers();
+  const update = (patch: Partial<Answers>) =>
+    set((prev) => {
+      const next = { ...prev, ...patch };
+      return { ...patch, ...applySuggestion(form, next) };
+    });
+  return { a, update };
+}
+
+function EnergyValue({ form }: { form: FormVersion }) {
+  const { t } = useTranslation();
+  const { a, update } = useEnergy(form);
+  return (
+    <Question title={t('energy.value')} help={t('energy.valueHelp')}>
+      <TextField inputMode="decimal" suffix="kWh/(m²a)" autoFocus value={a.energyValue} onChange={(v) => update({ energyValue: v })} />
+    </Question>
+  );
+}
+
+function EnergyKindScreen({ form }: { form: FormVersion }) {
+  const { t, i18n } = useTranslation();
+  const { a, update } = useEnergy(form);
   const value = parseNumber(a.energyValue);
   const suggested = value !== undefined ? suggestEnergyMerkmal(form.id, value, a.energyKind, a.energyDecentralWater) : undefined;
   const merkmal = form.groups.flatMap((g) => g.merkmale).find((m) => m.id === suggested);
-
-  const update = (patch: Partial<Answers>) => set((prev) => {
-    const next = { ...prev, ...patch };
-    return { ...patch, ...applySuggestion(form, next) };
-  });
-
-  const scale = MEDIA.energie_minus_1?.[0];
-
   return (
-    <section className="step">
-      <h2>{t('energy.title')}</h2>
-      <p className="lead">{t('energy.intro')}</p>
-      {scale && (
-        <figure className="media-illustration wide">
-          <img src={scale.src} alt={scale.alt} />
-        </figure>
-      )}
-      <TextField label={t('energy.value')} help={t('energy.valueHelp')} inputMode="decimal" suffix="kWh/(m²a)" value={a.energyValue} onChange={(v) => update({ energyValue: v })} />
-      <Choice<EnergyKind>
-        label={t('energy.kind')}
+    <Question title={t('energy.kind')}>
+      <OptionList<EnergyKind>
         value={a.energyKind}
         onChange={(v) => update({ energyKind: v })}
         options={[
@@ -59,6 +66,25 @@ export function EnergyStep({ form }: { form: FormVersion }) {
         ) : (
           <Notice>{t('energy.noSuggestion')}</Notice>
         ))}
-    </section>
+    </Question>
   );
+}
+
+export function energyScreens(form: FormVersion, a: Answers, t: TFunction): Screen[] {
+  const scale = MEDIA.energie_minus_1?.[0];
+  const hasValue = parseNumber(a.energyValue) !== undefined;
+  return [
+    {
+      id: 'energy.intro',
+      chapter: 'energy',
+      intro: true,
+      element: (
+        <ChapterIntro chapter="energy" title={t('energy.title')} lead={t('energy.intro')}>
+          {scale && <Image src={scale.src} alt={scale.alt} radius="md" maw={480} />}
+        </ChapterIntro>
+      ),
+    },
+    { id: 'energy.value', chapter: 'energy', answered: hasValue, element: <EnergyValue form={form} /> },
+    ...(hasValue ? [{ id: 'energy.kind', chapter: 'energy', answered: true, element: <EnergyKindScreen form={form} /> } as Screen] : []),
+  ];
 }

@@ -16,6 +16,16 @@ Step-by-step assistant for Berlin tenants: check rent-relevant features under th
 
 Alle Eingaben bleiben im `localStorage` des Browsers; es gibt keinen Server.
 
+### Bedienkonzept
+
+- **Handy: eine Frage pro Bildschirm** („one thing per page“, GOV.UK Service Manual): weniger kognitive Last, weniger Abbrüche.
+- **Desktop (ab 62em): bis zu 6 Fragen pro Seite** als Karten, Kapitel gleichmäßig auf Seiten verteilt (`src/flow/pages.ts`); nach einer Antwort scrollt die Seite zur nächsten Karte.
+- **Hell/Dunkel** umschaltbar in der Kopfzeile (wird im Browser gespeichert).
+- **Kapitel mit eigenem Einstieg** und segmentierter Fortschrittsanzeige – kurze Etappenziele statt eines langen Formulars.
+- **Hilfe nur auf Wunsch** (progressive disclosure): Erläuterungen, Originalwortlaut und Links sind aufklappbar.
+- **Automatisch weiter** nach Ja/Nein- und Merkmal-Antworten; bei Folgefragen bleibt der Bildschirm offen. Enter springt in Textfeldern weiter.
+- Oberfläche mit [Mantine](https://mantine.dev) (inkl. RTL für Arabisch), Icons von Tabler, Schrift Inter / Noto Sans Arabic.
+
 ## Entwicklung
 
 ```bash
@@ -36,7 +46,8 @@ Beispiel-PDFs aller Jahrgänge erzeugen: `PDF_OUT=/tmp/pdfs npx vitest run src/p
 | `src/i18n/features/{de,en,ar}.ts` | Fragen & Erläuterungen je Merkmal |
 | `src/i18n/ui/{de,en,ar}.ts` | Oberflächentexte |
 | `src/pdf/` | PDF-Erzeugung (pdf-lib): Prüfbogen und Rüge |
-| `src/steps/` | Schritte des Assistenten |
+| `src/flow/` | Bildschirm-Modell, Kapitel, automatisches Weiter |
+| `src/steps/` | Bildschirme je Kapitel (`xxxScreens()`) |
 | `public/media/` | Illustrationen (eigene SVGs) und Fotos (Wikimedia Commons) |
 | `scripts/fetch-commons.mjs` | lädt Fotos + Lizenzangaben von Wikimedia Commons |
 

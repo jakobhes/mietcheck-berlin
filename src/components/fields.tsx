@@ -1,44 +1,81 @@
-import { useId, useState, type ReactNode } from 'react';
+import { Alert, Anchor, Checkbox, Collapse, Group, Paper, Radio, SimpleGrid, Stack, Text, TextInput, Textarea, Title, UnstyledButton } from '@mantine/core';
+import { IconAlertTriangle, IconChevronDown, IconCircleCheck, IconExternalLink, IconInfoCircle } from '@tabler/icons-react';
+import { createContext, useContext, useId, useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useFlow } from '../flow/FlowContext';
+import { useLayout } from '../flow/LayoutContext';
 import type { YesNo } from '../state/answers';
 import { hasNonLatin } from '../state/derive';
 
-/** Aufklappbarer Hilfetext */
-export function Help({ children }: { children: ReactNode }) {
-  const { t } = useTranslation();
-  const [open, setOpen] = useState(false);
+/** ID der Überschrift des aktuellen Bildschirms – Eingaben ohne eigenes Label verweisen darauf */
+const TitleIdContext = createContext<string | undefined>(undefined);
+
+interface QuestionProps {
+  title: ReactNode;
+  /** kleine Zeile über der Überschrift, z. B. ein Merkmal-Badge */
+  eyebrow?: ReactNode;
+  lead?: ReactNode;
+  help?: ReactNode;
+  children?: ReactNode;
+  /** längere Erläuterungen etwas kleiner */
+  leadSize?: 'md' | 'lg';
+}
+
+/** Layout eines Bildschirms: eine Frage, kurze Einleitung, Hilfe nur auf Wunsch */
+export function Question({ title, eyebrow, lead, help, children, leadSize = 'lg' }: QuestionProps) {
+  const titleId = useId();
+  const stacked = useLayout() === 'stacked';
+  const body = (
+    <Stack gap={stacked ? 'md' : 'lg'}>
+      <Stack gap="xs">
+        {eyebrow}
+        <Title order={stacked ? 2 : 1} id={titleId} className={stacked ? 'card-title' : 'question-title'}>
+          {title}
+        </Title>
+        {lead && (
+          <Text className="lead" size={stacked ? 'md' : leadSize}>
+            {lead}
+          </Text>
+        )}
+        {help && <Help>{help}</Help>}
+      </Stack>
+      {children}
+    </Stack>
+  );
   return (
-    <div className="help">
-      <button type="button" className="help-toggle" aria-expanded={open} onClick={() => setOpen(!open)}>
-        <span aria-hidden="true">ⓘ</span> {open ? t('common.lessInfo') : t('common.moreInfo')}
-      </button>
-      {open && <div className="help-body">{children}</div>}
-    </div>
+    <TitleIdContext.Provider value={titleId}>
+      {stacked ? (
+        <Paper withBorder radius="xl" p="xl" className="q-card">
+          {body}
+        </Paper>
+      ) : (
+        body
+      )}
+    </TitleIdContext.Provider>
   );
 }
 
-interface FieldProps {
-  label: ReactNode;
-  help?: ReactNode;
-  children: ReactNode;
-  htmlFor?: string;
-}
-
-export function Field({ label, help, children, htmlFor }: FieldProps) {
+/** Aufklappbarer Hilfetext (progressive disclosure) */
+export function Help({ children, label }: { children: ReactNode; label?: ReactNode }) {
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
   return (
-    <div className="field">
-      <label className="field-label" htmlFor={htmlFor}>
-        {label}
-      </label>
-      {help && <Help>{help}</Help>}
-      {children}
+    <div>
+      <UnstyledButton className="help-toggle" aria-expanded={open} onClick={() => setOpen(!open)}>
+        <IconInfoCircle size={18} stroke={1.8} />
+        <span>{label ?? (open ? t('common.lessInfo') : t('common.moreInfo'))}</span>
+        <IconChevronDown size={16} className="chevron" data-open={open || undefined} />
+      </UnstyledButton>
+      <Collapse expanded={open}>
+        <div className="help-body">{children}</div>
+      </Collapse>
     </div>
   );
 }
 
 interface TextProps {
-  label: ReactNode;
-  help?: ReactNode;
+  /** ohne Label wird die Überschrift des Bildschirms als Beschriftung verwendet */
+  label?: ReactNode;
   value: string;
   onChange: (v: string) => void;
   type?: 'text' | 'date' | 'email' | 'tel';
@@ -49,70 +86,89 @@ interface TextProps {
   pdf?: boolean;
   suffix?: string;
   autoComplete?: string;
+  autoFocus?: boolean;
 }
 
-export function TextField({ label, help, value, onChange, type = 'text', inputMode, placeholder, multiline, pdf, suffix, autoComplete }: TextProps) {
-  const id = useId();
+export function TextField({ label, value, onChange, type = 'text', inputMode, placeholder, multiline, pdf, suffix, autoComplete, autoFocus }: TextProps) {
   const { t } = useTranslation();
-  const warn = pdf && hasNonLatin(value);
+  const titleId = useContext(TitleIdContext);
+  const stacked = useLayout() === 'stacked';
+  const error = pdf && hasNonLatin(value) ? t('common.latinWarning') : undefined;
+  const a11y = label ? {} : { 'aria-labelledby': titleId };
+  if (multiline) {
+    return <Textarea label={label} value={value} placeholder={placeholder} error={error} autoFocus={autoFocus && !stacked} onChange={(e) => onChange(e.currentTarget.value)} {...a11y} />;
+  }
   return (
-    <Field label={label} help={help} htmlFor={id}>
-      <div className="input-row">
-        {multiline ? (
-          <textarea id={id} value={value} rows={3} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} />
-        ) : (
-          <input
-            id={id}
-            type={type}
-            value={value}
-            inputMode={inputMode}
-            placeholder={placeholder}
-            autoComplete={autoComplete}
-            dir={type === 'date' || inputMode ? 'ltr' : undefined}
-            onChange={(e) => onChange(e.target.value)}
-          />
-        )}
-        {suffix && <span className="suffix">{suffix}</span>}
-      </div>
-      {warn && <p className="warn">{t('common.latinWarning')}</p>}
-    </Field>
-  );
-}
-
-interface ChoiceProps<T extends string> {
-  label: ReactNode;
-  help?: ReactNode;
-  value: T;
-  options: { value: T; label: ReactNode }[];
-  onChange: (v: T) => void;
-}
-
-export function Choice<T extends string>({ label, help, value, options, onChange }: ChoiceProps<T>) {
-  const name = useId();
-  return (
-    <fieldset className="field">
-      <legend className="field-label">{label}</legend>
-      {help && <Help>{help}</Help>}
-      <div className="choices">
-        {options.map((o) => (
-          <label key={o.value} className={`chip ${value === o.value ? 'selected' : ''}`}>
-            <input type="radio" name={name} checked={value === o.value} onChange={() => onChange(o.value)} />
-            {o.label}
-          </label>
-        ))}
-      </div>
-    </fieldset>
-  );
-}
-
-export function YesNoField({ label, help, value, onChange }: { label: ReactNode; help?: ReactNode; value: YesNo; onChange: (v: YesNo) => void }) {
-  const { t } = useTranslation();
-  return (
-    <Choice<YesNo>
+    <TextInput
       label={label}
-      help={help}
+      type={type}
       value={value}
-      onChange={(v) => onChange(v === value ? '' : v)}
+      inputMode={inputMode}
+      placeholder={placeholder}
+      autoComplete={autoComplete}
+      autoFocus={autoFocus && !stacked}
+      error={error}
+      dir={type === 'date' || inputMode ? 'ltr' : undefined}
+      rightSection={suffix ? <Text c="dimmed" size="sm">{suffix}</Text> : undefined}
+      rightSectionWidth={suffix ? Math.max(44, suffix.length * 9 + 16) : undefined}
+      onChange={(e) => onChange(e.currentTarget.value)}
+      {...a11y}
+    />
+  );
+}
+
+export interface Option<T extends string> {
+  value: T;
+  label: ReactNode;
+  icon?: ReactNode;
+}
+
+/** Große, gut antippbare Antwortkarten */
+export function OptionList<T extends string>({ value, options, onChange, label }: { value: T | ''; options: Option<T>[]; onChange: (v: T) => void; label?: string }) {
+  const titleId = useContext(TitleIdContext);
+  const name = useId();
+  const stacked = useLayout() === 'stacked';
+  const Wrapper = stacked ? SimpleGrid : Stack;
+  return (
+    <Wrapper {...(stacked ? { cols: Math.min(options.length, 3), spacing: 'sm' } : { gap: 'sm' })} role="radiogroup" aria-label={label} aria-labelledby={label ? undefined : titleId}>
+      {options.map((o) => (
+        <Radio.Card key={o.value} className="option" name={name} value={o.value} checked={value === o.value} withBorder onClick={() => onChange(o.value)}>
+          <Group wrap="nowrap" gap={stacked ? 'sm' : 'md'}>
+            <Radio.Indicator size="md" />
+            {o.icon && !stacked && <span className="option-icon">{o.icon}</span>}
+            <Text fw={500} size={stacked ? 'md' : 'lg'}>
+              {o.label}
+            </Text>
+          </Group>
+        </Radio.Card>
+      ))}
+    </Wrapper>
+  );
+}
+
+/** Einfachauswahl; ein zweiter Klick hebt die Auswahl auf. Springt nach der Auswahl weiter, außer `stayIf` trifft zu. */
+export function ChoiceField<T extends string>({ value, options, onChange, stayIf }: { value: T | ''; options: Option<T>[]; onChange: (v: T | '') => void; stayIf?: (v: T) => boolean }) {
+  const { advance } = useFlow();
+  return (
+    <OptionList
+      value={value}
+      options={options}
+      onChange={(v) => {
+        const next = v === value ? '' : v;
+        onChange(next);
+        if (next && !stayIf?.(next)) advance();
+      }}
+    />
+  );
+}
+
+export function YesNoField({ value, onChange, stayIf }: { value: YesNo; onChange: (v: YesNo) => void; stayIf?: (v: 'ja' | 'nein') => boolean }) {
+  const { t } = useTranslation();
+  return (
+    <ChoiceField<'ja' | 'nein'>
+      value={value}
+      onChange={onChange}
+      stayIf={stayIf}
       options={[
         { value: 'ja', label: t('common.yes') },
         { value: 'nein', label: t('common.no') },
@@ -123,25 +179,34 @@ export function YesNoField({ label, help, value, onChange }: { label: ReactNode;
 
 export function CheckField({ label, checked, onChange }: { label: ReactNode; checked: boolean; onChange: (v: boolean) => void }) {
   return (
-    <label className={`check ${checked ? 'selected' : ''}`}>
-      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} />
-      <span>{label}</span>
-    </label>
+    <Checkbox.Card className="option" checked={checked} withBorder onClick={() => onChange(!checked)}>
+      <Group wrap="nowrap" gap="md">
+        <Checkbox.Indicator size="md" />
+        <Text fw={500}>{label}</Text>
+      </Group>
+    </Checkbox.Card>
   );
 }
 
+const NOTICE = {
+  info: { color: 'brand', icon: <IconInfoCircle /> },
+  warn: { color: 'orange', icon: <IconAlertTriangle /> },
+  ok: { color: 'teal', icon: <IconCircleCheck /> },
+} as const;
+
 export function Notice({ kind = 'info', children }: { kind?: 'info' | 'warn' | 'ok'; children: ReactNode }) {
+  const n = NOTICE[kind];
   return (
-    <div className={`notice notice-${kind}`} role={kind === 'warn' ? 'alert' : undefined}>
+    <Alert variant="light" color={n.color} icon={n.icon} radius="lg" role={kind === 'warn' ? 'alert' : undefined} className="notice">
       {children}
-    </div>
+    </Alert>
   );
 }
 
 export function ExtLink({ href, children }: { href: string; children: ReactNode }) {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer">
-      {children} ↗
-    </a>
+    <Anchor href={href} target="_blank" rel="noopener noreferrer" inline>
+      {children} <IconExternalLink size={14} style={{ verticalAlign: '-2px' }} />
+    </Anchor>
   );
 }
