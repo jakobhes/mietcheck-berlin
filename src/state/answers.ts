@@ -11,7 +11,13 @@ export interface Address {
   city: string;
 }
 
+export type HouseVariant = 'renoviert' | 'unrenoviert';
+
 export interface Answers {
+  /* Haus-Modus (z. B. Excelsior): Aufgang und Zustand der Wohnung */
+  houseNo: string;
+  houseVariant: '' | HouseVariant;
+
   /* Vertrag */
   contractDate: string;
   rentStart: string;
@@ -81,6 +87,8 @@ export interface Answers {
 export const emptyAddress: Address = { name: '', street: '', zip: '', city: '' };
 
 export const initialAnswers: Answers = {
+  houseNo: '',
+  houseVariant: '',
   contractDate: '',
   rentStart: '',
   rent: '',

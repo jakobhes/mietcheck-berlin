@@ -1,29 +1,42 @@
-import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { initialHouse, storeHouse } from '../house/activation';
+import { applyHouse, type HousePreset } from '../house/presets';
 import { clearAnswers, initialAnswers, loadAnswers, saveAnswers, type Answers } from './answers';
 
 interface Ctx {
+  /** Antworten inkl. der festen Werte des Hauses (falls Haus-Modus aktiv) */
   a: Answers;
   set: (patch: Partial<Answers> | ((prev: Answers) => Partial<Answers>)) => void;
   reset: () => void;
+  house?: HousePreset;
+  setHouse: (house: HousePreset | undefined) => void;
 }
 
 const AnswersContext = createContext<Ctx | null>(null);
 
 export function AnswersProvider({ children }: { children: ReactNode }) {
-  const [a, setA] = useState<Answers>(loadAnswers);
+  const [raw, setRaw] = useState<Answers>(loadAnswers);
+  const [house, setHouseState] = useState(initialHouse);
 
-  useEffect(() => saveAnswers(a), [a]);
+  useEffect(() => saveAnswers(raw), [raw]);
 
   const set = useCallback<Ctx['set']>((patch) => {
-    setA((prev) => ({ ...prev, ...(typeof patch === 'function' ? patch(prev) : patch) }));
+    setRaw((prev) => ({ ...prev, ...(typeof patch === 'function' ? patch(prev) : patch) }));
   }, []);
 
   const reset = useCallback(() => {
     clearAnswers();
-    setA(initialAnswers);
+    setRaw(initialAnswers);
   }, []);
 
-  return <AnswersContext.Provider value={{ a, set, reset }}>{children}</AnswersContext.Provider>;
+  const setHouse = useCallback((h: HousePreset | undefined) => {
+    storeHouse(h);
+    setHouseState(h);
+  }, []);
+
+  const a = useMemo(() => applyHouse(raw, house), [raw, house]);
+
+  return <AnswersContext.Provider value={{ a, set, reset, house, setHouse }}>{children}</AnswersContext.Provider>;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components

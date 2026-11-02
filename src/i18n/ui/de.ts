@@ -56,6 +56,7 @@ const de = {
     resumeButton: 'Weitermachen, wo ich war',
   },
   steps: {
+    house: 'Ihr Haus',
     contract: 'Mietvertrag',
     exceptions: 'Ausnahmen',
     flat: 'Wohnung',
@@ -69,6 +70,18 @@ const de = {
     remarks: 'Bemerkungen',
     persons: 'Ihre Daten',
     summary: 'Ergebnis & PDF',
+  },
+  house: {
+    title: 'Mieterversammlung {{name}}',
+    intro: 'Vieles zu Ihrem Haus ist schon ausgefüllt: Baujahr, Wohnlage, Energie und die meisten Merkmale von Gebäude und Umfeld. Sie beantworten nur, was sich von Wohnung zu Wohnung unterscheidet.',
+    number: 'In welchem Aufgang wohnen Sie ({{street}})?',
+    variant: 'Ist Ihre Wohnung renoviert oder unrenoviert?',
+    variantHelp: 'Renoviert heißt: Die Wohnung wurde vor Ihrem Einzug modernisiert – z. B. neue Einbauküche, neues Bad, neue Fenster, keine Schwellen. Danach richtet sich, welche Fragen noch kommen.',
+    renoviert: 'renoviert',
+    unrenoviert: 'unrenoviert',
+    prefilled: '{{count}} Merkmal(e) sind für Ihr Haus bereits ausgefüllt.',
+    leave: '{{name}}-Modus beenden',
+    excelsiorLaermHint: 'Gehen Ihre Fenster zur Stresemannstraße? Laut Lärmkarte ist die Fassade dort stark belastet – dann „trifft zu“ und „Straßenverkehrslärm“ wählen. Zum Hof hin eher „trifft nicht zu“.',
   },
   contract: {
     title: 'Ihr Mietvertrag',

@@ -2,6 +2,7 @@ import { writeFileSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { FORMS } from '../data/forms';
+import { applyHouse, HOUSES } from '../house/presets';
 import { initialAnswers, type Answers } from '../state/answers';
 import { buildPruefbogen } from './pruefbogen';
 import { buildRuege, ruegeParagraphs } from './ruege';
@@ -85,5 +86,14 @@ describe('PDF generation', () => {
     const a = { ...sample('2026'), remarks: 'ملاحظة → test', tenant: { ...sample('2026').tenant, name: 'محمد' } };
     await expect(buildPruefbogen(form, a, '2026-11-02')).resolves.toBeInstanceOf(Uint8Array);
     await expect(buildRuege(form, a, '2026-11-02')).resolves.toBeInstanceOf(Uint8Array);
+  });
+});
+
+describe('Haus-Modus', () => {
+  it('Prüfbogen 2026 mit Excelsior-Vorbelegung', async () => {
+    const a = applyHouse({ ...sample('2026'), features: {}, houseNo: '72', houseVariant: 'renoviert' }, HOUSES.excelsior);
+    const bytes = await buildPruefbogen(FORMS[0], a, '2026-11-02');
+    expect(bytes.length).toBeGreaterThan(10_000);
+    if (OUT) writeFileSync(join(OUT, 'Pruefbogen-2026-excelsior.pdf'), bytes);
   });
 });

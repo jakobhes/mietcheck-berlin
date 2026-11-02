@@ -9,14 +9,14 @@ import { useLayout } from '../flow/LayoutContext';
 import { featureText } from '../i18n';
 import type { FeatureAnswer } from '../state/answers';
 import { useAnswers } from '../state/AnswersContext';
-import { CheckField, ExtLink, OptionList, Question, TextField } from './fields';
+import { CheckField, ExtLink, Notice, OptionList, Question, TextField } from './fields';
 
 const NOISE_MAP = 'https://www.berlin.de/sen/uvk/umwelt/laerm/laermminderungsplanung-berlin/laermkarten/';
 
 /** Ein Merkmal als eigener Bildschirm: Frage, kurze Erläuterung, Beispielbild, Antwort */
 export function MerkmalCard({ m, siblings }: { m: Merkmal; siblings: Merkmal[] }) {
   const { t, i18n } = useTranslation();
-  const { a, set } = useAnswers();
+  const { a, set, house } = useAnswers();
   const { advance } = useFlow();
   const [showOriginal, setShowOriginal] = useState(false);
   const text = featureText(i18n.language, m.id, m.de);
@@ -24,6 +24,7 @@ export function MerkmalCard({ m, siblings }: { m: Merkmal; siblings: Merkmal[] }
   const media = MEDIA[m.id] ?? [];
   const plus = m.sign === '+';
   const stacked = useLayout() === 'stacked';
+  const houseHint = house?.hints[m.id];
 
   function choose(v: FeatureAnswer) {
     const deselect = a.features[m.id] === v;
@@ -62,6 +63,7 @@ export function MerkmalCard({ m, siblings }: { m: Merkmal; siblings: Merkmal[] }
 
   const answerEl = (
     <>
+      {houseHint && <Notice>{t(houseHint, { name: house!.name })}</Notice>}
       <OptionList<FeatureAnswer>
         value={answer ?? ''}
         onChange={choose}

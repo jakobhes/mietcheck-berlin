@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import type { GroupId } from '../data/types';
 
-export type ChapterId = 'contract' | 'exceptions' | 'flat' | 'energy' | 'sonder' | GroupId | 'remarks' | 'persons' | 'summary';
+export type ChapterId = 'house' | 'contract' | 'exceptions' | 'flat' | 'energy' | 'sonder' | GroupId | 'remarks' | 'persons' | 'summary';
 
 /**
  * Ein Bildschirm des Assistenten – in der Regel genau eine Frage

@@ -4,6 +4,7 @@ import {
   IconBath,
   IconBolt,
   IconBuilding,
+  IconBuildingSkyscraper,
   IconFileCheck,
   IconFileText,
   IconHome,
@@ -21,6 +22,7 @@ import { useLayout } from './LayoutContext';
 import type { ChapterId } from './types';
 
 export const CHAPTER_ICONS: Record<ChapterId, Icon> = {
+  house: IconBuildingSkyscraper,
   contract: IconFileText,
   exceptions: IconAlertTriangle,
   flat: IconHome,

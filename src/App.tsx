@@ -17,7 +17,7 @@ import {
   useMantineColorScheme,
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { IconArrowLeft, IconArrowRight, IconBrandGithub, IconCheck, IconHome, IconLanguage, IconListDetails, IconMoon, IconRefresh, IconSun } from '@tabler/icons-react';
+import { IconArrowLeft, IconArrowRight, IconBrandGithub, IconBuildingSkyscraper, IconCheck, IconHome, IconLanguage, IconListDetails, IconMoon, IconRefresh, IconSun } from '@tabler/icons-react';
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { selectFormVersion } from './data/forms';
@@ -84,12 +84,12 @@ function chaptersOf(screens: Screen[]): ChapterInfo[] {
 
 export default function App() {
   const { t, i18n } = useTranslation();
-  const { a, reset } = useAnswers();
+  const { a, reset, house, setHouse } = useAnswers();
   const { setDirection } = useDirection();
   const { setColorScheme } = useMantineColorScheme();
   const scheme = useComputedColorScheme('light');
   const desktop = useMediaQuery(DESKTOP_QUERY, window.matchMedia(DESKTOP_QUERY).matches, { getInitialValueInEffect: false });
-  const screens = buildScreens(a, t);
+  const screens = buildScreens(a, t, house);
   const chapters = chaptersOf(screens);
   const pages = desktop ? paginate(screens) : singlePages(screens);
   const form = selectFormVersion(a.contractDate);
@@ -203,6 +203,11 @@ export default function App() {
                 <IconHome size={20} />
               </ThemeIcon>
               <span className="brand-name">{t('app.name')}</span>
+              {house && (
+                <Badge variant="light" color="violet" radius="xl" visibleFrom="sm">
+                  {house.name}
+                </Badge>
+              )}
             </button>
             <Group gap={6}>
               <Menu position="bottom-end" radius="md" shadow="md">
@@ -347,6 +352,20 @@ export default function App() {
               );
             })}
             <Divider my="md" />
+            {house && (
+              <Button
+                variant="subtle"
+                color="gray"
+                leftSection={<IconBuildingSkyscraper size={18} />}
+                justify="flex-start"
+                onClick={() => {
+                  setHouse(undefined);
+                  setMenuOpen(false);
+                }}
+              >
+                {t('house.leave', { name: house.name })}
+              </Button>
+            )}
             <Button variant="subtle" color="red" leftSection={<IconRefresh size={18} />} justify="flex-start" onClick={() => setConfirmOpen(true)}>
               {t('common.restart')}
             </Button>

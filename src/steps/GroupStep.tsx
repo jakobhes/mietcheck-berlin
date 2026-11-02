@@ -8,11 +8,15 @@ import type { Screen } from '../flow/types';
 import type { Answers } from '../state/answers';
 import { conditionContext } from '../state/derive';
 
-export function groupScreens(group: MerkmalGroup, a: Answers, t: TFunction): Screen[] {
+/** `prefilled`: Merkmale, deren Antwort im Haus-Modus feststeht und die nicht gefragt werden */
+export function groupScreens(group: MerkmalGroup, a: Answers, t: TFunction, prefilled: (id: string) => boolean = () => false): Screen[] {
   const visible = applicableMerkmale(group.merkmale, conditionContext(a));
   const hidden = group.merkmale.length - visible.length;
+  const asked = visible.filter((m) => !prefilled(m.id));
+  const known = visible.length - asked.length;
+  if (asked.length === 0) return [];
   // wie im Prüfbogen: erst wohnwertmindernde, dann wohnwerterhöhende Merkmale
-  const ordered = [...visible.filter((m) => m.sign === '-'), ...visible.filter((m) => m.sign === '+')];
+  const ordered = [...asked.filter((m) => m.sign === '-'), ...asked.filter((m) => m.sign === '+')];
   return [
     {
       id: `${group.id}.intro`,
@@ -20,6 +24,7 @@ export function groupScreens(group: MerkmalGroup, a: Answers, t: TFunction): Scr
       intro: true,
       element: (
         <ChapterIntro chapter={group.id} lead={t('groups.intro')} questions={ordered.length}>
+          {known > 0 && <Notice kind="ok">{t('house.prefilled', { count: known })}</Notice>}
           {hidden > 0 && <Notice>{t('common.notApplicableHidden', { count: hidden })}</Notice>}
         </ChapterIntro>
       ),

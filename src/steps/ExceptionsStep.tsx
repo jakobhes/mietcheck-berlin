@@ -11,7 +11,7 @@ function DisclosedText({ label }: { label: string }) {
   return <TextField label={label} multiline pdf value={a.landlordDisclosedText} onChange={(v) => set({ landlordDisclosedText: v })} />;
 }
 
-export function exceptionsScreens(a: Answers, t: TFunction): Screen[] {
+export function exceptionsScreens(a: Answers, t: TFunction, hidden: ReadonlySet<string> = new Set()): Screen[] {
   const q = (k: 'exNewBuild' | 'exModernized' | 'exPreviousRent' | 'exSocialHousing' | 'landlordDisclosed', key: string, extra?: { warn?: string; textarea?: boolean }): Screen => ({
     id: `exceptions.${key}`,
     chapter: 'exceptions',
@@ -23,12 +23,15 @@ export function exceptionsScreens(a: Answers, t: TFunction): Screen[] {
       </YesNoQ>
     ),
   });
-  return [
-    { id: 'exceptions.intro', chapter: 'exceptions', intro: true, element: <ChapterIntro chapter="exceptions" title={t('exceptions.title')} lead={t('exceptions.intro')} questions={5} /> },
+  const questions = [
     q('exNewBuild', 'newBuild', { warn: 'exceptions.warnNewBuild' }),
     q('exModernized', 'modernized'),
     q('exPreviousRent', 'previousRent'),
     q('exSocialHousing', 'socialHousing', { warn: 'exceptions.warnSocial' }),
     q('landlordDisclosed', 'disclosed', { textarea: true }),
+  ].filter((s) => !hidden.has(s.id));
+  return [
+    { id: 'exceptions.intro', chapter: 'exceptions', intro: true, element: <ChapterIntro chapter="exceptions" title={t('exceptions.title')} lead={t('exceptions.intro')} questions={questions.length} /> },
+    ...questions,
   ];
 }

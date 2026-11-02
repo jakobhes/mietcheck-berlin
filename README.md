@@ -26,6 +26,15 @@ Alle Eingaben bleiben im `localStorage` des Browsers; es gibt keinen Server.
 - **Automatisch weiter** nach Ja/Nein- und Merkmal-Antworten; bei Folgefragen bleibt der Bildschirm offen. Enter springt in Textfeldern weiter.
 - Oberfläche mit [Mantine](https://mantine.dev) (inkl. RTL für Arabisch), Icons von Tabler, Schrift Inter / Noto Sans Arabic.
 
+### Haus-Modus (z. B. Mieterversammlung)
+
+Für ein bestimmtes Gebäude lässt sich vieles vorausfüllen, damit nur noch gefragt wird, was sich von Wohnung zu Wohnung unterscheidet. Eingeschaltet wird der Modus über einen Link (z. B. als QR-Code):
+
+- `…/?haus=excelsior` – Excelsior, Stresemannstraße 68–76 (Baujahr 1966)
+- `…/?haus=aus` – zurück zur normalen App (oder im Menü „Excelsior-Modus beenden“)
+
+Der Modus bleibt im Browser gespeichert, auch nach „Neu beginnen“. Zuerst wird nach Aufgang und „renoviert / unrenoviert“ gefragt; danach entfallen Baujahr, Wohnlage, Energie, einige Ausnahmen und alle Merkmale, die für das Haus feststehen. Im PDF sind die vorausgefüllten Merkmale trotzdem angekreuzt. Definition: `src/house/presets.ts` (je Zustand `yes` = angekreuzt, `ask` = wird gefragt, übrige Merkmale des Bogens 2026 = trifft nicht zu).
+
 ## Entwicklung
 
 ```bash
@@ -47,6 +56,7 @@ Beispiel-PDFs aller Jahrgänge erzeugen: `PDF_OUT=/tmp/pdfs npx vitest run src/p
 | `src/i18n/ui/{de,en,ar}.ts` | Oberflächentexte |
 | `src/pdf/` | PDF-Erzeugung (pdf-lib): Prüfbogen und Rüge |
 | `src/flow/` | Bildschirm-Modell, Kapitel, automatisches Weiter |
+| `src/house/` | Haus-Modus: Voreinstellungen je Gebäude, Aktivierung per `?haus=` |
 | `src/steps/` | Bildschirme je Kapitel (`xxxScreens()`) |
 | `public/media/` | Illustrationen (eigene SVGs) und Fotos (Wikimedia Commons) |
 | `scripts/fetch-commons.mjs` | lädt Fotos + Lizenzangaben von Wikimedia Commons |

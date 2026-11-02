@@ -58,6 +58,7 @@ const en: UiStrings = {
     resumeButton: 'Continue where I left off',
   },
   steps: {
+    house: 'Your building',
     contract: 'Tenancy agreement',
     exceptions: 'Exceptions',
     flat: 'Flat',
@@ -71,6 +72,18 @@ const en: UiStrings = {
     remarks: 'Remarks',
     persons: 'Your details',
     summary: 'Result & PDF',
+  },
+  house: {
+    title: 'Tenants’ meeting {{name}}',
+    intro: 'Much about your building is already filled in: year of construction, residential area, energy and most features of the building and surroundings. You only answer what differs from flat to flat.',
+    number: 'Which entrance do you live in ({{street}})?',
+    variant: 'Is your flat renovated or unrenovated?',
+    variantHelp: 'Renovated means: the flat was modernised before you moved in – e.g. new fitted kitchen, new bathroom, new windows, no thresholds. This decides which questions follow.',
+    renoviert: 'renovated',
+    unrenoviert: 'unrenovated',
+    prefilled: '{{count}} feature(s) are already filled in for your building.',
+    leave: 'Leave {{name}} mode',
+    excelsiorLaermHint: 'Do your windows face Stresemannstraße? According to the noise map the façade there is heavily affected – then choose “applies” and “road traffic noise”. Facing the courtyard: rather “does not apply”.',
   },
   contract: {
     title: 'Your tenancy agreement',
