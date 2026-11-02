@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" font-family="system-ui,sans-serif">
+  <rect width="400" height="260" fill="#fff"/>
+  <rect x="20" y="215" width="360" height="30" fill="#ccc"/>
+  <text x="200" y="236" text-anchor="middle" font-size="14" fill="#333">Straße · Street · الشارع</text>
+  <!-- Vorderhaus -->
+  <rect x="40" y="165" width="320" height="45" fill="#cfe3f0" stroke="#1f5f8b" stroke-width="2"/>
+  <text x="200" y="193" text-anchor="middle" font-size="14" font-weight="700" fill="#1f5f8b">Vorderhaus</text>
+  <!-- Seitenflügel -->
+  <rect x="40" y="55" width="70" height="110" fill="#fdf1ec" stroke="#b3401f" stroke-width="2"/>
+  <text x="75" y="115" text-anchor="middle" font-size="13" font-weight="700" fill="#b3401f" transform="rotate(-90 75 115)">Seitenflügel</text>
+  <!-- Quergebäude -->
+  <rect x="40" y="15" width="320" height="40" fill="#fdf1ec" stroke="#b3401f" stroke-width="2"/>
+  <text x="200" y="40" text-anchor="middle" font-size="13" font-weight="700" fill="#b3401f">Quergebäude / Hinterhaus</text>
+  <!-- Hof -->
+  <rect x="110" y="55" width="250" height="110" fill="#eef6e9" stroke="#999" stroke-dasharray="4 4"/>
+  <text x="235" y="115" text-anchor="middle" font-size="14" fill="#4b6b3a">Hof</text>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 190" font-family="system-ui,sans-serif">
+  <rect width="400" height="190" fill="#fff"/>
+  <!-- bodengleich -->
+  <g transform="translate(20,40)">
+    <path d="M0 100h60l6 4h88l6-4h20" stroke="#1e7a46" stroke-width="4" fill="none"/>
+    <rect x="60" y="0" width="4" height="100" fill="#9cc6e0"/>
+    <circle cx="110" cy="20" r="10" fill="#9cc6e0"/>
+    <path d="M110 30v60" stroke="#9cc6e0" stroke-width="2" stroke-dasharray="4 6"/>
+    <text x="90" y="135" text-anchor="middle" font-size="16" font-weight="700" fill="#1e7a46">✓ ≤ 3 cm</text>
+  </g>
+  <!-- Duschwanne mit hoher Kante -->
+  <g transform="translate(220,40)">
+    <path d="M0 100h40v-22h110v22h20" stroke="#b3401f" stroke-width="4" fill="none"/>
+    <circle cx="95" cy="10" r="10" fill="#9cc6e0"/>
+    <path d="M95 20v50" stroke="#9cc6e0" stroke-width="2" stroke-dasharray="4 6"/>
+    <path d="M30 78v22" stroke="#b3401f" stroke-width="2"/>
+    <text x="85" y="135" text-anchor="middle" font-size="16" font-weight="700" fill="#b3401f">✗ &gt; 3 cm</text>
+  </g>
+</svg>

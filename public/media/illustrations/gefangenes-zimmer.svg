@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 230" font-family="system-ui,sans-serif">
+  <rect width="400" height="230" fill="#fff"/>
+  <g transform="translate(20,20)" stroke="#333" stroke-width="4" fill="none">
+    <rect x="0" y="0" width="360" height="180" fill="#f7f7f7"/>
+    <!-- Flur -->
+    <rect x="0" y="120" width="360" height="60" fill="#e8f1f8"/>
+    <!-- Zimmer A -->
+    <path d="M120 0v120"/>
+    <!-- Zimmer B (gefangen) -->
+    <path d="M240 0v120"/>
+    <!-- Türen -->
+    <path d="M40 120h40" stroke="#e8f1f8" stroke-width="6"/>
+    <path d="M160 120h40" stroke="#e8f1f8" stroke-width="6"/>
+    <path d="M240 40v40" stroke="#f7f7f7" stroke-width="6"/>
+  </g>
+  <g font-size="14" text-anchor="middle" fill="#333">
+    <text x="80" y="80">1</text>
+    <text x="200" y="80">2</text>
+    <text x="320" y="70" fill="#b3401f" font-weight="700">3</text>
+    <text x="320" y="92" fill="#b3401f" font-size="22">⛔</text>
+    <text x="200" y="175" fill="#1f5f8b">⇄</text>
+  </g>
+  <path d="M200 160 V100 Q200 80 230 80 H300" stroke="#b3401f" stroke-width="3" fill="none" stroke-dasharray="6 5" marker-end="url(#m)"/>
+  <defs><marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#b3401f"/></marker></defs>
+  <text x="200" y="222" text-anchor="middle" font-size="13" fill="#555">3 → nur durch 2 erreichbar</text>
+</svg>

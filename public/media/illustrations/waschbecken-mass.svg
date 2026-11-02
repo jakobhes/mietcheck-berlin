@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="system-ui,sans-serif">
+  <rect width="400" height="200" fill="#fff"/>
+  <g transform="translate(40,60)">
+    <path d="M0 0h100v14c0 30-22 46-50 46S0 44 0 14z" fill="#fdf1ec" stroke="#b3401f" stroke-width="3"/>
+    <rect x="44" y="-18" width="12" height="18" fill="#888"/>
+    <path d="M0 80h100" stroke="#b3401f" stroke-width="2" marker-start="url(#a)" marker-end="url(#a)"/>
+    <text x="50" y="104" text-anchor="middle" font-size="18" font-weight="700" fill="#b3401f">≤ 50 cm</text>
+    <text x="50" y="128" text-anchor="middle" font-size="22" fill="#b3401f">−</text>
+  </g>
+  <g transform="translate(190,60)">
+    <path d="M0 0h170v14c0 30-30 46-85 46S0 44 0 14z" fill="#edf8f1" stroke="#1e7a46" stroke-width="3"/>
+    <rect x="79" y="-18" width="12" height="18" fill="#888"/>
+    <path d="M0 80h170" stroke="#1e7a46" stroke-width="2" marker-start="url(#b)" marker-end="url(#b)"/>
+    <text x="85" y="104" text-anchor="middle" font-size="18" font-weight="700" fill="#1e7a46">≥ 80 cm</text>
+    <text x="85" y="128" text-anchor="middle" font-size="22" fill="#1e7a46">+</text>
+  </g>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#b3401f"/></marker>
+    <marker id="b" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#1e7a46"/></marker>
+  </defs>
+</svg>

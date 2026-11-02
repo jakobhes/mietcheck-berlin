@@ -1,0 +1,147 @@
+[
+  {
+    "file": "clawfoot-bathtub.jpg",
+    "alt": "Freistehende Badewanne auf Füßen",
+    "author": "Yannick Trottier (ytrottier)",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Clawfoot_bathtub.jpg",
+    "ids": [
+      "bad_freistehende_wanne"
+    ]
+  },
+  {
+    "file": "handtuchwarmer-badheizkorper.jpg",
+    "alt": "Handtuch-Heizkörper (Strukturheizkörper) im Bad",
+    "author": "High Contrast",
+    "license": "CC BY 3.0 de",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/de/deed.en",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Handtuchw%C3%A4rmer_-_Badheizk%C3%B6rper.jpg",
+    "ids": [
+      "bad_strukturheizkoerper"
+    ]
+  },
+  {
+    "file": "ger-by-munchen-bahnhofplatz-1-doppelwaschbecken-2020.jpg",
+    "alt": "Doppelwaschbecken",
+    "author": "User:Mattes",
+    "license": "CC BY 2.0 de",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/de/deed.en",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:GER_%E2%80%94_BY_%E2%80%94_M%C3%BCnchen_%E2%80%94_Bahnhofplatz_1_(Doppelwaschbecken)_2020.JPG",
+    "ids": [
+      "bad_grosses_waschbecken"
+    ]
+  },
+  {
+    "file": "geberit-vorwand-installationselement-fur-ein-wc-neubau-wohnb.jpg",
+    "alt": "Vorwandelement für ein wandhängendes WC (vor dem Verkleiden)",
+    "author": "Kai Kemmann",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Geberit_Vorwand-Installationselement_f%C3%BCr_ein_WC,_Neubau_Wohnblock_Frida-Mager-Allee,_53121_Bonn_02.jpg",
+    "ids": [
+      "bad_wandhaengendes_wc"
+    ]
+  },
+  {
+    "file": "bathroom-mold.jpg",
+    "alt": "Schimmel und Feuchtigkeit an der Wand",
+    "author": "Milliped",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bathroom-mold.jpg",
+    "ids": [
+      "gebaeude_instandhaltung_schlecht"
+    ]
+  },
+  {
+    "file": "ceranfeld.jpg",
+    "alt": "Ceran-Kochfeld",
+    "author": "Felix Reimann",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ceranfeld.jpg",
+    "ids": [
+      "kueche_ceran"
+    ]
+  },
+  {
+    "file": "california-kitchen-range-hood.jpg",
+    "alt": "Dunstabzugshaube über dem Herd",
+    "author": "Stilfehler",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:California_Kitchen_Range_Hood.jpg",
+    "ids": [
+      "kueche_dunstabzug"
+    ]
+  },
+  {
+    "file": "fi-schutzschalter-fi-22-03.jpg",
+    "alt": "FI-Schutzschalter im Sicherungskasten",
+    "author": "Heidas at German Wikipedia",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:FI-Schutzschalter_FI_22.03.JPG",
+    "ids": [
+      "wohnung_elektro_unzureichend"
+    ]
+  },
+  {
+    "file": "2014-grumbtsche-villa-decke-raum-4-og.jpg",
+    "alt": "Stuckdecke",
+    "author": "Derbrauni",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:2014_Grumbtsche_Villa_-_Decke_Raum_4_OG.JPG",
+    "ids": [
+      "wohnung_stuck"
+    ]
+  },
+  {
+    "file": "constructingheatedfloor.jpg",
+    "alt": "Fußbodenheizung beim Einbau (Rohre im Estrich)",
+    "author": "Rpvdk at English Wikipedia",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Constructingheatedfloor.jpg",
+    "ids": [
+      "wohnung_fussbodenheizung",
+      "bad_fussbodenheizung"
+    ]
+  },
+  {
+    "file": "albertstrasse-balkon-21-11-2010-10-51-15.jpg",
+    "alt": "Balkone an einem Berliner Wohnhaus",
+    "author": "Dirk Ingo Franke",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Albertstrasse_balkon_21.11.2010_10-51-15.JPG",
+    "ids": [
+      "wohnung_balkon",
+      "wohnung_kein_balkon"
+    ]
+  },
+  {
+    "file": "berlin-courtyard-in-knesebeckstra-e-charlottenburg-01.jpg",
+    "alt": "Berliner Hinterhof mit Seitenflügel und Quergebäude",
+    "author": "Joe Mabel",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Berlin_-_courtyard_in_Knesebeckstra%C3%9Fe,_Charlottenburg_01.jpg",
+    "ids": [
+      "gebaeude_seitenfluegel"
+    ]
+  },
+  {
+    "file": "2-staple-style-bike-racks-in-grey-metal.jpg",
+    "alt": "Fahrradbügel zum Anschließen",
+    "author": "IlPinguinoOSM",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:2_%22staple%22_style_bike_racks_in_grey_metal.jpg",
+    "ids": [
+      "gebaeude_fahrradraum",
+      "umfeld_keine_fahrradplaetze"
+    ]
+  }
+]

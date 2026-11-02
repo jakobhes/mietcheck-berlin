@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 120" font-family="system-ui,sans-serif">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0" stop-color="#1a9641"/>
+      <stop offset="0.35" stop-color="#a6d96a"/>
+      <stop offset="0.55" stop-color="#ffffbf"/>
+      <stop offset="0.75" stop-color="#fdae61"/>
+      <stop offset="1" stop-color="#d7191c"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="120" fill="#fff"/>
+  <rect x="20" y="30" width="560" height="34" rx="6" fill="url(#g)"/>
+  <g font-size="13" fill="#333" text-anchor="middle">
+    <text x="20" y="84">0</text><text x="113" y="84">50</text><text x="207" y="84">100</text>
+    <text x="300" y="84">150</text><text x="393" y="84">200</text><text x="487" y="84">250</text><text x="580" y="84">&gt;300</text>
+  </g>
+  <text x="300" y="108" text-anchor="middle" font-size="13" fill="#555">kWh/(m²·a)</text>
+  <text x="70" y="22" text-anchor="middle" font-size="16" font-weight="700" fill="#1e7a46">+</text>
+  <text x="530" y="22" text-anchor="middle" font-size="16" font-weight="700" fill="#b3401f">−</text>
+</svg>

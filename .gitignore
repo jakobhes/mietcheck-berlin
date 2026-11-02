@@ -147,3 +147,13 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# Original-PDFs vom BMV – nur lokale Referenz, nicht weiterverbreiten
+sources/
+
+# Vite / Editor / macOS
+*.local
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea/
