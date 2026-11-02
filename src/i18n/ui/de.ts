@@ -31,6 +31,8 @@ const de = {
     restart: 'Neu beginnen',
     restartConfirm: 'Alle Eingaben löschen und neu beginnen?',
     language: 'Sprache',
+    month: 'Monat',
+    year: 'Jahr',
     imageCredit: 'Bild',
     notApplicableHidden: '{{count}} Merkmal(e) ausgeblendet, weil sie für Ihr Baujahr nicht gelten.',
     latinWarning: 'Bitte in lateinischen Buchstaben schreiben – das PDF ist auf Deutsch und kann andere Schriften nicht darstellen.',
@@ -86,7 +88,7 @@ const de = {
   contract: {
     title: 'Ihr Mietvertrag',
     contractDate: 'Wann haben Sie den Mietvertrag unterschrieben?',
-    contractDateHelp: 'Maßgeblich ist das Datum der Unterschrift (Vertragsabschluss), nicht der Einzug. Danach richtet sich, welcher Mietspiegel und welcher Prüfbogen gilt.',
+    contractDateHelp: 'Maßgeblich ist die Unterschrift (Vertragsabschluss), nicht der Einzug. Monat und Jahr genügen – danach richtet sich, welcher Mietspiegel und welcher Prüfbogen gilt.',
     rentStart: 'Ab wann läuft das Mietverhältnis (Mietbeginn)?',
     rentStartHelp: 'Wichtig für die Frist der Rüge: Bei Verträgen ab 1.4.2020 können Sie zu viel gezahlte Miete ab Mietbeginn zurückfordern, wenn Sie innerhalb von 30 Monaten nach Mietbeginn rügen.',
     rent: 'Wie hoch ist die vereinbarte Nettokaltmiete pro Monat?',

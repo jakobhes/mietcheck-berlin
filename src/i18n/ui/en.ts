@@ -33,6 +33,8 @@ const en: UiStrings = {
     restart: 'Start over',
     restartConfirm: 'Delete all answers and start over?',
     language: 'Language',
+    month: 'Month',
+    year: 'Year',
     imageCredit: 'Image',
     notApplicableHidden: '{{count}} feature(s) hidden because they do not apply to your building year.',
     latinWarning: 'Please use Latin letters – the PDF is in German and cannot display other scripts.',
@@ -88,7 +90,7 @@ const en: UiStrings = {
   contract: {
     title: 'Your tenancy agreement',
     contractDate: 'When did you sign the tenancy agreement?',
-    contractDateHelp: 'What counts is the date of signing (conclusion of the contract), not the move-in date. It determines which rent index (Mietspiegel) and which form apply.',
+    contractDateHelp: 'What counts is the signing (conclusion of the contract), not the move-in date. Month and year are enough – they determine which rent index (Mietspiegel) and which form apply.',
     rentStart: 'When does the tenancy start?',
     rentStartHelp: 'Important for the deadline: for contracts from 1 April 2020 you can reclaim overpaid rent from the start of the tenancy if you object within 30 months of the start.',
     rent: 'What is the agreed net cold rent per month?',

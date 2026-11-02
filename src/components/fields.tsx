@@ -1,4 +1,4 @@
-import { Alert, Anchor, Checkbox, Collapse, Group, Paper, Radio, SimpleGrid, Stack, Text, TextInput, Textarea, Title, UnstyledButton } from '@mantine/core';
+import { Alert, Anchor, Checkbox, Collapse, Group, NativeSelect, Paper, Radio, SimpleGrid, Stack, Text, TextInput, Textarea, Title, UnstyledButton } from '@mantine/core';
 import { IconAlertTriangle, IconChevronDown, IconCircleCheck, IconExternalLink, IconInfoCircle } from '@tabler/icons-react';
 import { createContext, useContext, useId, useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -114,6 +114,30 @@ export function TextField({ label, value, onChange, type = 'text', inputMode, pl
       onChange={(e) => onChange(e.currentTarget.value)}
       {...a11y}
     />
+  );
+}
+
+/**
+ * Monat + Jahr als zwei native Auswahllisten (auf dem Handy das System-Auswahlrad).
+ * Wert „yyyy-mm“, leer solange nicht beides gewählt ist; ältere Werte „yyyy-mm-dd“ werden angezeigt.
+ */
+export function MonthField({ value, onChange, fromYear, toYear }: { value: string; onChange: (v: string) => void; fromYear: number; toYear: number }) {
+  const { t, i18n } = useTranslation();
+  const [month, setMonth] = useState(value.slice(5, 7));
+  const [year, setYear] = useState(value.slice(0, 4));
+  const monthName = new Intl.DateTimeFormat(i18n.language, { month: 'long' });
+  const months = Array.from({ length: 12 }, (_, i) => ({ value: String(i + 1).padStart(2, '0'), label: monthName.format(new Date(2000, i, 1)) }));
+  const years = Array.from({ length: toYear - fromYear + 1 }, (_, i) => String(toYear - i));
+  function update(m: string, y: string) {
+    setMonth(m);
+    setYear(y);
+    onChange(m && y ? `${y}-${m}` : '');
+  }
+  return (
+    <Group grow align="flex-start" wrap="nowrap">
+      <NativeSelect size="lg" radius="md" label={t('common.month')} value={month} data={[{ value: '', label: '–' }, ...months]} onChange={(e) => update(e.currentTarget.value, year)} />
+      <NativeSelect size="lg" radius="md" label={t('common.year')} value={year} data={['', ...years].map((y) => ({ value: y, label: y || '–' }))} onChange={(e) => update(month, e.currentTarget.value)} />
+    </Group>
   );
 }
 

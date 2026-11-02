@@ -45,7 +45,7 @@ export function ruegeParagraphs(form: FormVersion, a: Answers, today: string): {
   p.push(
     `mit Mietvertrag vom ${a.contractDate ? formatDateDe(a.contractDate) : '__________'} habe ich die oben genannte Wohnung` +
       (area ? ` mit einer Wohnfläche von ${a.area.trim()} m²` : '') +
-      (a.rentStart ? ` ab dem ${formatDateDe(a.rentStart)}` : '') +
+      (a.rentStart ? ` ab ${a.rentStart.length > 7 ? 'dem ' : ''}${formatDateDe(a.rentStart)}` : '') +
       ` angemietet. Vereinbart ist eine Nettokaltmiete von ${rent ? euro(rent) : '__________'} monatlich${perSqm}.` +
       (a.staffelRent === 'ja' ? ' Es ist eine Staffelmiete vereinbart; die Rüge bezieht sich auf jede einzelne Staffel.' : '') +
       (a.indexRent === 'ja' ? ' Es ist eine Indexmiete vereinbart; die Rüge bezieht sich auf die Ausgangsmiete.' : ''),

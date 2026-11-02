@@ -7,6 +7,7 @@
  * nur einmal gepflegt werden müssen. Unterschiede zwischen den Jahren stecken im Wortlaut
  * (`de`) und in den Bedingungen (`cond`).
  */
+import { monthStart } from './dates';
 import type { Condition, FollowUpKey, FormId, FormVersion, Merkmal, MerkmalGroup } from './types';
 
 const BMV = 'https://www.berliner-mieterverein.de/downloads/';
@@ -635,11 +636,11 @@ export function getForm(id: FormId): FormVersion {
 }
 
 /**
- * Wählt den Prüfbogen anhand des Datums des Vertragsabschlusses (ISO yyyy-mm-dd).
+ * Wählt den Prüfbogen anhand des Vertragsabschlusses (yyyy-mm oder yyyy-mm-dd; die Zeiträume beginnen immer am Monatsersten).
  * Gibt `undefined` zurück, wenn der Vertrag vor Einführung der Mietpreisbremse geschlossen wurde.
  */
 export function selectFormVersion(contractDate: string): FormVersion | undefined {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(contractDate)) return undefined;
-  if (contractDate < MIETPREISBREMSE_START) return undefined;
-  return FORMS.find((f) => contractDate >= f.validFrom && (!f.validTo || contractDate <= f.validTo));
+  const date = monthStart(contractDate);
+  if (!date || date < MIETPREISBREMSE_START) return undefined;
+  return FORMS.find((f) => date >= f.validFrom && (!f.validTo || date <= f.validTo));
 }

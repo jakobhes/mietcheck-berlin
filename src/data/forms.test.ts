@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { FORMS, selectFormVersion } from './forms';
-import { addMonths, isApplicable, parseNumber, refundRule, suggestEnergyMerkmal } from './logic';
+import { addMonths, formatDateDe, isApplicable, parseNumber, refundRule, suggestEnergyMerkmal } from './logic';
 import featDe from '../i18n/features/de';
 import featEn from '../i18n/features/en';
 import featAr from '../i18n/features/ar';
@@ -25,6 +25,11 @@ describe('selectFormVersion', () => {
     ['2025-08-31', '2024'],
     ['2025-09-01', '2026'],
     ['2026-11-02', '2026'],
+    // nur Monat und Jahr
+    ['2015-05', undefined],
+    ['2015-06', '2015'],
+    ['2025-08', '2024'],
+    ['2025-09', '2026'],
   ];
   it.each(cases)('%s → %s', (date, expected) => {
     expect(selectFormVersion(date)?.id).toBe(expected);
@@ -124,6 +129,15 @@ describe('refund rule', () => {
   it('30 months from rent start', () => {
     expect(refundRule('2024-01-10', '2024-02-01', '2026-08-01')).toEqual({ kind: 'fromStart', deadline: '2026-08-01' });
     expect(refundRule('2024-01-10', '2024-02-01', '2026-08-02')).toEqual({ kind: 'fromRuegeLate', deadline: '2026-08-01' });
+  });
+  it('month-only dates count from the first of the month', () => {
+    expect(refundRule('2020-03', '2020-04', '2020-06-01').kind).toBe('fromRuegeOld');
+    expect(refundRule('2024-01', '2024-02', '2026-08-01')).toEqual({ kind: 'fromStart', deadline: '2026-08-01' });
+    expect(refundRule('2024-01', '', '2026-08-01')).toEqual({ kind: 'fromRuegeLate', deadline: '2026-07-01' });
+  });
+  it('formats month-only dates', () => {
+    expect(formatDateDe('2024-03')).toBe('März 2024');
+    expect(formatDateDe('2024-03-15')).toBe('15.03.2024');
   });
   it('addMonths clamps month ends', () => {
     expect(addMonths('2023-08-31', 30)).toBe('2026-02-28');

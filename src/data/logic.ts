@@ -1,3 +1,4 @@
+import { monthStart } from './dates';
 import { ENERGY_THRESHOLDS } from './forms';
 import type { Condition, FormId, Merkmal, SonderId } from './types';
 
@@ -97,17 +98,24 @@ export type RefundRule =
   | { kind: 'fromRuegeOld' };
 
 export function refundRule(contractDate: string, rentStart: string, today: string): RefundRule {
-  if (contractDate < RUECKWIRKUNG_AB) return { kind: 'fromRuegeOld' };
-  const start = rentStart || contractDate;
+  if (monthStart(contractDate) < RUECKWIRKUNG_AB) return { kind: 'fromRuegeOld' };
+  // nur Monat bekannt → ab dem Monatsersten rechnen (frühestmögliche Frist, also auf der sicheren Seite)
+  const start = monthStart(rentStart) || monthStart(contractDate);
   const deadline = addMonths(start, 30);
   return today <= deadline ? { kind: 'fromStart', deadline } : { kind: 'fromRuegeLate', deadline };
 }
 
+const MONTHS_DE = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+
+/** „2024-03“ → „März 2024“, „2024-03-15“ → „15.03.2024“ */
 export function formatDateDe(iso: string): string {
+  if (/^\d{4}-\d{2}$/.test(iso)) return `${MONTHS_DE[Number(iso.slice(5)) - 1] ?? iso.slice(5)} ${iso.slice(0, 4)}`;
   if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
   const [y, m, d] = iso.split('-');
   return `${d}.${m}.${y}`;
 }
+
+export { monthStart };
 
 export function todayIso(): string {
   const d = new Date();
