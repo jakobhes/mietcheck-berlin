@@ -4,7 +4,8 @@
  * Aktiviert wird der Modus über den Link `?haus=<id>` (siehe `activation.ts`).
  */
 import { FORMS, getForm, selectFormVersion } from '../data/forms';
-import { suggestEnergyMerkmal } from '../data/logic';
+import { parseNumber, parseYear, suggestEnergyMerkmal } from '../data/logic';
+import { findMietspiegelField } from '../data/mietspiegel';
 import type { FormId } from '../data/types';
 import type { Answers, FeatureAnswer, HouseVariant } from '../state/answers';
 
@@ -68,6 +69,8 @@ const excelsior: HousePreset = {
     'flat.buildYear',
     'flat.east',
     'flat.wohnlage',
+    // Mietspiegelfeld ergibt sich aus Wohnfläche und Tabelle (siehe applyHouse), sonst ermittelt es der Mieterverein
+    'flat.row',
     'flat.position',
     'flat.attic',
     'flat.modernizedOld',
@@ -184,8 +187,11 @@ function formIdOf(a: Answers): FormId {
 /** Antworten mit den festen Werten des Hauses überlagern (wird nicht gespeichert) */
 export function applyHouse(a: Answers, house: HousePreset | undefined): Answers {
   if (!house) return a;
-  const features = a.houseVariant ? { ...a.features, ...presetFeatures(house, a.houseVariant, formIdOf(a)) } : a.features;
-  return { ...a, ...house.fixed(a), features };
+  const formId = formIdOf(a);
+  const features = a.houseVariant ? { ...a.features, ...presetFeatures(house, a.houseVariant, formId) } : a.features;
+  const fixed = { ...a, ...house.fixed(a), features };
+  const field = findMietspiegelField(formId, fixed.wohnlage, parseYear(fixed.buildYear), parseNumber(fixed.area));
+  return field ? { ...fixed, row: field.field.row, column: field.column ?? '' } : fixed;
 }
 
 /** Steht die Antwort auf dieses Merkmal durch das Haus bereits fest? */

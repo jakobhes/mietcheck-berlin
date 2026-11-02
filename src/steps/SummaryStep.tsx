@@ -4,15 +4,16 @@ import type { TFunction } from 'i18next';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CheckField, Help, Notice, Question, TextField } from '../components/fields';
-import { formatDateDe, refundRule, todayIso } from '../data/logic';
+import { formatDateDe, parseNumber, refundRule, todayIso } from '../data/logic';
 import { photoCredits } from '../data/media';
+import type { RentCalculation } from '../data/mietspiegel';
 import type { FormVersion } from '../data/types';
 import { CHAPTER_ICONS, ChapterIntro } from '../flow/chapters';
 import type { Screen } from '../flow/types';
 import { featureText } from '../i18n';
 import type { Answers } from '../state/answers';
 import { useAnswers } from '../state/AnswersContext';
-import { groupStats } from '../state/derive';
+import { groupStats, rentCalculation } from '../state/derive';
 
 function download(bytes: Uint8Array, filename: string) {
   const blob = new Blob([bytes as BlobPart], { type: 'application/pdf' });
@@ -88,15 +89,52 @@ function Result({ form }: { form: FormVersion }) {
   );
 }
 
-function LetterOptions() {
+const money = (n: number) => n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+
+/** Haus-Modus: zulässige Miete wird aus der Mietspiegeltabelle berechnet, soweit sie erfasst ist */
+function useRentCalculation(form: FormVersion) {
+  const { a, house } = useAnswers();
+  return house ? rentCalculation(form, a) : undefined;
+}
+
+function RentCalculationNotice({ form, calc }: { form: FormVersion; calc: RentCalculation }) {
   const { t } = useTranslation();
-  const { a, set } = useAnswers();
+  const { a } = useAnswers();
+  const rent = parseNumber(a.rent);
+  return (
+    <>
+      <Notice kind="ok">
+        {t('summary.calcResult', {
+          year: form.id,
+          maxRent: money(calc.maxRent),
+          perSqm: money(calc.ovmPerSqm),
+          area: calc.area.toLocaleString('de-DE'),
+          row: calc.field.row,
+        })}
+      </Notice>
+      {rent !== undefined && rent > calc.maxRent && <Text size="sm">{t('summary.calcExcess', { excess: money(rent - calc.maxRent) })}</Text>}
+      {rent !== undefined && rent <= calc.maxRent && <Notice kind="warn">{t('summary.calcNoExcess')}</Notice>}
+    </>
+  );
+}
+
+function LetterOptions({ form }: { form: FormVersion }) {
+  const { t } = useTranslation();
+  const { a, set, house } = useAnswers();
+  const calc = useRentCalculation(form);
   return (
     <Question title={t('summary.lettersTitle')}>
-      <TextField label={`${t('summary.maxRent')} (${t('common.optional')})`} inputMode="decimal" suffix="€" value={a.maxRent} onChange={(v) => set({ maxRent: v })} />
-      <Text size="sm" c="dimmed" mt={-8}>
-        {t('summary.maxRentHelp')}
-      </Text>
+      {calc ? (
+        <RentCalculationNotice form={form} calc={calc} />
+      ) : (
+        <>
+          {house && <Notice>{t(a.area ? 'summary.calcUnavailable' : 'summary.calcNeedsArea')}</Notice>}
+          <TextField label={`${t('summary.maxRent')} (${t('common.optional')})`} inputMode="decimal" suffix="€" value={a.maxRent} onChange={(v) => set({ maxRent: v })} />
+          <Text size="sm" c="dimmed" mt={-8}>
+            {t('summary.maxRentHelp')}
+          </Text>
+        </>
+      )}
       <CheckField label={t('summary.demandInfo')} checked={a.demandInfo} onChange={(v) => set({ demandInfo: v })} />
     </Question>
   );
@@ -105,6 +143,7 @@ function LetterOptions() {
 function Downloads({ form }: { form: FormVersion }) {
   const { t } = useTranslation();
   const { a } = useAnswers();
+  const calc = useRentCalculation(form);
   const [busy, setBusy] = useState<'form' | 'ruege' | null>(null);
   const missing = [
     !a.rent && t('contract.rent'),
@@ -123,7 +162,7 @@ function Downloads({ form }: { form: FormVersion }) {
         download(await buildPruefbogen(form, a, today), `Pruefbogen-169A-Mietspiegel-${form.id}.pdf`);
       } else {
         const { buildRuege } = await import('../pdf/ruege');
-        download(await buildRuege(form, a, today), `Ruege-556g-BGB-${today}.pdf`);
+        download(await buildRuege(form, a, today, calc), `Ruege-556g-BGB-${today}.pdf`);
       }
     } finally {
       setBusy(null);
@@ -200,7 +239,7 @@ function NextSteps({ form }: { form: FormVersion }) {
 export function summaryScreens(form: FormVersion, _a: Answers, t: TFunction): Screen[] {
   return [
     { id: 'summary.result', chapter: 'summary', intro: true, nextLabel: t('common.next'), element: <Result form={form} /> },
-    { id: 'summary.letter', chapter: 'summary', answered: true, element: <LetterOptions /> },
+    { id: 'summary.letter', chapter: 'summary', answered: true, element: <LetterOptions form={form} /> },
     { id: 'summary.download', chapter: 'summary', answered: true, element: <Downloads form={form} /> },
     { id: 'summary.next', chapter: 'summary', answered: true, element: <NextSteps form={form} /> },
   ];

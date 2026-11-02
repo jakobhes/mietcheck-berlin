@@ -33,7 +33,7 @@ Für ein bestimmtes Gebäude lässt sich vieles vorausfüllen, damit nur noch ge
 - `…/?haus=excelsior` – Excelsior, Stresemannstraße 68–76 (Baujahr 1966)
 - `…/?haus=aus` – zurück zur normalen App (oder im Menü „Excelsior-Modus beenden“)
 
-Der Modus bleibt im Browser gespeichert, auch nach „Neu beginnen“. Zuerst wird nach Aufgang und „renoviert / unrenoviert“ gefragt; danach entfallen Baujahr, Wohnlage, Energie, einige Ausnahmen und alle Merkmale, die für das Haus feststehen. Im PDF sind die vorausgefüllten Merkmale trotzdem angekreuzt. Definition: `src/house/presets.ts` (je Zustand `yes` = angekreuzt, `ask` = wird gefragt, übrige Merkmale des Bogens 2026 = trifft nicht zu).
+Der Modus bleibt im Browser gespeichert, auch nach „Neu beginnen“. Zuerst wird nach Aufgang und „renoviert / unrenoviert“ gefragt; danach entfallen Baujahr, Wohnlage, Energie, einige Ausnahmen und alle Merkmale, die für das Haus feststehen. Im PDF sind die vorausgefüllten Merkmale trotzdem angekreuzt. Soweit die Mietspiegeltabelle in `src/data/mietspiegel.ts` erfasst ist (bisher Mietspiegel 2015–2026, Baujahr 1965–1972; 2015 inkl. Sondermerkmale), trägt die App außerdem das Mietspiegelfeld in den Prüfbogen ein, berechnet die ortsübliche Vergleichsmiete nach der Orientierungshilfe und schreibt die zulässige Miete samt Rechenweg ins Rügeschreiben. Definition: `src/house/presets.ts` (je Zustand `yes` = angekreuzt, `ask` = wird gefragt, übrige Merkmale des Bogens 2026 = trifft nicht zu).
 
 ## Entwicklung
 

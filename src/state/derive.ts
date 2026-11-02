@@ -1,4 +1,5 @@
-import { isApplicable, parseYear, type ConditionContext } from '../data/logic';
+import { isApplicable, parseNumber, parseYear, type ConditionContext } from '../data/logic';
+import { calculateRent, findMietspiegelField, type RentCalculation } from '../data/mietspiegel';
 import type { FormVersion, Merkmal, MerkmalGroup } from '../data/types';
 import type { Answers } from './answers';
 
@@ -41,6 +42,14 @@ export function groupStats(form: FormVersion, a: Answers): GroupStats[] {
     const tendency = minus.length > plus.length ? 'minus' : plus.length > minus.length ? 'plus' : 'neutral';
     return { group, minus, plus, unsure, tendency };
   });
+}
+
+/** Zulässige Miete nach Mietspiegeltabelle und Orientierungshilfe, soweit die Tabelle erfasst ist */
+export function rentCalculation(form: FormVersion, a: Answers): RentCalculation | undefined {
+  const area = parseNumber(a.area);
+  const field = findMietspiegelField(form.id, a.wohnlage, parseYear(a.buildYear), area);
+  const sonder = (Object.keys(a.sonder) as (keyof Answers['sonder'])[]).filter((id) => a.sonder[id] === 'ja');
+  return field && area ? calculateRent(field, groupStats(form, a), area, sonder) : undefined;
 }
 
 export function flatAddressLine(a: Answers): string {

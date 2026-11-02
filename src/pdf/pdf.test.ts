@@ -5,6 +5,7 @@ import { FORMS } from '../data/forms';
 import { applyHouse, HOUSES } from '../house/presets';
 import { initialAnswers, type Answers } from '../state/answers';
 import { buildPruefbogen } from './pruefbogen';
+import { rentCalculation } from '../state/derive';
 import { buildRuege, ruegeParagraphs } from './ruege';
 
 /** Beispieldaten; mit PDF_OUT=<ordner> werden die PDFs zur Sichtprüfung gespeichert. */
@@ -95,5 +96,45 @@ describe('Haus-Modus', () => {
     const bytes = await buildPruefbogen(FORMS[0], a, '2026-11-02');
     expect(bytes.length).toBeGreaterThan(10_000);
     if (OUT) writeFileSync(join(OUT, 'Pruefbogen-2026-excelsior.pdf'), bytes);
+  });
+
+  it('Rüge 2026 mit berechneter zulässiger Miete', async () => {
+    const a = applyHouse(
+      { ...sample('2026'), features: {}, houseNo: '72', houseVariant: 'unrenoviert', area: '72', rent: '650,00', staffelRent: 'nein', landlordDisclosed: 'nein' },
+      HOUSES.excelsior,
+    );
+    const calc = rentCalculation(FORMS[0], a)!;
+    expect(calc.field.row).toBe('26');
+    expect(a.row).toBe('26');
+    const text = ruegeParagraphs(FORMS[0], a, '2026-11-02', calc).paragraphs.join(' ');
+    expect(text).toContain('Mietspiegeltabelle 9.1 (einfache Wohnlage), Zeile 26');
+    expect(text).toContain(`beträgt danach ${calc.maxRent.toLocaleString('de-DE', { minimumFractionDigits: 2 })} €`);
+    const bytes = await buildRuege(FORMS[0], a, '2026-11-02', calc);
+    if (OUT) writeFileSync(join(OUT, 'Ruege-2026-excelsior.pdf'), bytes);
+  });
+
+  it('Rüge 2019 mit Zeile und Spalte der Matrix', async () => {
+    const form = FORMS.find((f) => f.id === '2019')!;
+    const a = applyHouse({ ...sample('2019'), features: {}, houseNo: '70', houseVariant: 'renoviert', area: '65,3', row: '', column: '' }, HOUSES.excelsior);
+    expect([a.row, a.column]).toEqual(['G', '4']);
+    const calc = rentCalculation(form, a)!;
+    const text = ruegeParagraphs(form, a, '2026-11-02', calc).paragraphs.join(' ');
+    expect(text).toContain('Berliner Mietspiegeltabelle 2019, Zeile G (einfache Wohnlage, Wohnfläche 60 m² bis unter 90 m²), Spalte 4 (Bezugsfertigkeit 1965 bis 1972)');
+    if (OUT) writeFileSync(join(OUT, 'Ruege-2019-excelsior.pdf'), await buildRuege(form, a, '2026-11-02', calc));
+  });
+
+  it('Rüge 2015 mit Sondermerkmal', async () => {
+    const form = FORMS.find((f) => f.id === '2015')!;
+    const a = applyHouse({ ...sample('2015'), features: {}, houseNo: '72', houseVariant: 'renoviert', area: '72', sonder: { sm_kueche: 'ja' } }, HOUSES.excelsior);
+    const calc = rentCalculation(form, a)!;
+    expect(calc.sonderItems).toEqual([{ id: 'sm_kueche', amount: 0.5 }]);
+    const text = ruegeParagraphs(form, a, '2026-11-02', calc).paragraphs.join(' ');
+    expect(text).toContain('»Moderne Küchenausstattung« (+0,50 € je m²)');
+    if (OUT) writeFileSync(join(OUT, 'Ruege-2015-excelsior.pdf'), await buildRuege(form, a, '2026-11-02', calc));
+  });
+
+  it('keine Berechnung außerhalb der erfassten Baujahre', () => {
+    const a = { ...sample('2026'), buildYear: '1905', wohnlage: 'einfache' as const, area: '72' };
+    expect(rentCalculation(FORMS[0], a)).toBeUndefined();
   });
 });

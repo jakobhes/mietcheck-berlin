@@ -3,6 +3,7 @@
  * Briefaufbau angelehnt an DIN 5008 (Form B).
  */
 import { formatDateDe, parseNumber, refundRule } from '../data/logic';
+import type { RentCalculation } from '../data/mietspiegel';
 import type { FormVersion } from '../data/types';
 import type { Answers } from '../state/answers';
 import { equipmentList, flatAddressLine, flatDetailLine, groupStats } from '../state/derive';
@@ -14,6 +15,69 @@ function euro(n: number): string {
   return n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
 }
 
+function sqm(n: number): string {
+  return n.toLocaleString('de-DE', { maximumFractionDigits: 2 }) + ' m²';
+}
+
+/** „in der Merkmalgruppe »Küche«“ bzw. „in den Merkmalgruppen »Bad/WC/Gäste-WC« und »Küche«“ */
+function inGroups(names: string[]): string {
+  const q = names.map((n) => `»${n}«`);
+  if (q.length === 1) return `in der Merkmalgruppe ${q[0]}`;
+  return `in den Merkmalgruppen ${q.slice(0, -1).join(', ')} und ${q[q.length - 1]}`;
+}
+
+function calcParagraphs(form: FormVersion, calc: RentCalculation, stats: ReturnType<typeof groupStats>): string[] {
+  const { field } = calc;
+  const areaRange =
+    field.minArea === 0 ? `bis unter ${sqm(field.maxArea!)}` : field.maxArea === undefined ? `ab ${sqm(field.minArea)}` : `${sqm(field.minArea)} bis unter ${sqm(field.maxArea)}`;
+  const name = (s: (typeof stats)[number]) => s.group.titleDe.replace(/^Merkmalgruppe \d: /, '');
+  const minus = stats.filter((s) => s.tendency === 'minus').map(name);
+  const plus = stats.filter((s) => s.tendency === 'plus').map(name);
+
+  const tendencies = [
+    minus.length && `überwiegen ${inGroups(minus)} die wohnwertmindernden Merkmale`,
+    plus.length && `${minus.length ? '' : 'überwiegen '}${inGroups(plus)} die wohnwerterhöhenden Merkmale`,
+  ].filter(Boolean);
+  const neutral = minus.length + plus.length < stats.length;
+  const situation = tendencies.length
+    ? `Nach der Orientierungshilfe für die Spanneneinordnung ${tendencies.join(', ')}` +
+      (neutral ? '; in den übrigen Merkmalgruppen halten sich die Merkmale die Waage.' : '.')
+    : 'Nach der Orientierungshilfe für die Spanneneinordnung halten sich die Merkmale in allen Merkmalgruppen die Waage.';
+
+  const n = Math.abs(calc.balance);
+  const result =
+    calc.balance === 0
+      ? ` Gegeneinander aufgerechnet ergibt sich weder ein Zu- noch ein Abschlag${calc.sonderItems.length ? '.' : '; maßgeblich ist der Mittelwert.'}`
+      : ` Gegeneinander aufgerechnet ergibt sich ${calc.balance < 0 ? 'ein Abschlag' : 'ein Zuschlag'} von ${n * 20} Prozent des Unterschiedsbetrags zwischen Mittelwert und ${calc.balance < 0 ? 'Unterwert' : 'Oberwert'} (${euro(calc.balance < 0 ? field.mean - field.lower : field.upper - field.mean)}), also ${euro(Math.abs(calc.adjustment))} je m².`;
+
+  const built = `Bezugsfertigkeit ${calc.buildFrom} bis ${calc.buildTo}`;
+  const place = calc.table
+    ? `in die Mietspiegeltabelle ${calc.table} (${calc.wohnlage} Wohnlage), Zeile ${field.row} (${built}, Wohnfläche ${areaRange}) einzuordnen`
+    : `in die Berliner Mietspiegeltabelle ${form.id}, Zeile ${field.row} (${calc.wohnlage} Wohnlage, Wohnfläche ${areaRange}), Spalte ${calc.column} (${built}) einzuordnen`;
+  const out = [
+    `Die Wohnung ist danach ${place}. ` +
+      `Die Spanne reicht von ${euro(field.lower)} (Unterwert) über ${euro(field.mean)} (Mittelwert) bis ${euro(field.upper)} (Oberwert) je m² monatlich.`,
+  ];
+  if (calc.sonderItems.length) {
+    const items = calc.sonderItems.map(({ id, amount }) => {
+      const name = form.sonder?.find((x) => x.id === id)?.de.replace(/ \(.*$/, '') ?? id;
+      return `»${name}« (${amount > 0 ? '+' : '−'}${euro(Math.abs(amount))} je m²)`;
+    });
+    out.push(
+      `Für die Baualtersklasse ${calc.buildFrom} bis ${calc.buildTo} sind nach Nr. 10.1 des Mietspiegels folgende Sondermerkmale zu berücksichtigen: ${items.join(', ')}. ` +
+        `Ausgehend vom Mittelwert ergeben sich damit ${euro(calc.base)} je m² monatlich.` +
+        (calc.sonderBeyondRange ? ' Damit ist der Spannenendwert bereits überschritten; die Orientierungshilfe bleibt daher außer Betracht (Nr. 11.3, Schritt 3).' : ''),
+    );
+  }
+  if (!calc.sonderBeyondRange) {
+    const base = calc.sonderItems.length ? ` Auf den Wert nach Sondermerkmalen von ${euro(calc.base)}` : '';
+    const cap = calc.capped ? ` Das Ergebnis ist auf den ${calc.balance > 0 ? 'Oberwert' : 'Unterwert'} der Spanne zu begrenzen (Nr. 11.3, Schritt 3).` : '';
+    out.push(situation + result + (base && calc.adjustment ? `${base} ist dieser Betrag ${calc.adjustment > 0 ? 'aufzuschlagen' : 'abzuziehen'}.` : '') + cap);
+  }
+  out.push(`Die ortsübliche Vergleichsmiete beträgt damit ${euro(calc.ovmPerSqm)} je m² monatlich, für ${sqm(calc.area)} also ${euro(calc.ovm)} monatlich.`);
+  return out;
+}
+
 function addDays(iso: string, days: number): string {
   const d = new Date(iso + 'T12:00:00Z');
   d.setUTCDate(d.getUTCDate() + days);
@@ -21,10 +85,15 @@ function addDays(iso: string, days: number): string {
 }
 
 /** Baut die Absätze des Briefes – getrennt vom Layout, damit sie testbar sind. */
-export function ruegeParagraphs(form: FormVersion, a: Answers, today: string): { subject: string; salutation: string; paragraphs: (string | string[])[] } {
+export function ruegeParagraphs(
+  form: FormVersion,
+  a: Answers,
+  today: string,
+  calc?: RentCalculation,
+): { subject: string; salutation: string; paragraphs: (string | string[])[] } {
   const rent = parseNumber(a.rent);
   const area = parseNumber(a.area);
-  const maxRent = parseNumber(a.maxRent);
+  const maxRent = calc?.maxRent ?? parseNumber(a.maxRent);
   const deadline = formatDateDe(addDays(today, 14));
   const flat = [flatAddressLine(a), flatDetailLine(a)].filter(Boolean).join(', ');
 
@@ -63,7 +132,8 @@ export function ruegeParagraphs(form: FormVersion, a: Answers, today: string): {
   if (a.area) facts.push(`Wohnfläche: ${a.area.trim()} m²`);
   const eq = equipmentList(a);
   if (eq.length) facts.push(`Ausstattung: ${eq.join(', ')}`);
-  if (a.row) facts.push(`Mietspiegelfeld: Zeile ${a.row}${form.asksColumn && a.column ? `, Spalte ${a.column}` : ''}`);
+  if (calc) facts.push(`Mietspiegelfeld: ${calc.table ? `Tabelle ${calc.table}, Zeile ${calc.field.row}` : `Zeile ${calc.field.row}, Spalte ${calc.column}`}`);
+  else if (a.row) facts.push(`Mietspiegelfeld: Zeile ${a.row}${form.asksColumn && a.column ? `, Spalte ${a.column}` : ''}`);
   if (a.energyValue) facts.push(`Energiekennwert: ${a.energyValue} kWh/(m²a)`);
   if (facts.length) {
     p.push(`Für die Einordnung in den Berliner Mietspiegel ${form.id} sind insbesondere folgende Angaben maßgeblich:`);
@@ -77,7 +147,9 @@ export function ruegeParagraphs(form: FormVersion, a: Answers, today: string): {
     p.push(minus.map((m) => m.de.replace(/ \[bezieht sich[^\]]*\]/g, '')));
   }
   const minusGroups = stats.filter((s) => s.tendency === 'minus').map((s) => s.group.titleDe.replace(/^Merkmalgruppe \d: /, ''));
-  if (minusGroups.length) {
+  if (calc) {
+    p.push(...calcParagraphs(form, calc, stats));
+  } else if (minusGroups.length) {
     p.push(
       `In den Merkmalgruppen ${minusGroups.join(', ')} überwiegen die wohnwertmindernden Merkmale. Die Wohnung ist daher innerhalb der Spanne des Mietspiegelfeldes entsprechend unterhalb des Mittelwerts einzuordnen.`,
     );
@@ -129,10 +201,10 @@ export function ruegeParagraphs(form: FormVersion, a: Answers, today: string): {
   return { subject, salutation, paragraphs: p };
 }
 
-export async function buildRuege(form: FormVersion, a: Answers, today: string): Promise<Uint8Array> {
+export async function buildRuege(form: FormVersion, a: Answers, today: string, calc?: RentCalculation): Promise<Uint8Array> {
   const l = await Layout.create(undefined, { left: 25 * MM, right: 20 * MM, top: 20 * MM, bottom: 22 * MM });
   const t = a.tenant;
-  const { subject, salutation, paragraphs } = ruegeParagraphs(form, a, today);
+  const { subject, salutation, paragraphs } = ruegeParagraphs(form, a, today, calc);
 
   // Absenderzeile + Anschriftfeld (DIN 5008 Form B: Anschriftfeld ab 45 mm von oben)
   const sender = [t.name, t.street, [t.zip, t.city].filter(Boolean).join(' ')].filter(Boolean);
