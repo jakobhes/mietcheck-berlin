@@ -32,7 +32,6 @@ import { useAnswers } from './state/AnswersContext';
 import { StartStep } from './steps/StartStep';
 
 const STEP_KEY = 'mietcheck-berlin:step';
-const AUTO_ADVANCE_MS = 320;
 const DESKTOP_QUERY = '(min-width: 62em)';
 
 /** Handy: jede Seite enthält genau einen Bildschirm */
@@ -99,7 +98,6 @@ export default function App() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const mainRef = useRef<HTMLElement>(null);
   const lastIndex = useRef(0);
-  const timer = useRef<number | undefined>(undefined);
 
   // Fällt der aktuelle Bildschirm weg (z. B. andere Antwort), bleibt man an derselben Position
   let index = currentId === 'start' ? -1 : screens.findIndex((s) => s.id === currentId);
@@ -130,7 +128,6 @@ export default function App() {
   }, [currentId]);
 
   function go(i: number) {
-    window.clearTimeout(timer.current);
     setCurrentId(i < 0 ? 'start' : screens[Math.min(i, screens.length - 1)].id);
   }
 
@@ -142,24 +139,6 @@ export default function App() {
   const canNext = !!page && !page.all.some((s) => s.blocked) && pageIndex < pages.length - 1;
   const next = () => canNext && goPage(pageIndex + 1);
 
-  // Automatisch weiter nach einer Auswahl – immer mit dem aktuellen Stand der Antworten
-  const nextRef = useRef(next);
-  nextRef.current = next;
-  const idRef = useRef(currentId);
-  idRef.current = screen?.id ?? currentId;
-  const flow = useMemo(
-    () => ({
-      advance: () => {
-        const from = idRef.current;
-        window.clearTimeout(timer.current);
-        timer.current = window.setTimeout(() => {
-          if (idRef.current === from) nextRef.current();
-        }, AUTO_ADVANCE_MS);
-      },
-    }),
-    [],
-  );
-  useEffect(() => () => window.clearTimeout(timer.current), []);
 
   function resume() {
     const exact = screens.findIndex((s) => s.id === savedId);
@@ -194,204 +173,202 @@ export default function App() {
   const NextIcon = rtl ? IconArrowLeft : IconArrowRight;
 
   return (
-    <FlowContext.Provider value={flow}>
-      <div className="app">
-        <header className="topbar">
-          <div className="topbar-inner">
-            <button type="button" className="brand" onClick={() => go(-1)}>
-              <ThemeIcon size={36} radius="md" variant="gradient" gradient={{ from: 'brand.4', to: 'violet.6', deg: 135 }}>
-                <IconHome size={20} />
-              </ThemeIcon>
-              <span className="brand-name">{t('app.name')}</span>
-              {house && (
-                <Badge variant="light" color="violet" radius="xl" visibleFrom="sm">
-                  {house.name}
-                </Badge>
-              )}
-            </button>
-            <Group gap={6}>
-              <Menu position="bottom-end" radius="md" shadow="md">
-                <Menu.Target>
-                  <Button variant="subtle" color="gray" size="compact-md" leftSection={<IconLanguage size={18} />} aria-label={t('common.language')}>
-                    {i18n.language.toUpperCase()}
-                  </Button>
-                </Menu.Target>
-                <Menu.Dropdown>
-                  {LANGUAGES.map((l) => (
-                    <Menu.Item key={l.code} lang={l.code} onClick={() => void i18n.changeLanguage(l.code)} rightSection={i18n.language === l.code ? <IconCheck size={16} /> : null}>
-                      {l.label}
-                    </Menu.Item>
-                  ))}
-                </Menu.Dropdown>
-              </Menu>
-              <ActionIcon
-                variant="subtle"
-                color="gray"
-                size="lg"
-                aria-label={scheme === 'dark' ? t('common.lightMode') : t('common.darkMode')}
-                title={scheme === 'dark' ? t('common.lightMode') : t('common.darkMode')}
-                onClick={() => setColorScheme(scheme === 'dark' ? 'light' : 'dark')}
-              >
-                {scheme === 'dark' ? <IconSun size={20} /> : <IconMoon size={20} />}
-              </ActionIcon>
-              {screen && (
-                <ActionIcon variant="subtle" color="gray" size="lg" aria-label={t('common.overview')} onClick={() => setMenuOpen(true)}>
-                  <IconListDetails size={20} />
-                </ActionIcon>
-              )}
-            </Group>
-          </div>
-
-          {screen && chapter && (
-            <nav className="progress" aria-label={t('common.progress')}>
-              <div className="segments">
-                {chapters.map((c) => {
-                  const total = c.last - c.first + 1;
-                  const done = pos > c.last ? 1 : pos < c.first ? 0 : (pos - c.first + 1) / total;
-                  return (
-                    <div key={c.id} className="segment" style={{ flexGrow: Math.max(total, 2) }} title={t(`steps.${c.id}`)}>
-                      <div style={{ width: `${done * 100}%` }} />
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="progress-label">
-                <Text size="sm" fw={600}>
-                  {t(`steps.${chapter.id}`)}
-                </Text>
-                {chapterQuestion > 0 && (
-                  <Text size="sm" c="dimmed">
-                    {t('common.questionOf', { n: chapterQuestion, total: chapter.questions.length })}
-                  </Text>
-                )}
-                {desktop && chapterPages.length > 1 && (
-                  <Text size="sm" c="dimmed">
-                    {t('common.pageOf', { n: chapterPages.indexOf(page!) + 1, total: chapterPages.length })}
-                  </Text>
-                )}
-              </div>
-            </nav>
-          )}
-        </header>
-
-        <main ref={mainRef} tabIndex={-1} onKeyDown={onKeyDown}>
-          {page && desktop ? (
-            <LayoutContext.Provider value="stacked">
-              <div key={page.all[0].id} className="screen page">
-                {page.intro?.element}
-                {page.questions.map((s, k) => (
-                  <CardFlow key={s.id} id={s.id} nextId={page.questions[k + 1]?.id}>
-                    {s.element}
-                  </CardFlow>
-                ))}
-              </div>
-            </LayoutContext.Provider>
-          ) : (
-            <div key={screen?.id ?? 'start'} className="screen">
-              {screen ? screen.element : <StartStep canResume={!!savedId && !!a.contractDate} onStart={() => go(0)} onResume={resume} />}
-            </div>
-          )}
-        </main>
-
-        {screen && (
-          <div className="bottom-nav">
-            <div className="bottom-nav-inner">
-              <Button variant="default" size="lg" leftSection={<BackIcon size={18} />} onClick={() => goPage(pageIndex - 1)}>
-                {t('common.back')}
-              </Button>
-              {pageIndex < pages.length - 1 && (
-                <Button size="lg" rightSection={<NextIcon size={18} />} disabled={!canNext} variant={nextFilled ? 'filled' : 'light'} onClick={next}>
-                  {nextLabel}
+    <div className="app">
+      <header className="topbar">
+        <div className="topbar-inner">
+          <button type="button" className="brand" onClick={() => go(-1)}>
+            <ThemeIcon size={36} radius="md" variant="gradient" gradient={{ from: 'brand.4', to: 'violet.6', deg: 135 }}>
+              <IconHome size={20} />
+            </ThemeIcon>
+            <span className="brand-name">{t('app.name')}</span>
+            {house && (
+              <Badge variant="light" color="violet" radius="xl" visibleFrom="sm">
+                {house.name}
+              </Badge>
+            )}
+          </button>
+          <Group gap={6}>
+            <Menu position="bottom-end" radius="md" shadow="md">
+              <Menu.Target>
+                <Button variant="subtle" color="gray" size="compact-md" leftSection={<IconLanguage size={18} />} aria-label={t('common.language')}>
+                  {i18n.language.toUpperCase()}
                 </Button>
+              </Menu.Target>
+              <Menu.Dropdown>
+                {LANGUAGES.map((l) => (
+                  <Menu.Item key={l.code} lang={l.code} onClick={() => void i18n.changeLanguage(l.code)} rightSection={i18n.language === l.code ? <IconCheck size={16} /> : null}>
+                    {l.label}
+                  </Menu.Item>
+                ))}
+              </Menu.Dropdown>
+            </Menu>
+            <ActionIcon
+              variant="subtle"
+              color="gray"
+              size="lg"
+              aria-label={scheme === 'dark' ? t('common.lightMode') : t('common.darkMode')}
+              title={scheme === 'dark' ? t('common.lightMode') : t('common.darkMode')}
+              onClick={() => setColorScheme(scheme === 'dark' ? 'light' : 'dark')}
+            >
+              {scheme === 'dark' ? <IconSun size={20} /> : <IconMoon size={20} />}
+            </ActionIcon>
+            {screen && (
+              <ActionIcon variant="subtle" color="gray" size="lg" aria-label={t('common.overview')} onClick={() => setMenuOpen(true)}>
+                <IconListDetails size={20} />
+              </ActionIcon>
+            )}
+          </Group>
+        </div>
+
+        {screen && chapter && (
+          <nav className="progress" aria-label={t('common.progress')}>
+            <div className="segments">
+              {chapters.map((c) => {
+                const total = c.last - c.first + 1;
+                const done = pos > c.last ? 1 : pos < c.first ? 0 : (pos - c.first + 1) / total;
+                return (
+                  <div key={c.id} className="segment" style={{ flexGrow: Math.max(total, 2) }} title={t(`steps.${c.id}`)}>
+                    <div style={{ width: `${done * 100}%` }} />
+                  </div>
+                );
+              })}
+            </div>
+            <div className="progress-label">
+              <Text size="sm" fw={600}>
+                {t(`steps.${chapter.id}`)}
+              </Text>
+              {chapterQuestion > 0 && (
+                <Text size="sm" c="dimmed">
+                  {t('common.questionOf', { n: chapterQuestion, total: chapter.questions.length })}
+                </Text>
+              )}
+              {desktop && chapterPages.length > 1 && (
+                <Text size="sm" c="dimmed">
+                  {t('common.pageOf', { n: chapterPages.indexOf(page!) + 1, total: chapterPages.length })}
+                </Text>
               )}
             </div>
+          </nav>
+        )}
+      </header>
+
+      <main ref={mainRef} tabIndex={-1} onKeyDown={onKeyDown}>
+        {page && desktop ? (
+          <LayoutContext.Provider value="stacked">
+            <div key={page.all[0].id} className="screen page">
+              {page.intro?.element}
+              {page.questions.map((s, k) => (
+                <CardFlow key={s.id} id={s.id} nextId={page.questions[k + 1]?.id}>
+                  {s.element}
+                </CardFlow>
+              ))}
+            </div>
+          </LayoutContext.Provider>
+        ) : (
+          <div key={screen?.id ?? 'start'} className="screen">
+            {screen ? screen.element : <StartStep canResume={!!savedId && !!a.contractDate} onStart={() => go(0)} onResume={resume} />}
           </div>
         )}
+      </main>
 
-        <Drawer
-          opened={menuOpen}
-          onClose={() => setMenuOpen(false)}
-          position={rtl ? 'left' : 'right'}
-          radius="lg"
-          offset={8}
-          size="sm"
-          title={
-            <Group gap="xs">
-              <Text fw={700}>{t('common.overview')}</Text>
-              {form && (
-                <Badge variant="light" radius="xl">
-                  Mietspiegel {form.id}
-                </Badge>
-              )}
-            </Group>
-          }
-        >
-          <Stack gap={4}>
-            {chapters.map((c) => {
-              const Icon = CHAPTER_ICONS[c.id];
-              const answered = c.questions.filter((q) => q.answered).length;
-              const isDone = pos > c.last;
-              return (
-                <NavLink
-                  key={c.id}
-                  label={t(`steps.${c.id}`)}
-                  description={c.questions.length > 0 && c.id !== 'summary' ? `${answered} / ${c.questions.length}` : undefined}
-                  active={chapter?.id === c.id}
-                  disabled={!reachable(c.first)}
-                  leftSection={
-                    <ThemeIcon variant={isDone ? 'filled' : 'light'} color={isDone ? 'teal' : 'brand'} radius="md" size="md">
-                      {isDone ? <IconCheck size={16} /> : <Icon size={16} />}
-                    </ThemeIcon>
-                  }
-                  onClick={() => {
-                    go(c.first);
-                    setMenuOpen(false);
-                  }}
-                  style={{ borderRadius: 'var(--mantine-radius-md)' }}
-                />
-              );
-            })}
-            <Divider my="md" />
-            {house && (
-              <Button
-                variant="subtle"
-                color="gray"
-                leftSection={<IconBuildingSkyscraper size={18} />}
-                justify="flex-start"
-                onClick={() => {
-                  setHouse(undefined);
-                  setMenuOpen(false);
-                }}
-              >
-                {t('house.leave', { name: house.name })}
+      {screen && (
+        <div className="bottom-nav">
+          <div className="bottom-nav-inner">
+            <Button variant="default" size="lg" leftSection={<BackIcon size={18} />} onClick={() => goPage(pageIndex - 1)}>
+              {t('common.back')}
+            </Button>
+            {pageIndex < pages.length - 1 && (
+              <Button size="lg" rightSection={<NextIcon size={18} />} disabled={!canNext} variant={nextFilled ? 'filled' : 'light'} onClick={next}>
+                {nextLabel}
               </Button>
             )}
-            <Button variant="subtle" color="red" leftSection={<IconRefresh size={18} />} justify="flex-start" onClick={() => setConfirmOpen(true)}>
-              {t('common.restart')}
-            </Button>
-            <Text size="xs" c="dimmed" mt="md">
-              {t('start.disclaimer')}
-            </Text>
-            <Anchor href="https://github.com/jakobhes/mietcheck-berlin" target="_blank" rel="noopener noreferrer" size="xs" c="dimmed" mt="xs">
-              <Group gap={4}>
-                <IconBrandGithub size={14} /> GitHub · MIT License
-              </Group>
-            </Anchor>
-          </Stack>
-        </Drawer>
+          </div>
+        </div>
+      )}
 
-        <Modal opened={confirmOpen} onClose={() => setConfirmOpen(false)} title={t('common.restart')} centered radius="lg">
-          <Text mb="lg">{t('common.restartConfirm')}</Text>
-          <Group justify="flex-end">
-            <Button variant="default" onClick={() => setConfirmOpen(false)}>
-              {t('common.cancel')}
-            </Button>
-            <Button color="red" onClick={restart}>
-              {t('common.restart')}
-            </Button>
+      <Drawer
+        opened={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        position={rtl ? 'left' : 'right'}
+        radius="lg"
+        offset={8}
+        size="sm"
+        title={
+          <Group gap="xs">
+            <Text fw={700}>{t('common.overview')}</Text>
+            {form && (
+              <Badge variant="light" radius="xl">
+                Mietspiegel {form.id}
+              </Badge>
+            )}
           </Group>
-        </Modal>
-      </div>
-    </FlowContext.Provider>
+        }
+      >
+        <Stack gap={4}>
+          {chapters.map((c) => {
+            const Icon = CHAPTER_ICONS[c.id];
+            const answered = c.questions.filter((q) => q.answered).length;
+            const isDone = pos > c.last;
+            return (
+              <NavLink
+                key={c.id}
+                label={t(`steps.${c.id}`)}
+                description={c.questions.length > 0 && c.id !== 'summary' ? `${answered} / ${c.questions.length}` : undefined}
+                active={chapter?.id === c.id}
+                disabled={!reachable(c.first)}
+                leftSection={
+                  <ThemeIcon variant={isDone ? 'filled' : 'light'} color={isDone ? 'teal' : 'brand'} radius="md" size="md">
+                    {isDone ? <IconCheck size={16} /> : <Icon size={16} />}
+                  </ThemeIcon>
+                }
+                onClick={() => {
+                  go(c.first);
+                  setMenuOpen(false);
+                }}
+                style={{ borderRadius: 'var(--mantine-radius-md)' }}
+              />
+            );
+          })}
+          <Divider my="md" />
+          {house && (
+            <Button
+              variant="subtle"
+              color="gray"
+              leftSection={<IconBuildingSkyscraper size={18} />}
+              justify="flex-start"
+              onClick={() => {
+                setHouse(undefined);
+                setMenuOpen(false);
+              }}
+            >
+              {t('house.leave', { name: house.name })}
+            </Button>
+          )}
+          <Button variant="subtle" color="red" leftSection={<IconRefresh size={18} />} justify="flex-start" onClick={() => setConfirmOpen(true)}>
+            {t('common.restart')}
+          </Button>
+          <Text size="xs" c="dimmed" mt="md">
+            {t('start.disclaimer')}
+          </Text>
+          <Anchor href="https://github.com/jakobhes/mietcheck-berlin" target="_blank" rel="noopener noreferrer" size="xs" c="dimmed" mt="xs">
+            <Group gap={4}>
+              <IconBrandGithub size={14} /> GitHub · MIT License
+            </Group>
+          </Anchor>
+        </Stack>
+      </Drawer>
+
+      <Modal opened={confirmOpen} onClose={() => setConfirmOpen(false)} title={t('common.restart')} centered radius="lg">
+        <Text mb="lg">{t('common.restartConfirm')}</Text>
+        <Group justify="flex-end">
+          <Button variant="default" onClick={() => setConfirmOpen(false)}>
+            {t('common.cancel')}
+          </Button>
+          <Button color="red" onClick={restart}>
+            {t('common.restart')}
+          </Button>
+        </Group>
+      </Modal>
+    </div>
   );
 }

@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 
 interface FlowCtx {
-  /** nach einer Auswahl automatisch zum nächsten Bildschirm wechseln */
+  /** Desktop: nach einer Auswahl zur nächsten Fragekarte scrollen; auf dem Handy passiert nichts, man tippt selbst auf „Weiter“ */
   advance: () => void;
 }
 
