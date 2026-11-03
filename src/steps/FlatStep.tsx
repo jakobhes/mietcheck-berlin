@@ -108,8 +108,6 @@ export function flatScreens(form: FormVersion, a: Answers, t: TFunction): Screen
     s('wohnlage', !!a.wohnlage, <Wohnlage form={form} />),
     s('row', !!a.row, <RowColumn form={form} />),
     s('equipment', Object.values(a.equipment).some(Boolean), <Equipment />),
-    s('equipmentTenantNote', !!a.equipmentTenantNote, <TextQ k="equipmentTenantNote" pdf title={t('flat.equipmentTenantNote')} />),
-    s('modernization', !!a.modernization, <TextQ k="modernization" multiline pdf title={t('flat.modernization')} help={t('flat.modernizationHelp')} />),
     s('position', !!a.position, <Position />),
     s('floor', !!(a.floor || a.side), <FloorSide />),
     s('attic', !!a.attic, <YesNoQ k="attic" title={t('flat.attic')} />),

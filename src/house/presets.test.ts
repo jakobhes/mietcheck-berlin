@@ -23,6 +23,13 @@ describe('Excelsior', () => {
     expect(applyHouse(raw, excelsior).buildYear).toBe('1966');
   });
 
+  it('answers index and graduated rent with no – nobody in the house has them', () => {
+    const fixed = applyHouse(a({}), excelsior);
+    expect(fixed.indexRent).toBe('nein');
+    expect(fixed.staffelRent).toBe('nein');
+    expect(excelsior.hiddenScreens).toEqual(expect.arrayContaining(['contract.indexRent', 'contract.staffelRent']));
+  });
+
   it('unrenoviert: only the unblackened merkmale stay open', () => {
     const f = presetFeatures(excelsior, 'unrenoviert', '2026');
     const open = [...ids2026].filter((id) => !(id in f));

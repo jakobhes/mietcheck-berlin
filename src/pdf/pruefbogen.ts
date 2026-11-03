@@ -103,11 +103,11 @@ export async function buildPruefbogen(form: FormVersion, a: Answers, today: stri
     qx + 8,
     SIZE,
   );
-  if (a.equipmentTenantNote.trim()) ans(`Vom Mieter eingebaut: ${a.equipmentTenantNote.trim()}`);
   q('7)', 'Wie hoch ist die mietvertraglich vereinbarte Nettokaltmiete (Miete ohne Vorauszahlungen für Heiz- und Betriebskosten)?');
   ans(`${value(a.rent)} € / Monat`);
   q('8)', form.id <= '2023' ? 'Wurden in der Wohnung/im Haus Modernisierungsmaßnahmen (mit öffentlichen Mitteln) durchgeführt? Wenn ja, welche?' : 'Wurden in der Wohnung/im Haus Modernisierungsmaßnahmen durchgeführt? Wenn ja, welche?');
-  ans(a.modernization.trim() || '–');
+  // wird nicht mehr gefragt (für Mieter:innen kaum zu beantworten)
+  ans('–');
   q('9)', 'Index- oder Staffelmiete');
   ynLine('Ist eine Indexmiete vereinbart?', a.indexRent);
   ynLine('Ist eine Staffelmiete vereinbart?', a.staffelRent);
@@ -208,7 +208,6 @@ export async function buildPruefbogen(form: FormVersion, a: Answers, today: stri
     const excluded = state === 'excluded';
     const notes: string[] = [];
     if (excluded) notes.push('entfällt für dieses Baujahr / wegen Sondermerkmal');
-    if (state === 'yes' && a.selfInstalled[m.id]) notes.push('vom Mieter selbst eingebaut – nicht berücksichtigen');
     if (state === 'unsure') notes.push('Mieter:in unsicher – bitte prüfen');
     const fu = state === 'yes' || state === 'unsure' ? followUpAnswer(m, a) : '';
     if (fu) notes.push(`Angabe: ${fu}`);
@@ -220,7 +219,7 @@ export async function buildPruefbogen(form: FormVersion, a: Answers, today: stri
         ? l.textAt(n, x + cbW + 4, yTop - 3 - h, tw, { size: 7.5, italic: true, lineHeight: 9, color: rgb(0.1, 0.2, 0.55) })
         : l.measure(n, { size: 7.5, italic: true, lineHeight: 9, width: tw });
     }
-    if (render) l.checkbox(x + 4, yTop - 4, state === 'yes' && !a.selfInstalled[m.id], 8);
+    if (render) l.checkbox(x + 4, yTop - 4, state === 'yes', 8);
     return h + 6;
   }
 
@@ -276,10 +275,6 @@ export async function buildPruefbogen(form: FormVersion, a: Answers, today: stri
   const unsure = form.groups.flatMap((g) => g.merkmale.filter((m) => merkmalState(m, a, ctx) === 'unsure'));
   if (unsure.length) {
     remarks.push('Bei folgenden Merkmalen ist sich die Mieterin/der Mieter unsicher (nicht angekreuzt):\n' + unsure.map((m) => `- ${m.de}`).join('\n'));
-  }
-  const self = form.groups.flatMap((g) => g.merkmale.filter((m) => a.features[m.id] === 'yes' && a.selfInstalled[m.id]));
-  if (self.length) {
-    remarks.push('Vom Mieter selbst eingebaut / bezahlt (nicht angekreuzt):\n' + self.map((m) => `- ${m.de}`).join('\n'));
   }
   if (remarks.length) {
     l.text(remarks.join('\n\n'), { size: SIZE });

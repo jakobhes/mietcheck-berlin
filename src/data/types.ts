@@ -4,7 +4,6 @@ export type GroupId = 'bad' | 'kueche' | 'wohnung' | 'gebaeude' | 'umfeld';
 
 /** Zusatzfrage aus den Fußnoten der Prüfbögen, z. B. „(3) In welchen Räumen?“ */
 export type FollowUpKey =
-  | 'entlueftungAlter'
   | 'kuecheGroesse'
   | 'raeumeEinfachfenster'
   | 'raeumeElektro'

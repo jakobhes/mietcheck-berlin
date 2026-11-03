@@ -34,6 +34,11 @@ export interface HousePreset {
   energyValue: number;
   /** zusätzlicher Hinweis bei einem Merkmal (UI-Übersetzungsschlüssel) */
   hints: Record<string, string>;
+  /**
+   * Frage nach dem Zustand über ein erkennbares Merkmal statt „renoviert/unrenoviert“:
+   * Übersetzungen unter `<i18n>.title|help|renoviert|unrenoviert`, dazu je ein Beispielbild (unter public/).
+   */
+  variantQuestion?: { i18n: string; images: Record<HouseVariant, string> };
 }
 
 const BOTH_YES = ['gebaeude_treppenhaus_schlecht', 'gebaeude_fahrradraum', 'gebaeude_kein_keller'];
@@ -57,12 +62,17 @@ const excelsior: HousePreset = {
     exNewBuild: 'nein',
     exSocialHousing: 'nein',
     municipal: 'nein',
+    // im Haus gibt es keine Index- oder Staffelmietverträge
+    indexRent: 'nein',
+    staffelRent: 'nein',
     // gemessen nur in der 72; die übrigen Aufgänge sind vermutlich ähnlich (Einordnung mit `energyValue` unten)
     energyValue: a.houseNo === '72' ? '160' : '',
     energyKind: 'verbrauch',
     energyDecentralWater: false,
   }),
   hiddenScreens: [
+    'contract.indexRent',
+    'contract.staffelRent',
     'contract.municipal',
     'exceptions.newBuild',
     'exceptions.socialHousing',
@@ -158,6 +168,11 @@ const excelsior: HousePreset = {
   oldFormsNo: ['umfeld_vernachlaessigt', 'umfeld_citylage'],
   energyValue: 160,
   hints: { umfeld_laerm: 'house.excelsiorLaermHint' },
+  // renovierte Wohnungen haben neue Dreh-Fenster, unrenovierte noch die alten Schwingfenster
+  variantQuestion: {
+    i18n: 'house.excelsiorWindows',
+    images: { renoviert: 'media/house/excelsior-fenster-neu.svg', unrenoviert: 'media/house/excelsior-fenster-alt.svg' },
+  },
 };
 
 export const HOUSES: Record<string, HousePreset> = { excelsior };

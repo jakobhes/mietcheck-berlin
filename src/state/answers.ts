@@ -49,8 +49,6 @@ export interface Answers {
     ofenheizung: boolean;
     fahrstuhl: boolean;
   };
-  equipmentTenantNote: string;
-  modernization: string;
   position: '' | 'Vorderhaus' | 'Seitenflügel' | 'Hinterhaus';
   floor: string;
   side: '' | 'links' | 'rechts' | 'mitte';
@@ -67,7 +65,6 @@ export interface Answers {
   /* Merkmale */
   sonder: Partial<Record<SonderId, YesNo>>;
   features: Record<string, FeatureAnswer>;
-  selfInstalled: Record<string, boolean>;
   followUps: Partial<Record<FollowUpKey, string>>;
   laermArt: { strasse: boolean; schiene: boolean; flug: boolean };
   remarks: string;
@@ -108,8 +105,6 @@ export const initialAnswers: Answers = {
   row: '',
   column: '',
   equipment: { aussenWC: false, innenWC: false, badWC: false, sammelheizung: false, ofenheizung: false, fahrstuhl: false },
-  equipmentTenantNote: '',
-  modernization: '',
   position: '',
   floor: '',
   side: '',
@@ -122,7 +117,6 @@ export const initialAnswers: Answers = {
   energyDecentralWater: false,
   sonder: {},
   features: {},
-  selfInstalled: {},
   followUps: {},
   laermArt: { strasse: false, schiene: false, flug: false },
   remarks: '',

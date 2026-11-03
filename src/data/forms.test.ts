@@ -4,6 +4,7 @@ import { addMonths, formatDateDe, isApplicable, parseNumber, refundRule, suggest
 import featDe from '../i18n/features/de';
 import featEn from '../i18n/features/en';
 import featAr from '../i18n/features/ar';
+import { INVERTED } from '../i18n/features/types';
 import uiDe from '../i18n/ui/de';
 import uiEn from '../i18n/ui/en';
 import uiAr from '../i18n/ui/ar';
@@ -152,4 +153,14 @@ describe('parseNumber', () => {
     ['67.5', 67.5],
     ['', undefined],
   ])('%s', (input, out) => expect(parseNumber(input)).toBe(out));
+});
+
+describe('positively asked merkmale', () => {
+  it('refer to minus merkmale that exist and are translated in every language', () => {
+    const all = FORMS.flatMap((f) => f.groups.flatMap((g) => g.merkmale));
+    for (const id of INVERTED) {
+      expect(all.some((m) => m.id === id && m.sign === '-'), id).toBe(true);
+      for (const feat of [featDe, featEn, featAr]) expect(feat[id]?.q, id).toBeTruthy();
+    }
+  });
 });

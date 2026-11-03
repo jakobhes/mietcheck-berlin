@@ -7,11 +7,15 @@ import type { Merkmal } from '../data/types';
 import { useFlow } from '../flow/FlowContext';
 import { useLayout } from '../flow/LayoutContext';
 import { featureText } from '../i18n';
+import { INVERTED } from '../i18n/features/types';
 import type { FeatureAnswer } from '../state/answers';
 import { useAnswers } from '../state/AnswersContext';
 import { CheckField, ExtLink, Notice, OptionList, Question, TextField } from './fields';
 
 const NOISE_MAP = 'https://www.berlin.de/sen/uvk/umwelt/laerm/laermminderungsplanung-berlin/laermkarten/';
+
+/** Ja/Nein der positiv gestellten Frage ↔ trifft zu/trifft nicht zu (siehe INVERTED) */
+const flip = (v: FeatureAnswer): FeatureAnswer => (v === 'yes' ? 'no' : v === 'no' ? 'yes' : v);
 
 /** Ein Merkmal als eigener Bildschirm: Frage, kurze Erläuterung, Beispielbild, Antwort */
 export function MerkmalCard({ m, siblings }: { m: Merkmal; siblings: Merkmal[] }) {
@@ -21,12 +25,15 @@ export function MerkmalCard({ m, siblings }: { m: Merkmal; siblings: Merkmal[] }
   const [showOriginal, setShowOriginal] = useState(false);
   const text = featureText(i18n.language, m.id, m.de);
   const answer = a.features[m.id];
+  const inverted = INVERTED.has(m.id);
+  const shown = answer && inverted ? flip(answer) : answer;
   const media = MEDIA[m.id] ?? [];
   const plus = m.sign === '+';
   const stacked = useLayout() === 'stacked';
   const houseHint = house?.hints[m.id];
 
-  function choose(v: FeatureAnswer) {
+  function choose(picked: FeatureAnswer) {
+    const v = inverted ? flip(picked) : picked;
     const deselect = a.features[m.id] === v;
     set((prev) => {
       const features = { ...prev.features };
@@ -39,7 +46,7 @@ export function MerkmalCard({ m, siblings }: { m: Merkmal; siblings: Merkmal[] }
       return { features };
     });
     // Bei Zusatzfragen auf dem Bildschirm bleiben
-    const hasExtra = (v === 'yes' && plus) || ((v === 'yes' || v === 'unsure') && !!m.followUp);
+    const hasExtra = (v === 'yes' || v === 'unsure') && !!m.followUp;
     if (!deselect && !hasExtra) advance();
   }
 
@@ -65,22 +72,14 @@ export function MerkmalCard({ m, siblings }: { m: Merkmal; siblings: Merkmal[] }
     <>
       {houseHint && <Notice>{t(houseHint, { name: house!.name })}</Notice>}
       <OptionList<FeatureAnswer>
-        value={answer ?? ''}
+        value={shown ?? ''}
         onChange={choose}
         options={[
-          { value: 'yes', label: t('common.applies'), icon: <IconCheck size={20} /> },
-          { value: 'no', label: t('common.notApplies'), icon: <IconX size={20} /> },
+          { value: 'yes', label: t('common.yes'), icon: <IconCheck size={20} /> },
+          { value: 'no', label: t('common.no'), icon: <IconX size={20} /> },
           { value: 'unsure', label: t('common.unsure'), icon: <IconQuestionMark size={20} /> },
         ]}
       />
-
-      {answer === 'yes' && plus && (
-        <CheckField
-          label={t('common.selfInstalled')}
-          checked={!!a.selfInstalled[m.id]}
-          onChange={(v) => set((prev) => ({ selfInstalled: { ...prev.selfInstalled, [m.id]: v } }))}
-        />
-      )}
 
       {(answer === 'yes' || answer === 'unsure') && m.followUp && (
         <Stack gap="sm" className="followup">

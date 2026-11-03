@@ -95,7 +95,7 @@ const groups2026: MerkmalGroup[] = [
     id: 'kueche',
     titleDe: 'Merkmalgruppe 2: Küche',
     merkmale: [
-      m('kueche_ohne_fenster', '-', 'Küche ohne Fenster und ohne ausreichende Entlüftung', { followUp: 'entlueftungAlter' }),
+      m('kueche_ohne_fenster', '-', 'Küche ohne Fenster und ohne ausreichende Entlüftung'),
       m('kueche_kein_herd', '-', 'Keine Kochmöglichkeit oder Gas-/Elektroherd ohne Backofen'),
       m('kueche_keine_spuele', '-', 'Keine Spüle'),
       m('kueche_kein_warmwasser', '-', 'Keine ausreichende Warmwasserversorgung (z.B. keine zentrale Warmwasserversorgung, kein Durchlauferhitzer, kein Boiler)'),
@@ -313,7 +313,7 @@ function groups2017to2023(is2017: boolean): MerkmalGroup[] {
       id: 'kueche',
       titleDe: 'Merkmalgruppe 2: Küche',
       merkmale: [
-        m('kueche_ohne_fenster', '-', 'Küche ohne Fenster und ohne ausreichende Entlüftung', { followUp: 'entlueftungAlter' }),
+        m('kueche_ohne_fenster', '-', 'Küche ohne Fenster und ohne ausreichende Entlüftung'),
         m('kueche_kein_herd', '-', 'Keine Kochmöglichkeit oder Gas-/Elektroherd ohne Backofen'),
         m('kueche_keine_spuele', '-', 'Keine Spüle'),
         m('kueche_kein_warmwasser', '-', 'Keine ausreichende Warmwasserversorgung (z.B. keine zentrale Warmwasserversorgung, kein Durchlauferhitzer, kein Boiler)'),
@@ -435,7 +435,7 @@ const groups2015: MerkmalGroup[] = [
     id: 'kueche',
     titleDe: 'Merkmalgruppe 2: Küche',
     merkmale: [
-      m('kueche_ohne_fenster', '-', 'Küche ohne Fenster und ohne ausreichende Entlüftung', { followUp: 'entlueftungAlter' }),
+      m('kueche_ohne_fenster', '-', 'Küche ohne Fenster und ohne ausreichende Entlüftung'),
       m('kueche_kein_herd', '-', 'Keine Kochmöglichkeit oder Gas-/Elektroherd ohne Backofen'),
       m('kueche_keine_spuele', '-', 'Keine Spüle'),
       m('kueche_kein_warmwasser', '-', 'Keine ausreichende Warmwasserversorgung (keine zentrale Warmwasserversorgung, kein Durchlauferhitzer, kein Boiler an der Spüle)'),

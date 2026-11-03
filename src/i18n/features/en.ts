@@ -3,44 +3,44 @@ import type { FeatureTexts } from './types';
 const en: FeatureTexts = {
   /* ---------------- Bathroom ---------------- */
   bad_kein_waschbecken: {
-    q: 'Is there no washbasin in the bathroom (or toilet) – or only a very small one?',
-    help: 'A hand basin no wider than about 50 cm (older forms: 50 × 25 cm). Measure the outer edge of the basin.',
+    q: 'Is there a washbasin in the bathroom (or toilet) wider than about 50 cm?',
+    help: 'Measure the outer edge of the basin. “No” if there is no basin at all or only a small hand basin (up to about 50 cm, older forms: 50 × 25 cm).',
   },
   bad_wc_keine_lueftung: {
-    q: 'Does the toilet room have neither a window nor ventilation?',
-    help: 'Applies if there is no window that opens and no extractor fan or ventilation shaft.',
+    q: 'Does the toilet room have a window or ventilation?',
+    help: 'A window that opens, or an extractor fan / ventilation shaft. “No” if there is neither.',
   },
   bad_dielen: {
     q: 'Does the bathroom have wooden floorboards that are not suitable for wet rooms?',
     help: 'Classic wooden boards without sealing or tiles. Sealed, moisture-proof floors do not count.',
   },
   bad_nicht_beheizbar: {
-    q: 'Can the bathroom not be heated properly?',
-    help: 'Applies if there is no radiator, only a wood/coal stove, or only an electric radiant heater.',
+    q: 'Is there a radiator in the bathroom?',
+    help: '“No” if the bathroom cannot be heated at all, only with a wood/coal stove, or only with an electric radiant heater.',
   },
   bad_kein_warmwasser: {
-    q: 'Is there no adequate hot water supply in the bathroom?',
-    help: 'No central hot water, no instantaneous water heater (Durchlauferhitzer) and at most a small boiler (up to 60 litres).',
+    q: 'Is there enough hot water in the bathroom?',
+    help: 'For example central hot water or an instantaneous water heater (Durchlauferhitzer). “No” if there is at most a small boiler (up to 60 litres).',
   },
   bad_freistehende_wanne: {
     q: 'In an unrenovated bathroom: is there an old free-standing bathtub and no separate shower?',
     help: 'Typical for unrenovated old buildings: a tub on feet or standing free (even with panelling), no separate shower. A modern designer tub is not meant.',
   },
   bad_waende_nicht_gefliest: {
-    q: 'Are the walls around the basin, tub or shower not sufficiently tiled?',
-    help: 'Tiles or similar water protection are missing in the splash zone – e.g. only paint or wallpaper behind the shower.',
+    q: 'Are the walls around the basin, tub and shower tiled?',
+    help: 'The area where water splashes. “No” if there is only paint or wallpaper.',
   },
   bad_ohne_fenster: {
-    q: 'Does the bathroom with toilet have no window?',
-    help: 'An interior bathroom without a window. Does not count for prefab buildings built 1973–1990 in East Berlin.',
+    q: 'Does the bathroom have a window?',
+    help: 'The bathroom with toilet. For prefab buildings built 1973–1990 in East Berlin a missing window does not count.',
   },
   bad_keine_dusche: {
-    q: 'Is it not really possible to take a shower?',
-    help: 'For example no shower-head holder, no splash guard (curtain/glass) or a very small standing area.',
+    q: 'Can you take a proper shower in the bathroom?',
+    help: 'There is a shower-head holder, a splash guard (curtain or glass) and enough room to stand. “No” if any of this is missing.',
   },
   bad_klein: {
     q: 'Is the bathroom smaller than 4 m²?',
-    help: 'Measure the floor area (length × width). Does not apply to buildings from 1973–1990 in East Berlin.',
+    help: 'A quick check: stand in the bathroom and stretch your arms out to the sides. Can you touch both walls – and is the room no longer than about two big steps? Then it is probably smaller than 4 m². To be exact, measure length × width. Does not apply to buildings from 1973–1990 in East Berlin.',
   },
   bad_grosses_waschbecken: {
     q: 'Is there a very large basin (at least 80 cm wide), a double basin or two basins?',
@@ -93,32 +93,32 @@ const en: FeatureTexts = {
 
   /* ---------------- Kitchen ---------------- */
   kueche_ohne_fenster: {
-    q: 'Does the kitchen have no window and no adequate ventilation?',
-    help: 'No window and no working extraction system. If there is a ventilation system, please state its age.',
+    q: 'Does the kitchen have a window or ventilation?',
+    help: 'A window or a working extraction system. “No” if there is neither.',
   },
   kueche_kein_herd: {
-    q: 'Is there no cooker – or a cooker without an oven?',
-    help: 'Only applies if the landlord provides no cooker or one without an oven.',
+    q: 'Does the landlord provide a cooker with an oven?',
+    help: '“No” if there is no cooker from the landlord or the cooker has no oven.',
   },
   kueche_keine_spuele: {
-    q: 'Is there no sink in the kitchen?',
-    help: 'No sink provided by the landlord.',
+    q: 'Is there a sink in the kitchen?',
+    help: 'A sink provided by the landlord.',
   },
   kueche_kein_warmwasser: {
-    q: 'Is there no (adequate) hot water at the kitchen sink?',
-    help: 'No central hot water, no instantaneous water heater and no boiler at the sink.',
+    q: 'Is there hot water at the kitchen sink?',
+    help: 'For example central hot water, an instantaneous water heater or a small boiler at the sink.',
   },
   kueche_nicht_beheizbar: {
-    q: 'Can the kitchen not be heated (or only with wood/coal)?',
-    help: 'No radiator in the kitchen or only a coal stove.',
+    q: 'Is there a radiator in the kitchen?',
+    help: '“No” if the kitchen cannot be heated at all or only with a coal stove.',
   },
   kueche_kein_geschirrspueler: {
-    q: 'Is it impossible to install or connect a dishwasher in the kitchen?',
-    help: 'No space or no water/drain connection for a dishwasher.',
+    q: 'Can you connect a dishwasher in the kitchen?',
+    help: 'There is space for it and a water and drain connection.',
   },
   kueche_keine_wandfliesen: {
-    q: 'Are there no tiles or similar splash protection on the wall in the work area?',
-    help: 'Behind the cooker and sink there are no tiles, glass or plastic panels – only paint or wallpaper.',
+    q: 'Are there tiles or a splash guard on the wall behind the cooker and sink?',
+    help: 'Tiles or a glass or plastic panel. “No” if there is only paint or wallpaper.',
   },
   kueche_boden: {
     q: 'Does the kitchen have a high-quality floor in good condition?',
@@ -167,23 +167,23 @@ const en: FeatureTexts = {
     help: 'Visible plumbing in bathroom, kitchen or other rooms. Please state which rooms.',
   },
   wohnung_keine_waschmaschine: {
-    q: 'Is it impossible to place or connect a washing machine in either bathroom or kitchen?',
-    help: 'No space or no connection in bathroom and kitchen.',
+    q: 'Can you connect a washing machine in the bathroom or kitchen?',
+    help: 'There is space and a connection in the bathroom or kitchen. “No” if this is not possible in either room.',
   },
   wohnung_schlechter_schnitt: {
     q: 'Does the flat have a poor layout?',
     help: 'For example a “trapped room” (only reachable through another room) or a walk-through room.',
   },
   wohnung_kein_balkon: {
-    q: 'Is there no balcony, terrace, loggia or conservatory?',
-    help: 'Does not apply if a balcony is impossible for structural or legal reasons (e.g. listed building). Please give the reason if known.',
+    q: 'Is there a balcony, terrace, loggia or conservatory?',
+    help: 'If not: would a balcony be impossible for structural or legal reasons (e.g. listed building)? Then please give the reason if known.',
   },
   wohnung_eg_kein_einbruchschutz: {
     q: 'Ground floor: are burglary or privacy protections missing on the windows?',
     help: 'No bars, shutters, window alarm or similar on all windows of the ground-floor flat.',
   },
   wohnung_kein_kabel: {
-    q: 'Is there neither cable TV nor a shared satellite/antenna system?',
+    q: 'Is there cable TV or a shared satellite/antenna system?',
     help: 'Rent index 2015 only.',
   },
   wohnung_einbauschrank: {
@@ -245,12 +245,12 @@ const en: FeatureTexts = {
     help: 'For example peeling paint, graffiti, broken lighting, damaged steps. Please give the last renovation date and the defects.',
   },
   gebaeude_kein_keller: {
-    q: 'Is there no cellar or storage room outside the flat just for you?',
-    help: 'No private (lockable) cellar without extra cost.',
+    q: 'Do you have your own cellar or storage room outside the flat?',
+    help: 'A (lockable) room just for you, without extra cost.',
   },
   gebaeude_haustuer_offen: {
-    q: 'Is the building entrance freely accessible at all times (front door cannot be locked)?',
-    help: 'Anyone can enter the staircase at any time.',
+    q: 'Can the front door of the building be locked?',
+    help: '“No” if anyone can enter the staircase at any time.',
   },
   gebaeude_instandhaltung_schlecht: {
     q: 'Is the building in poor repair?',
@@ -265,8 +265,8 @@ const en: FeatureTexts = {
     help: 'From 2024: does not apply to buildings built up to 1949.',
   },
   gebaeude_keine_sprechanlage: {
-    q: 'Is there no intercom with electric door opener?',
-    help: 'You cannot talk to visitors at the front door or open it from your flat.',
+    q: 'Is there an intercom with a door opener?',
+    help: 'You can talk to visitors at the front door and open it from your flat.',
   },
   gebaeude_daemmung_schlecht: {
     q: 'Is the building poorly insulated or the heating old and inefficient?',
@@ -351,8 +351,8 @@ const en: FeatureTexts = {
     help: 'For example from businesses, restaurants or industry. Please state when.',
   },
   umfeld_keine_fahrradplaetze: {
-    q: 'Is there nowhere to park bicycles on the property?',
-    help: 'Neither a bike room nor bike stands.',
+    q: 'Can you park bicycles on the property?',
+    help: 'For example a bike room or bike stands.',
   },
   umfeld_muell: {
     q: 'Is the bin area untidy and open?',
@@ -402,7 +402,7 @@ const en: FeatureTexts = {
   },
   sm_kleines_bad: {
     q: 'Is the bathroom smaller than 4 m²?',
-    help: 'Only has an effect as a special feature for buildings from 1991–2002.',
+    help: 'Stretch your arms out: if you can touch both walls and the room is no longer than about two big steps, it is probably smaller than 4 m². Only has an effect as a special feature for buildings from 1991–2002.',
   },
   sm_modernes_bad: {
     q: 'Modern bathroom?',

@@ -7,44 +7,44 @@ import type { FeatureTexts } from './types';
 const de: FeatureTexts = {
   /* ---------------- Bad ---------------- */
   bad_kein_waschbecken: {
-    q: 'Fehlt im Bad (oder WC) ein Waschbecken – oder ist es sehr klein?',
-    help: 'Gemeint ist ein Handwaschbecken, das höchstens etwa 50 cm breit ist (ältere Bögen: 50 × 25 cm). Messen Sie die Außenkante des Beckens.',
+    q: 'Gibt es im Bad (oder WC) ein Waschbecken, das breiter als etwa 50 cm ist?',
+    help: 'Messen Sie die Außenkante des Beckens. „Nein“, wenn es gar kein Waschbecken gibt oder nur ein kleines Handwaschbecken (bis etwa 50 cm, ältere Bögen: 50 × 25 cm).',
   },
   bad_wc_keine_lueftung: {
-    q: 'Hat der Raum mit dem WC weder Fenster noch Lüftung?',
-    help: 'Trifft zu, wenn es im WC weder ein zu öffnendes Fenster noch einen Lüfter (Ventilator/Lüftungsschacht) gibt.',
+    q: 'Hat der Raum mit dem WC ein Fenster oder eine Lüftung?',
+    help: 'Ein Fenster, das man öffnen kann, oder ein Lüfter (Ventilator/Lüftungsschacht). „Nein“, wenn beides fehlt.',
   },
   bad_dielen: {
     q: 'Liegen im Bad Holzdielen, die nicht für Feuchträume geeignet sind?',
     help: 'Klassische Holzdielen ohne Versiegelung oder Fliesen darüber. Versiegelte, feuchtraumgeeignete Böden zählen nicht.',
   },
   bad_nicht_beheizbar: {
-    q: 'Kann das Bad nicht richtig geheizt werden?',
-    help: 'Zutreffend, wenn es keinen Heizkörper gibt, nur mit Holz/Kohle (Ofen) geheizt wird oder nur ein elektrischer Heizstrahler vorhanden ist.',
+    q: 'Gibt es im Bad einen Heizkörper?',
+    help: '„Nein“, wenn das Bad gar nicht, nur mit Holz/Kohle (Ofen) oder nur mit einem elektrischen Heizstrahler geheizt werden kann.',
   },
   bad_kein_warmwasser: {
-    q: 'Fehlt im Bad eine ausreichende Warmwasserversorgung?',
-    help: 'Kein zentrales Warmwasser, kein Durchlauferhitzer und höchstens ein kleiner Boiler (bis 60 Liter).',
+    q: 'Kommt im Bad genug warmes Wasser?',
+    help: 'Zum Beispiel zentrales Warmwasser oder ein Durchlauferhitzer. „Nein“, wenn es höchstens einen kleinen Boiler (bis 60 Liter) gibt.',
   },
   bad_freistehende_wanne: {
     q: 'Steht im nicht modernisierten Bad eine alte, freistehende Badewanne – ohne separate Dusche?',
     help: 'Typisch für unsanierte Altbauten: eine Wanne auf Füßen oder frei vor der Wand (auch mit Verkleidung), keine eigene Dusche. Eine moderne Designer-Wanne ist nicht gemeint.',
   },
   bad_waende_nicht_gefliest: {
-    q: 'Sind die Wände rund um Waschbecken, Wanne oder Dusche nicht ausreichend gefliest?',
-    help: 'Im Spritzwasserbereich fehlen Fliesen oder ein vergleichbarer Wasserschutz – z. B. nur Farbe oder Tapete hinter der Dusche.',
+    q: 'Sind die Wände rund um Waschbecken, Wanne und Dusche gefliest?',
+    help: 'Gemeint ist der Bereich, wo Wasser hinspritzt. „Nein“, wenn dort nur Farbe oder Tapete ist.',
   },
   bad_ohne_fenster: {
-    q: 'Hat das Bad mit WC kein Fenster?',
-    help: 'Ein innenliegendes Bad ohne Fenster. In Plattenbauten (Baujahr 1973–1990 Ost) zählt das Merkmal nicht.',
+    q: 'Hat das Bad ein Fenster?',
+    help: 'Gemeint ist das Bad mit WC. In Plattenbauten (Baujahr 1973–1990 Ost) zählt ein fehlendes Fenster nicht.',
   },
   bad_keine_dusche: {
-    q: 'Kann man im Bad nicht vernünftig duschen?',
-    help: 'Zum Beispiel kein Duschkopf-Halter, kein Spritzschutz (Vorhang/Glaswand) oder eine sehr kleine Standfläche.',
+    q: 'Kann man im Bad gut duschen?',
+    help: 'Es gibt einen Halter für den Duschkopf, einen Spritzschutz (Vorhang oder Glaswand) und genug Platz zum Stehen. „Nein“, wenn etwas davon fehlt.',
   },
   bad_klein: {
     q: 'Ist das Bad kleiner als 4 m²?',
-    help: 'Grundfläche des Badezimmers messen (Länge × Breite). Gilt nicht für Baujahr 1973–1990 Ost.',
+    help: 'So können Sie es schätzen: Stellen Sie sich ins Bad und strecken Sie die Arme zur Seite aus. Berühren Sie beide Wände – und ist das Bad auch nicht länger als etwa zwei große Schritte? Dann ist es wahrscheinlich kleiner als 4 m². Genau geht es mit dem Zollstock: Länge × Breite. Gilt nicht für Baujahr 1973–1990 Ost.',
   },
   bad_grosses_waschbecken: {
     q: 'Gibt es ein sehr großes Waschbecken (mind. 80 cm breit), ein Doppelwaschbecken oder zwei Waschbecken?',
@@ -97,32 +97,32 @@ const de: FeatureTexts = {
 
   /* ---------------- Küche ---------------- */
   kueche_ohne_fenster: {
-    q: 'Hat die Küche kein Fenster und keine ausreichende Lüftung?',
-    help: 'Kein Fenster und keine funktionierende Abluftanlage. Falls es eine Lüftungsanlage gibt, geben Sie bitte ihr Alter an.',
+    q: 'Hat die Küche ein Fenster oder eine Lüftung?',
+    help: 'Ein Fenster oder eine funktionierende Abluftanlage. „Nein“, wenn beides fehlt.',
   },
   kueche_kein_herd: {
-    q: 'Fehlt ein Herd – oder hat der Herd keinen Backofen?',
-    help: 'Nur zutreffend, wenn der Vermieter keinen Herd oder einen Herd ohne Backofen stellt.',
+    q: 'Gibt es einen Herd mit Backofen vom Vermieter?',
+    help: '„Nein“, wenn der Vermieter keinen Herd stellt oder der Herd keinen Backofen hat.',
   },
   kueche_keine_spuele: {
-    q: 'Gibt es in der Küche keine Spüle?',
-    help: 'Kein Spülbecken vom Vermieter.',
+    q: 'Gibt es in der Küche eine Spüle?',
+    help: 'Ein Spülbecken vom Vermieter.',
   },
   kueche_kein_warmwasser: {
-    q: 'Gibt es an der Spüle kein (ausreichendes) warmes Wasser?',
-    help: 'Kein zentrales Warmwasser, kein Durchlauferhitzer und kein Boiler an der Spüle.',
+    q: 'Kommt an der Spüle warmes Wasser?',
+    help: 'Zum Beispiel zentrales Warmwasser, ein Durchlauferhitzer oder ein kleiner Boiler an der Spüle.',
   },
   kueche_nicht_beheizbar: {
-    q: 'Kann die Küche nicht geheizt werden (oder nur mit Holz/Kohle)?',
-    help: 'Kein Heizkörper in der Küche oder nur ein Kohleofen.',
+    q: 'Gibt es in der Küche einen Heizkörper?',
+    help: '„Nein“, wenn die Küche gar nicht oder nur mit einem Kohleofen geheizt werden kann.',
   },
   kueche_kein_geschirrspueler: {
-    q: 'Kann in der Küche kein Geschirrspüler aufgestellt oder angeschlossen werden?',
-    help: 'Kein Platz oder kein Wasser-/Abwasseranschluss für eine Spülmaschine.',
+    q: 'Kann man in der Küche eine Spülmaschine anschließen?',
+    help: 'Es gibt Platz dafür und einen Anschluss für Wasser und Abwasser.',
   },
   kueche_keine_wandfliesen: {
-    q: 'Fehlen an der Wand im Arbeitsbereich Fliesen oder ein vergleichbarer Spritzschutz?',
-    help: 'Hinter Herd und Spüle gibt es keine Fliesen, keine Glas- oder Kunststoffplatte – nur Farbe/Tapete.',
+    q: 'Gibt es an der Wand hinter Herd und Spüle Fliesen oder einen Spritzschutz?',
+    help: 'Fliesen oder eine Platte aus Glas oder Kunststoff. „Nein“, wenn dort nur Farbe oder Tapete ist.',
   },
   kueche_boden: {
     q: 'Hat die Küche einen hochwertigen Bodenbelag in gutem Zustand?',
@@ -171,23 +171,23 @@ const de: FeatureTexts = {
     help: 'Sichtbare Sanitärleitungen in Bad, Küche oder anderen Räumen. Bitte Räume angeben.',
   },
   wohnung_keine_waschmaschine: {
-    q: 'Kann die Waschmaschine weder in Bad noch Küche aufgestellt oder angeschlossen werden?',
-    help: 'Kein Platz oder kein Anschluss in Bad und Küche.',
+    q: 'Kann man in Bad oder Küche eine Waschmaschine anschließen?',
+    help: 'Es gibt in Bad oder Küche Platz dafür und einen Anschluss. „Nein“, wenn das in beiden Räumen nicht geht.',
   },
   wohnung_schlechter_schnitt: {
     q: 'Hat die Wohnung einen schlechten Schnitt?',
     help: 'Zum Beispiel ein „gefangenes Zimmer“ (nur durch ein anderes Zimmer erreichbar) oder ein Durchgangszimmer.',
   },
   wohnung_kein_balkon: {
-    q: 'Gibt es keinen Balkon, keine Terrasse, Loggia oder Wintergarten?',
-    help: 'Gilt nicht, wenn ein Balkon aus baulichen oder rechtlichen Gründen gar nicht möglich wäre (z. B. Denkmalschutz). Bitte begründen, falls bekannt.',
+    q: 'Gibt es einen Balkon, eine Terrasse, Loggia oder einen Wintergarten?',
+    help: 'Wenn nicht: Wäre ein Balkon aus baulichen oder rechtlichen Gründen gar nicht möglich (z. B. Denkmalschutz)? Dann bitte den Grund angeben, falls bekannt.',
   },
   wohnung_eg_kein_einbruchschutz: {
     q: 'Erdgeschoss: Fehlt an den Fenstern ein Einbruchs- oder Sichtschutz?',
     help: 'Keine Gitter, Rollläden, Fensteralarm o. Ä. an allen Fenstern der Erdgeschosswohnung.',
   },
   wohnung_kein_kabel: {
-    q: 'Gibt es weder Kabelanschluss noch Gemeinschafts-Satellitenanlage?',
+    q: 'Gibt es Kabelanschluss oder eine Gemeinschafts-Satellitenanlage?',
     help: 'Nur Mietspiegel 2015.',
   },
   wohnung_einbauschrank: {
@@ -249,12 +249,12 @@ const de: FeatureTexts = {
     help: 'Zum Beispiel abblätternde Farbe, Schmierereien, kaputte Beleuchtung, beschädigte Stufen. Bitte letzte Renovierung und Mängel nennen.',
   },
   gebaeude_kein_keller: {
-    q: 'Fehlt ein Keller- oder Abstellraum außerhalb der Wohnung nur für Sie?',
-    help: 'Kein eigener (abschließbarer) Keller ohne Zusatzkosten.',
+    q: 'Haben Sie einen eigenen Keller oder Abstellraum außerhalb der Wohnung?',
+    help: 'Ein Raum nur für Sie (abschließbar), ohne Zusatzkosten.',
   },
   gebaeude_haustuer_offen: {
-    q: 'Ist der Hauseingang jederzeit frei zugänglich (Haustür nicht abschließbar)?',
-    help: 'Jeder kann jederzeit ins Treppenhaus.',
+    q: 'Ist die Haustür abschließbar?',
+    help: '„Nein“, wenn jeder jederzeit ins Treppenhaus kommt.',
   },
   gebaeude_instandhaltung_schlecht: {
     q: 'Ist das Gebäude in schlechtem Zustand?',
@@ -269,8 +269,8 @@ const de: FeatureTexts = {
     help: 'Ab 2024: gilt nicht für Gebäude bis Baujahr 1949.',
   },
   gebaeude_keine_sprechanlage: {
-    q: 'Fehlt eine Gegensprechanlage mit elektrischem Türöffner?',
-    help: 'Sie können nicht mit Besuchern an der Haustür sprechen und die Tür nicht von der Wohnung aus öffnen.',
+    q: 'Gibt es eine Gegensprechanlage mit Türöffner?',
+    help: 'Sie können mit Besuch an der Haustür sprechen und die Tür von der Wohnung aus öffnen.',
   },
   gebaeude_daemmung_schlecht: {
     q: 'Ist das Gebäude schlecht gedämmt oder die Heizung alt und ineffizient?',
@@ -355,8 +355,8 @@ const de: FeatureTexts = {
     help: 'Zum Beispiel durch Gewerbe, Gastronomie oder Industrie. Bitte angeben, wann.',
   },
   umfeld_keine_fahrradplaetze: {
-    q: 'Gibt es auf dem Grundstück keine Möglichkeit, Fahrräder abzustellen?',
-    help: 'Weder Fahrradkeller noch Fahrradständer.',
+    q: 'Kann man auf dem Grundstück Fahrräder abstellen?',
+    help: 'Zum Beispiel ein Fahrradkeller oder Fahrradständer.',
   },
   umfeld_muell: {
     q: 'Ist der Müllplatz ungepflegt und offen?',
@@ -406,7 +406,7 @@ const de: FeatureTexts = {
   },
   sm_kleines_bad: {
     q: 'Ist das Bad kleiner als 4 m²?',
-    help: 'Wirkt sich nur bei Baujahr 1991–2002 als Sondermerkmal aus.',
+    help: 'Arme zur Seite ausstrecken: Berühren Sie beide Wände und ist das Bad höchstens etwa zwei große Schritte lang, ist es wahrscheinlich kleiner als 4 m². Wirkt sich nur bei Baujahr 1991–2002 als Sondermerkmal aus.',
   },
   sm_modernes_bad: {
     q: 'Modernes Bad vorhanden?',

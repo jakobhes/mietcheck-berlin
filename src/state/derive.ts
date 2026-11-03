@@ -20,9 +20,9 @@ export function merkmalState(m: Merkmal, a: Answers, ctx: ConditionContext): Mer
   return a.features[m.id] ?? 'open';
 }
 
-/** Merkmal zählt als angekreuzt: trifft zu und wurde nicht selbst eingebaut */
+/** Merkmal zählt als angekreuzt */
 export function counts(m: Merkmal, a: Answers, ctx: ConditionContext): boolean {
-  return merkmalState(m, a, ctx) === 'yes' && !a.selfInstalled[m.id];
+  return merkmalState(m, a, ctx) === 'yes';
 }
 
 export interface GroupStats {

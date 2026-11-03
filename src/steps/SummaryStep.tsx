@@ -11,6 +11,7 @@ import type { FormVersion } from '../data/types';
 import { CHAPTER_ICONS, ChapterIntro } from '../flow/chapters';
 import type { Screen } from '../flow/types';
 import { featureText } from '../i18n';
+import { INVERTED } from '../i18n/features/types';
 import type { Answers } from '../state/answers';
 import { useAnswers } from '../state/AnswersContext';
 import { groupStats, rentCalculation } from '../state/derive';
@@ -74,6 +75,7 @@ function Result({ form }: { form: FormVersion }) {
                     {items.map((m) => (
                       <List.Item key={m.id} icon={m.sign === '+' ? <IconPlus size={14} color="var(--mantine-color-teal-7)" /> : <IconMinus size={14} color="var(--mantine-color-orange-7)" />}>
                         {featureText(i18n.language, m.id, m.de).q}
+                        {INVERTED.has(m.id) && ` – ${t('common.no')}`}
                       </List.Item>
                     ))}
                   </List>
