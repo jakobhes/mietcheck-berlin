@@ -1,11 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" font-family="Inter, sans-serif">
-  <!-- Platzhalter: altes Schwingfenster, dreht sich um eine Achse in der Mitte (Foto folgt) -->
+  <!-- Platzhalter: altes Wendefenster, dreht sich um eine senkrechte Achse in der Mitte (Foto folgt) -->
   <rect width="320" height="240" fill="#fff"/>
   <rect x="70" y="30" width="180" height="160" fill="#eaf2fb" stroke="#334" stroke-width="5"/>
-  <line x1="60" y1="110" x2="260" y2="110" stroke="#2b7bd6" stroke-width="2.5" stroke-dasharray="7 5"/>
-  <circle cx="70" cy="110" r="6" fill="#2b7bd6"/>
-  <circle cx="250" cy="110" r="6" fill="#2b7bd6"/>
-  <path d="M285 70 a40 40 0 0 1 0 80" fill="none" stroke="#2b7bd6" stroke-width="3"/>
-  <path d="M285 150 l-12 -4 m12 4 l-4 -12" stroke="#2b7bd6" stroke-width="3" fill="none"/>
+  <line x1="160" y1="18" x2="160" y2="202" stroke="#2b7bd6" stroke-width="2.5" stroke-dasharray="7 5"/>
+  <circle cx="160" cy="30" r="6" fill="#2b7bd6"/>
+  <circle cx="160" cy="190" r="6" fill="#2b7bd6"/>
+  <!-- Drehpfeil um die senkrechte Achse: eine Hälfte nach innen, die andere nach außen -->
+  <path d="M110 110 a50 16 0 0 0 100 0" fill="none" stroke="#2b7bd6" stroke-width="3"/>
+  <path d="M210 110 l-4 -12 m4 12 l-12 -3" stroke="#2b7bd6" stroke-width="3" fill="none"/>
   <text x="160" y="222" text-anchor="middle" font-size="15" fill="#667">Platzhalter – Foto folgt</text>
 </svg>

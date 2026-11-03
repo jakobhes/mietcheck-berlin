@@ -26,11 +26,7 @@ export interface Answers {
   staffelRent: YesNo;
   municipal: YesNo;
 
-  /* Ausnahmen (§ 556e, § 556f BGB) – nur Hinweise */
-  exNewBuild: YesNo;
-  exModernized: YesNo;
-  exPreviousRent: YesNo;
-  exSocialHousing: YesNo;
+  /* Auskunft des Vermieters über Ausnahmen (§ 556g Abs. 1a BGB) */
   landlordDisclosed: YesNo;
   landlordDisclosedText: string;
 
@@ -92,10 +88,6 @@ export const initialAnswers: Answers = {
   indexRent: '',
   staffelRent: '',
   municipal: '',
-  exNewBuild: '',
-  exModernized: '',
-  exPreviousRent: '',
-  exSocialHousing: '',
   landlordDisclosed: '',
   landlordDisclosedText: '',
   buildYear: '',

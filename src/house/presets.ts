@@ -59,8 +59,6 @@ const excelsior: HousePreset = {
     attic: 'nein',
     modernizedOld: 'nein',
     smallHouse: 'nein',
-    exNewBuild: 'nein',
-    exSocialHousing: 'nein',
     municipal: 'nein',
     // im Haus gibt es keine Index- oder Staffelmietverträge
     indexRent: 'nein',
@@ -74,8 +72,6 @@ const excelsior: HousePreset = {
     'contract.indexRent',
     'contract.staffelRent',
     'contract.municipal',
-    'exceptions.newBuild',
-    'exceptions.socialHousing',
     'flat.buildYear',
     'flat.east',
     'flat.wohnlage',
