@@ -6,13 +6,15 @@ Step-by-step assistant for Berlin tenants: check rent-relevant features under th
 
 ## Was die App macht
 
-1. **Vertragsdatum** → wählt automatisch den passenden BMV-Prüfbogen 169A (Mietspiegel 2015, 2017, 2019, 2021, 2023, 2024 oder 2026).
-2. **Ausnahmen** (Neubau, umfassende Modernisierung, Vormiete …) werden erklärt.
+1. **Mietvertrag**: Das Vertragsdatum wählt automatisch den passenden BMV-Prüfbogen 169A (Mietspiegel 2015, 2017, 2019, 2021, 2023, 2024 oder 2026). Dazu kommen Mietbeginn, Nettokaltmiete, Index-/Staffelmiete und städtischer Vermieter.
+2. **Ausnahmen**: Gefragt wird nur, ob der Vermieter vor Vertragsschluss schriftlich eine Ausnahme mitgeteilt hat (§ 556g Abs. 1a BGB; ja / nein / weiß nicht). Bei „ja“ kommt der Wortlaut in die Rüge, bei „weiß nicht“ ein allgemeiner Bezug. Ob tatsächlich eine Ausnahme vorliegt (Neubau, Vormiete, Modernisierung), fragt das Rügeschreiben beim Vermieter ab.
 3. **Wohnung & Energie** – inkl. automatischer Einordnung des Energiekennwerts.
-4. **Merkmalgruppen 1–5** (Bad, Küche, Wohnung, Gebäude, Wohnumfeld): jedes Merkmal als verständliche Frage mit Erläuterung, Beispielbild und dem Originalwortlaut. Merkmale, die für das Baujahr (bzw. 2015: wegen Sondermerkmalen) nicht gelten, werden ausgeblendet.
+4. **Merkmalgruppen 1–5** (Bad, Küche, Wohnung, Gebäude, Wohnumfeld): jedes Merkmal als verständliche Frage mit Erläuterung, Beispielbild und dem Originalwortlaut, Antwort ja / nein / weiß nicht. Negativ formulierte Merkmale werden positiv gefragt („Hat das Bad ein Fenster?“) und intern umgedreht. „Weiß nicht“ wird nicht angekreuzt, sondern im Prüfbogen unter den Bemerkungen aufgeführt. Merkmale, die für das Baujahr (bzw. 2015: wegen Sondermerkmalen) nicht gelten, werden ausgeblendet.
 5. **Ergebnis**: Übersicht pro Merkmalgruppe, Rüge-Frist (30 Monate ab Mietbeginn bei Verträgen ab 1.4.2020) und zwei PDFs:
    - ausgefüllter **Prüfbogen 169A** zum Einsenden an den Berliner Mieterverein
    - **Rügeschreiben** nach § 556g Abs. 2 BGB mit Auskunftsverlangen nach Abs. 3
+
+Die PDFs lassen sich erst erstellen, wenn alle **Pflichtfragen** beantwortet sind – alles, was im Prüfbogen oder in der Rüge sonst leer bliebe oder falsch angekreuzt wäre (Vertragsdaten, Wohnungsangaben, Ja/Nein-Fragen des Bogens, Namen und Anschriften). Optional bleiben die Merkmale der Orientierungshilfe, Mietspiegelzeile, Ausstattung, Energiekennwert, Kontaktdaten und Bemerkungen.
 
 Alle Eingaben bleiben im `localStorage` des Browsers; es gibt keinen Server.
 
@@ -23,7 +25,7 @@ Alle Eingaben bleiben im `localStorage` des Browsers; es gibt keinen Server.
 - **Hell/Dunkel** umschaltbar in der Kopfzeile (wird im Browser gespeichert).
 - **Kapitel mit eigenem Einstieg** und segmentierter Fortschrittsanzeige – kurze Etappenziele statt eines langen Formulars.
 - **Hilfe nur auf Wunsch** (progressive disclosure): Erläuterungen, Originalwortlaut und Links sind aufklappbar.
-- **Automatisch weiter** nach Ja/Nein- und Merkmal-Antworten; bei Folgefragen bleibt der Bildschirm offen. Enter springt in Textfeldern weiter.
+- **Weiter von Hand**: Auf dem Handy geht es nach einer Auswahl nicht automatisch weiter, sondern erst mit „Weiter“ (Enter in Textfeldern geht auch). Optionale Fragen lassen sich überspringen; bei offenen Pflichtfragen ist „Weiter“ gesperrt, und das Kapitelmenü springt nicht darüber hinaus.
 - Oberfläche mit [Mantine](https://mantine.dev) (inkl. RTL für Arabisch), Icons von Tabler, Schrift Inter / Noto Sans Arabic.
 
 ### Haus-Modus (z. B. Mieterversammlung)
@@ -33,14 +35,14 @@ Für ein bestimmtes Gebäude lässt sich vieles vorausfüllen, damit nur noch ge
 - `…/?haus=excelsior` – Excelsior, Stresemannstraße 68–76 (Baujahr 1966)
 - `…/?haus=aus` – zurück zur normalen App (oder im Menü „Excelsior-Modus beenden“)
 
-Der Modus bleibt im Browser gespeichert, auch nach „Neu beginnen“. Zuerst wird nach Aufgang und „renoviert / unrenoviert“ gefragt; danach entfallen Baujahr, Wohnlage, Energie, einige Ausnahmen und alle Merkmale, die für das Haus feststehen. Im PDF sind die vorausgefüllten Merkmale trotzdem angekreuzt. Soweit die Mietspiegeltabelle in `src/data/mietspiegel.ts` erfasst ist (bisher Mietspiegel 2015–2026, Baujahr 1965–1972; 2015 inkl. Sondermerkmale), trägt die App außerdem das Mietspiegelfeld in den Prüfbogen ein, berechnet die ortsübliche Vergleichsmiete nach der Orientierungshilfe und schreibt die zulässige Miete samt Rechenweg ins Rügeschreiben. Definition: `src/house/presets.ts` (je Zustand `yes` = angekreuzt, `ask` = wird gefragt, übrige Merkmale des Bogens 2026 = trifft nicht zu).
+Der Modus bleibt im Browser gespeichert, auch nach „Neu beginnen“. Zuerst wird nach dem Aufgang und dem Zustand der Wohnung (renoviert / unrenoviert) gefragt – im Excelsior über ein sichtbares Merkmal: wie die Fenster aufgehen (`variantQuestion`). Danach entfallen Baujahr, Wohnlage, Vorderhaus/Seitenflügel, Dachgeschoss, Altbau-Modernisierung, Ein-/Zweifamilienhaus, Energie, Index-/Staffelmiete, städtischer Vermieter und alle Merkmale, die für das Haus feststehen. Im PDF sind die vorausgefüllten Merkmale trotzdem angekreuzt. Soweit die Mietspiegeltabelle in `src/data/mietspiegel.ts` erfasst ist (bisher Mietspiegel 2015–2026, Baujahr 1965–1972; 2015 inkl. Sondermerkmale), trägt die App außerdem das Mietspiegelfeld in den Prüfbogen ein, berechnet die ortsübliche Vergleichsmiete nach der Orientierungshilfe und schreibt die zulässige Miete samt Rechenweg ins Rügeschreiben. Definition: `src/house/presets.ts` (je Zustand `yes` = angekreuzt, `ask` = wird gefragt, übrige Merkmale des Bogens 2026 = trifft nicht zu).
 
 ## Entwicklung
 
 ```bash
 npm install
 npm run dev        # Entwicklungsserver
-npm test           # Vitest (Logik, Kataloge, Übersetzungen, PDF-Erzeugung)
+npm test           # Vitest (Logik, Kataloge, Übersetzungen, Pflichtfragen, PDF-Erzeugung)
 npm run build      # statischer Build nach dist/
 ```
 
@@ -52,10 +54,12 @@ Beispiel-PDFs aller Jahrgänge erzeugen: `PDF_OUT=/tmp/pdfs npx vitest run src/p
 |---|---|
 | `src/data/forms.ts` | Kataloge aller Prüfbogen-Versionen (Wortlaut, Bedingungen, Folgefragen) |
 | `src/data/logic.ts` | Versionsauswahl, Baujahr-Bedingungen, Energiekennwert, Rüge-Fristen |
+| `src/data/mietspiegel.ts` | Mietspiegeltabellen (bisher Baujahr 1965–1972) und Berechnung der zulässigen Miete |
 | `src/i18n/features/{de,en,ar}.ts` | Fragen & Erläuterungen je Merkmal |
 | `src/i18n/ui/{de,en,ar}.ts` | Oberflächentexte |
 | `src/pdf/` | PDF-Erzeugung (pdf-lib): Prüfbogen und Rüge |
-| `src/flow/` | Bildschirm-Modell, Kapitel, automatisches Weiter |
+| `src/flow/` | Bildschirm-Modell (inkl. Pflichtfragen), Kapitel, Seitenaufteilung am Desktop |
+| `src/state/` | Antworten, Speicherung im Browser, abgeleitete Werte |
 | `src/house/` | Haus-Modus: Voreinstellungen je Gebäude, Aktivierung per `?haus=` |
 | `src/steps/` | Bildschirme je Kapitel (`xxxScreens()`) |
 | `public/media/` | Illustrationen (eigene SVGs) und Fotos (Wikimedia Commons) |
