@@ -21,7 +21,7 @@ export function buildScreens(a: Answers, t: TFunction, house?: HousePreset): Scr
   const screens = [
     ...(house ? houseScreens(house, a, t) : []),
     ...contractScreens(a, t),
-    ...exceptionsScreens(a, t),
+    ...exceptionsScreens(a),
     ...flatScreens(form, a, t),
     ...energyScreens(form, a, t),
     ...sonderScreens(form, a, t),

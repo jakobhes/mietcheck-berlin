@@ -80,6 +80,15 @@ describe('PDF generation', () => {
     expect(old.paragraphs.join(' ')).toContain('nach Zugang dieser Rüge');
   });
 
+  it('Rüge refers to the landlord’s disclosure only as far as the tenant knows it', () => {
+    const form = FORMS.find((f) => f.id === '2026')!;
+    const text = (landlordDisclosed: Answers['landlordDisclosed']) => ruegeParagraphs(form, { ...sample('2026'), landlordDisclosed }, '2026-11-02').paragraphs.join(' ');
+    expect(text('ja')).toContain('Die Vormiete habe 1.200 € betragen');
+    expect(text('unsicher')).toContain('Soweit Sie mir vor Vertragsschluss eine Auskunft');
+    expect(text('')).toContain('Soweit Sie mir vor Vertragsschluss eine Auskunft');
+    expect(text('nein')).not.toContain('556g Abs. 1a');
+  });
+
   it('survives non-Latin input', async () => {
     const form = FORMS.find((f) => f.id === '2026')!;
     const a = { ...sample('2026'), remarks: 'ملاحظة → test', tenant: { ...sample('2026').tenant, name: 'محمد' } };

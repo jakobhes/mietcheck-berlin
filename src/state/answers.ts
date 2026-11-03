@@ -27,7 +27,8 @@ export interface Answers {
   municipal: YesNo;
 
   /* Auskunft des Vermieters über Ausnahmen (§ 556g Abs. 1a BGB) */
-  landlordDisclosed: YesNo;
+  /** 'unsicher' → allgemeiner Bezug in der Rüge („Soweit Sie mir … mitgeteilt haben“) */
+  landlordDisclosed: YesNo | 'unsicher';
   landlordDisclosedText: string;
 
   /* Wohnung */

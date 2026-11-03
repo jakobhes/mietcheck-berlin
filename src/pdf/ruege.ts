@@ -183,6 +183,12 @@ export function ruegeParagraphs(
       `Vor Vertragsschluss haben Sie mir gemäß § 556g Abs. 1a BGB Folgendes mitgeteilt: „${a.landlordDisclosedText.trim().replace(/[.!]+$/, '') || '__________'}“. ` +
         'Diese Rüge bezieht sich ausdrücklich auch auf diese Auskunft. Ich bestreite, dass die Voraussetzungen der von Ihnen genannten Ausnahme vorliegen bzw. dass sie die vereinbarte Miethöhe rechtfertigen, und bitte um entsprechende Nachweise.',
     );
+  } else if (a.landlordDisclosed !== 'nein') {
+    // Mieter:in weiß es nicht (oder hat die Frage übersprungen): allgemeiner Bezug, ohne eine Auskunft zu behaupten
+    p.push(
+      'Soweit Sie mir vor Vertragsschluss eine Auskunft nach § 556g Abs. 1a BGB erteilt haben, bezieht sich diese Rüge ausdrücklich auch auf diese Auskunft. ' +
+        'Ich bestreite, dass die Voraussetzungen einer Ausnahme vorliegen bzw. dass sie die vereinbarte Miethöhe rechtfertigen, und bitte um entsprechende Nachweise.',
+    );
   }
 
   if (a.demandInfo) {
