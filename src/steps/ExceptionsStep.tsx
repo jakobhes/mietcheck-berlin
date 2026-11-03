@@ -38,7 +38,9 @@ export function exceptionsScreens(a: Answers): Screen[] {
     {
       id: 'exceptions.disclosed',
       chapter: 'exceptions',
-      answered: !!a.landlordDisclosed,
+      // bei „ja“ gehört der Wortlaut der Auskunft in die Rüge
+      answered: !!a.landlordDisclosed && (a.landlordDisclosed !== 'ja' || !!a.landlordDisclosedText.trim()),
+      required: true,
       element: <Disclosed />,
     },
   ];

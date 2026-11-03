@@ -20,4 +20,6 @@ export interface Screen {
   nextLabel?: string;
   /** Weiter gesperrt (z. B. ohne gültiges Vertragsdatum) */
   blocked?: boolean;
+  /** Pflichtfrage für die PDFs: solange unbeantwortet, ist Weiter gesperrt */
+  required?: boolean;
 }

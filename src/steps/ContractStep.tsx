@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { ExtLink, MonthField, Notice, Question } from '../components/fields';
 import { monthStart } from '../data/dates';
 import { MIETPREISBREMSE_START, selectFormVersion } from '../data/forms';
+import { parseNumber } from '../data/logic';
 import { TextQ, YesNoQ } from '../flow/generic';
 import type { Screen } from '../flow/types';
 import type { Answers } from '../state/answers';
@@ -46,6 +47,7 @@ export function contractScreens(a: Answers, t: TFunction): Screen[] {
     id: `contract.${k}`,
     chapter: 'contract',
     answered: !!a[k],
+    required: true,
     element: <YesNoQ k={k} title={t(`contract.${k}`)} help={t(help)} />,
   });
   return [
@@ -55,12 +57,14 @@ export function contractScreens(a: Answers, t: TFunction): Screen[] {
       id: 'contract.rentStart',
       chapter: 'contract',
       answered: !!a.rentStart,
+      required: true,
       element: <RentStart />,
     },
     {
       id: 'contract.rent',
       chapter: 'contract',
-      answered: !!a.rent,
+      answered: parseNumber(a.rent) !== undefined,
+      required: true,
       element: <TextQ k="rent" inputMode="decimal" suffix="€" title={t('contract.rent')} help={t('contract.rentHelp')} />,
     },
     yesNo('indexRent', 'contract.indexHelp'),

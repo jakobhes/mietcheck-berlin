@@ -144,7 +144,9 @@ export default function App() {
     const exact = screens.findIndex((s) => s.id === savedId);
     // ältere Versionen haben ganze Schritte gespeichert, z. B. „flat“
     const byChapter = screens.findIndex((s) => s.chapter === savedId);
-    go(exact >= 0 ? exact : Math.max(byChapter, 0));
+    const target = exact >= 0 ? exact : Math.max(byChapter, 0);
+    // nicht hinter eine offene Pflichtfrage springen
+    go(firstBlocked >= 0 ? Math.min(target, firstBlocked) : target);
   }
 
   function restart() {
@@ -167,8 +169,9 @@ export default function App() {
   const chapterQuestion = !desktop && chapter && screen && !screen.intro && chapter.id !== 'summary' ? chapter.questions.indexOf(screen) + 1 : 0;
   const chapterPages = page ? pages.filter((p) => p.chapter === page.chapter) : [];
   const first = page?.all[0];
-  const nextLabel = desktop ? (first?.nextLabel ?? t('common.next')) : (first?.nextLabel ?? (first?.intro ? t('common.continue') : first?.answered ? t('common.next') : t('common.skip')));
-  const nextFilled = desktop || !!first?.intro || !!first?.answered;
+  const nextLabel = desktop ? (first?.nextLabel ?? t('common.next')) : (first?.nextLabel ?? (first?.intro ? t('common.continue') : first?.answered || first?.required ? t('common.next') : t('common.skip')));
+  const nextFilled = desktop || !!first?.intro || !!first?.answered || !!first?.required;
+  const pageBlocked = !!page?.all.some((s) => s.blocked);
   const BackIcon = rtl ? IconArrowRight : IconArrowLeft;
   const NextIcon = rtl ? IconArrowLeft : IconArrowRight;
 
@@ -273,6 +276,11 @@ export default function App() {
 
       {screen && (
         <div className="bottom-nav">
+          {pageBlocked && pageIndex < pages.length - 1 && (
+            <Text size="sm" c="dimmed" ta="center" mb="xs">
+              {t(desktop ? 'common.requiredPage' : 'common.required')}
+            </Text>
+          )}
           <div className="bottom-nav-inner">
             <Button variant="default" size="lg" leftSection={<BackIcon size={18} />} onClick={() => goPage(pageIndex - 1)}>
               {t('common.back')}

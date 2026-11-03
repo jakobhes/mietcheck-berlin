@@ -36,6 +36,6 @@ export function sonderScreens(form: FormVersion, a: Answers, t: TFunction): Scre
   if (!form.sonder) return [];
   return [
     { id: 'sonder.intro', chapter: 'sonder', intro: true, element: <ChapterIntro chapter="sonder" title={t('sonder.title')} lead={t('sonder.intro')} questions={form.sonder.length} /> },
-    ...form.sonder.map((s): Screen => ({ id: `sonder.${s.id}`, chapter: 'sonder', answered: !!a.sonder[s.id], element: <SonderQuestion s={s} /> })),
+    ...form.sonder.map((s): Screen => ({ id: `sonder.${s.id}`, chapter: 'sonder', answered: !!a.sonder[s.id], required: true, element: <SonderQuestion s={s} /> })),
   ];
 }

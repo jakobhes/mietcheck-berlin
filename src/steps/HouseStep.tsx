@@ -65,7 +65,7 @@ function Variant({ house }: { house: HousePreset }) {
 export function houseScreens(house: HousePreset, a: Answers, t: TFunction): Screen[] {
   return [
     { id: 'house.intro', chapter: 'house', intro: true, element: <ChapterIntro chapter="house" title={t('house.title', { name: house.name })} lead={t('house.intro', { name: house.name })} questions={2} /> },
-    { id: 'house.number', chapter: 'house', answered: !!a.houseNo, element: <HouseNumber house={house} /> },
+    { id: 'house.number', chapter: 'house', answered: !!a.houseNo, required: true, element: <HouseNumber house={house} /> },
     // ohne Zustand wären alle Merkmale offen – deshalb Pflichtfrage
     { id: 'house.variant', chapter: 'house', answered: !!a.houseVariant, blocked: !a.houseVariant, element: <Variant house={house} /> },
   ];

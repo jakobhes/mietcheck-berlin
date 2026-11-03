@@ -9,7 +9,7 @@ import { photoCredits } from '../data/media';
 import type { RentCalculation } from '../data/mietspiegel';
 import type { FormVersion } from '../data/types';
 import { CHAPTER_ICONS, ChapterIntro } from '../flow/chapters';
-import type { Screen } from '../flow/types';
+import type { ChapterId, Screen } from '../flow/types';
 import { featureText } from '../i18n';
 import { INVERTED } from '../i18n/features/types';
 import type { Answers } from '../state/answers';
@@ -142,18 +142,12 @@ function LetterOptions({ form }: { form: FormVersion }) {
   );
 }
 
-function Downloads({ form }: { form: FormVersion }) {
+/** `missing`: Kapitel mit offenen Pflichtfragen – solange es sie gibt, sind die PDFs gesperrt */
+function Downloads({ form, missing }: { form: FormVersion; missing: ChapterId[] }) {
   const { t } = useTranslation();
   const { a } = useAnswers();
   const calc = useRentCalculation(form);
   const [busy, setBusy] = useState<'form' | 'ruege' | null>(null);
-  const missing = [
-    !a.rent && t('contract.rent'),
-    !a.area && t('flat.area'),
-    !a.buildYear && t('flat.buildYear'),
-    !a.tenant.name && t('persons.name'),
-    !a.landlord.name && t('persons.landlordName'),
-  ].filter(Boolean) as string[];
 
   async function make(kind: 'form' | 'ruege') {
     setBusy(kind);
@@ -185,7 +179,7 @@ function Downloads({ form }: { form: FormVersion }) {
             {text}
           </Text>
         </div>
-        <Button fullWidth size="md" leftSection={<IconDownload size={18} />} loading={busy === kind} disabled={busy !== null && busy !== kind} onClick={() => void make(kind)}>
+        <Button fullWidth size="md" leftSection={<IconDownload size={18} />} loading={busy === kind} disabled={missing.length > 0 || (busy !== null && busy !== kind)} onClick={() => void make(kind)}>
           PDF
         </Button>
       </Stack>
@@ -194,7 +188,7 @@ function Downloads({ form }: { form: FormVersion }) {
 
   return (
     <Question title={t('summary.downloadTitle')} lead={t('summary.downloadLead')}>
-      {missing.length > 0 && <Notice kind="warn">{t('summary.missing', { fields: missing.join(' · ') })}</Notice>}
+      {missing.length > 0 && <Notice kind="warn">{t('summary.missing', { fields: missing.map((c) => t(`steps.${c}`)).join(' · ') })}</Notice>}
       <SimpleGrid cols={{ base: 1, xs: 2 }} spacing="md">
         {card('form', IconFileText, t('summary.downloadForm', { year: form.id }), t('summary.formCardText'))}
         {card('ruege', IconMail, t('summary.downloadRuege'), t('summary.ruegeCardText'))}
@@ -238,11 +232,11 @@ function NextSteps({ form }: { form: FormVersion }) {
   );
 }
 
-export function summaryScreens(form: FormVersion, _a: Answers, t: TFunction): Screen[] {
+export function summaryScreens(form: FormVersion, _a: Answers, t: TFunction, missing: ChapterId[]): Screen[] {
   return [
     { id: 'summary.result', chapter: 'summary', intro: true, nextLabel: t('common.next'), element: <Result form={form} /> },
     { id: 'summary.letter', chapter: 'summary', answered: true, element: <LetterOptions form={form} /> },
-    { id: 'summary.download', chapter: 'summary', answered: true, element: <Downloads form={form} /> },
+    { id: 'summary.download', chapter: 'summary', answered: true, element: <Downloads form={form} missing={missing} /> },
     { id: 'summary.next', chapter: 'summary', answered: true, element: <NextSteps form={form} /> },
   ];
 }

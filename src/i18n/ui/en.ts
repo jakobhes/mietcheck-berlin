@@ -27,6 +27,8 @@ const en: UiStrings = {
     lessInfo: 'Less',
     step: 'Step {{n}} of {{total}}',
     optional: 'optional',
+    required: 'Please answer this question – it is needed for the PDFs.',
+    requiredPage: 'Please answer all questions on this page – they are needed for the PDFs.',
     restart: 'Start over',
     restartConfirm: 'Delete all answers and start over?',
     language: 'Language',
@@ -263,7 +265,7 @@ const en: UiStrings = {
     next2: 'Sign the objection letter and send it to the landlord with proof of delivery – e.g. registered mail (Einwurf-Einschreiben) or by messenger. Text form is enough (even email), but you must be able to prove receipt.',
     next3: 'Keep paying the full rent for now (possibly “under reservation”) until the amount is clarified – otherwise you risk termination for arrears.',
     next4: 'Questions? Berliner Mieterverein, phone 030 226260, or another tenant advice service.',
-    missing: 'Still missing for a complete result: {{fields}}',
+    missing: 'The PDFs can only be created once all required questions are answered. Still missing information in: {{fields}}',
   },
   credits: {
     title: 'Image credits',

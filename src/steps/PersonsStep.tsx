@@ -63,7 +63,7 @@ function FlatAddress() {
           <TextField label={t('persons.zip')} inputMode="numeric" value={a.flat.zip} onChange={flat('zip')} />
           <TextField label={t('persons.city')} pdf value={a.flat.city} onChange={flat('city')} />
         </Group>
-        <TextField label={t('persons.flatDetail')} pdf value={a.flat.detail} onChange={flat('detail')} />
+        <TextField label={`${t('persons.flatDetail')} (${t('common.optional')})`} pdf value={a.flat.detail} onChange={flat('detail')} />
       </Stack>
     </Question>
   );
@@ -86,12 +86,16 @@ function Landlord() {
   );
 }
 
+/** Name und vollständige Anschrift – sonst fehlen sie im Prüfbogen bzw. im Briefkopf der Rüge */
+const complete = (...fields: string[]) => fields.every((f) => !!f.trim());
+
 export function personsScreens(form: FormVersion, a: Answers, t: TFunction): Screen[] {
+  const { tenant, flat, landlord } = a;
   return [
     { id: 'persons.intro', chapter: 'persons', intro: true, element: <ChapterIntro chapter="persons" title={t('persons.title')} lead={t('persons.intro')} /> },
-    { id: 'persons.tenant', chapter: 'persons', answered: !!a.tenant.name, element: <Tenant /> },
+    { id: 'persons.tenant', chapter: 'persons', answered: complete(tenant.name, tenant.street, tenant.zip, tenant.city), required: true, element: <Tenant /> },
     { id: 'persons.contact', chapter: 'persons', answered: !!(a.tenant.email || a.tenant.phone), element: <Contact form={form} /> },
-    ...(a.flatDiffers ? [{ id: 'persons.flat', chapter: 'persons', answered: !!a.flat.street, element: <FlatAddress /> } as Screen] : []),
-    { id: 'persons.landlord', chapter: 'persons', answered: !!a.landlord.name, element: <Landlord /> },
+    ...(a.flatDiffers ? [{ id: 'persons.flat', chapter: 'persons', answered: complete(flat.street, flat.zip, flat.city), required: true, element: <FlatAddress /> } as Screen] : []),
+    { id: 'persons.landlord', chapter: 'persons', answered: complete(landlord.name, landlord.street, landlord.zip, landlord.city), required: true, element: <Landlord /> },
   ];
 }

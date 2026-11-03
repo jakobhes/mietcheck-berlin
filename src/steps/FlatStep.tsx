@@ -2,7 +2,7 @@ import { Group, Stack } from '@mantine/core';
 import type { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { CheckField, ChoiceField, ExtLink, OptionList, Question, TextField } from '../components/fields';
-import { parseYear } from '../data/logic';
+import { parseNumber, parseYear } from '../data/logic';
 import type { FormVersion } from '../data/types';
 import { TextQ, YesNoQ } from '../flow/generic';
 import type { Screen } from '../flow/types';
@@ -100,16 +100,16 @@ function ModernizedWhen() {
 
 export function flatScreens(form: FormVersion, a: Answers, t: TFunction): Screen[] {
   const year = parseYear(a.buildYear);
-  const s = (id: string, answered: boolean, element: Screen['element']): Screen => ({ id: `flat.${id}`, chapter: 'flat', answered, element });
+  const s = (id: string, answered: boolean, element: Screen['element'], required = true): Screen => ({ id: `flat.${id}`, chapter: 'flat', answered, required, element });
   return [
-    s('buildYear', !!a.buildYear, <TextQ k="buildYear" inputMode="numeric" title={t('flat.buildYear')} help={t('flat.buildYearHelp')} />),
+    s('buildYear', year !== undefined, <TextQ k="buildYear" inputMode="numeric" title={t('flat.buildYear')} help={t('flat.buildYearHelp')} />),
     ...(year !== undefined && year >= 1973 && year <= 1990 ? [s('east', !!a.east, <YesNoQ k="east" title={t('flat.east')} help={t('flat.eastHelp')} />)] : []),
-    s('area', !!a.area, <TextQ k="area" inputMode="decimal" suffix="m²" title={t('flat.area')} help={t('flat.areaHelp')} />),
+    s('area', parseNumber(a.area) !== undefined, <TextQ k="area" inputMode="decimal" suffix="m²" title={t('flat.area')} help={t('flat.areaHelp')} />),
     s('wohnlage', !!a.wohnlage, <Wohnlage form={form} />),
-    s('row', !!a.row, <RowColumn form={form} />),
-    s('equipment', Object.values(a.equipment).some(Boolean), <Equipment />),
+    s('row', !!a.row, <RowColumn form={form} />, false),
+    s('equipment', Object.values(a.equipment).some(Boolean), <Equipment />, false),
     s('position', !!a.position, <Position />),
-    s('floor', !!(a.floor || a.side), <FloorSide />),
+    s('floor', !!a.floor.trim(), <FloorSide />),
     s('attic', !!a.attic, <YesNoQ k="attic" title={t('flat.attic')} />),
     s(
       'modernizedOld',

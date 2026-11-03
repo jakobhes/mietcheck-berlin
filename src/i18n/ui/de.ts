@@ -25,6 +25,8 @@ const de = {
     lessInfo: 'Weniger',
     step: 'Schritt {{n}} von {{total}}',
     optional: 'optional',
+    required: 'Bitte beantworten Sie diese Frage – sie wird für die PDFs gebraucht.',
+    requiredPage: 'Bitte beantworten Sie alle Fragen auf dieser Seite – sie werden für die PDFs gebraucht.',
     restart: 'Neu beginnen',
     restartConfirm: 'Alle Eingaben löschen und neu beginnen?',
     language: 'Sprache',
@@ -261,7 +263,7 @@ const de = {
     next2: 'Rügeschreiben unterschreiben und nachweisbar an den Vermieter schicken – z. B. per Einwurf-Einschreiben oder per Boten. Textform genügt (auch E-Mail), aber Sie müssen den Zugang beweisen können.',
     next3: 'Zahlen Sie die Miete zunächst weiter in voller Höhe (ggf. unter Vorbehalt), bis die Höhe geklärt ist – sonst riskieren Sie eine Kündigung wegen Zahlungsverzugs.',
     next4: 'Bei Fragen: Berliner Mieterverein, Telefon 030 226260, oder eine andere Mieterberatung.',
-    missing: 'Für ein vollständiges Ergebnis fehlen noch: {{fields}}',
+    missing: 'Die PDFs lassen sich erst erstellen, wenn alle Pflichtfragen beantwortet sind. Es fehlen noch Angaben in: {{fields}}',
   },
   credits: {
     title: 'Bildnachweise',
