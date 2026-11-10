@@ -32,7 +32,7 @@ Stand: 3.11.2026 · Annahme: etwa 540 Mieter·innen, Verträge aus allen Zeiträ
   → Wird gefragt, mit Hinweis zur Stresemannstraße. Mit einer Liste „Aufgang + Seite“ ließe sich das auch vorausfüllen.
   → Hinweis aus den Straßenverzeichnissen 2017–2023: Ein `*` markiert dort Adressen mit Verkehrslärmbelastung. 2017: 66–68 mit `*`, 72–76 ohne (die 70 fehlt im Verzeichnis). 2019, 2021, 2023: 66–72 mit `*`, 74–76 ohne. Ab 2024 enthält das Verzeichnis diese Angabe nicht mehr.
 - [ ] **Renoviert / unrenoviert über die Fenster:** Die App fragt nicht mehr „renoviert?“, sondern wie die Fenster aufgehen: an der Seite wie eine Tür (neue Fenster → renoviert) oder um eine senkrechte Achse in der Mitte (alte Schwingfenster → unrenoviert). Trifft das auf alle Wohnungen zu? Gibt es renovierte Wohnungen mit alten Fenstern oder umgekehrt?
-  → Text in `src/i18n/ui/de.ts` (`house.excelsiorWindows`), dazu Englisch und Arabisch.
+  → Text in `src/i18n/ui/de.ts` (`house.excelsiorWindows`), dazu Englisch, Arabisch, Ukrainisch, Spanisch und Türkisch.
 - [ ] **Fotos der Fenster:** Die Bilder zur Fenster-Frage sind noch Platzhalter-Zeichnungen (`public/media/house/excelsior-fenster-alt.svg`, `…-neu.svg`). Fotos aus dem Haus wären deutlich verständlicher.
 - [ ] **Renoviert, Energiefeld:** Im PDF „renoviert“ war „größer als 145“ schwarz ausgefüllt statt angekreuzt. Das habe ich als Kreuz gewertet. Bitte bestätigen.
 

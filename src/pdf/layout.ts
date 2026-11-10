@@ -20,6 +20,13 @@ const REPLACEMENTS: Record<string, string> = {
   '←': '<-',
   '≤': '<=',
   '≥': '>=',
+  // Türkische Buchstaben außerhalb von WinAnsi
+  'Ş': 'S',
+  'ş': 's',
+  'Ğ': 'G',
+  'ğ': 'g',
+  'İ': 'I',
+  'ı': 'i',
   ' ': ' ',
   ' ': ' ',
   ' ': ' ',

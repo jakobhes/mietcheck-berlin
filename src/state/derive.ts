@@ -95,8 +95,9 @@ export function followUpAnswer(m: Merkmal, a: Answers): string {
 /**
  * Die PDF-Standardschrift kann nur den Zeichensatz WinAnsi (≈ Latin-1) darstellen.
  * Andere Zeichen (z. B. arabische Schrift) würden im PDF als „?“ erscheinen.
+ * Türkische Sonderbuchstaben (ş, ğ, ı, İ) werden im PDF transliteriert und gelten daher als lateinisch.
  */
 export function hasNonLatin(s: string): boolean {
   // eslint-disable-next-line no-control-regex
-  return /[^\u0000-ÿŒœŠšŸŽžƒ–-…‰‹›€™]/.test(s);
+  return /[^\u0000-ÿŒœŠšŸŽžƒ–-…‰‹›€™ŞşĞğİı]/.test(s);
 }

@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { FORMS } from '../data/forms';
 import { applyHouse, HOUSES } from '../house/presets';
 import { initialAnswers, type Answers } from '../state/answers';
+import { Layout } from './layout';
 import { buildPruefbogen } from './pruefbogen';
 import { rentCalculation } from '../state/derive';
 import { buildRuege, ruegeParagraphs } from './ruege';
@@ -87,6 +88,11 @@ describe('PDF generation', () => {
     expect(text('unsicher')).toContain('Soweit Sie mir vor Vertragsschluss eine Auskunft');
     expect(text('')).toContain('Soweit Sie mir vor Vertragsschluss eine Auskunft');
     expect(text('nein')).not.toContain('556g Abs. 1a');
+  });
+
+  it('transliterates Turkish letters', async () => {
+    const l = await Layout.create();
+    expect(l.clean('Şahin Yılmaz, Doğan İnce')).toBe('Sahin Yilmaz, Dogan Ince');
   });
 
   it('survives non-Latin input', async () => {

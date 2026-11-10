@@ -4,10 +4,16 @@ import { addMonths, formatDateDe, isApplicable, parseNumber, refundRule, suggest
 import featDe from '../i18n/features/de';
 import featEn from '../i18n/features/en';
 import featAr from '../i18n/features/ar';
+import featUk from '../i18n/features/uk';
+import featEs from '../i18n/features/es';
+import featTr from '../i18n/features/tr';
 import { INVERTED } from '../i18n/features/types';
 import uiDe from '../i18n/ui/de';
 import uiEn from '../i18n/ui/en';
 import uiAr from '../i18n/ui/ar';
+import uiUk from '../i18n/ui/uk';
+import uiEs from '../i18n/ui/es';
+import uiTr from '../i18n/ui/tr';
 
 describe('selectFormVersion', () => {
   const cases: [string, string | undefined][] = [
@@ -73,6 +79,9 @@ describe('translations', () => {
     ['de', featDe],
     ['en', featEn],
     ['ar', featAr],
+    ['uk', featUk],
+    ['es', featEs],
+    ['tr', featTr],
   ])('every merkmal has %s texts', (_lang, texts) => {
     const missing = [...allIds].filter((id) => !texts[id]?.q || !texts[id]?.help);
     expect(missing).toEqual([]);
@@ -84,6 +93,9 @@ describe('translations', () => {
   it('ui strings have the same keys in all languages', () => {
     expect(keys(uiEn).sort()).toEqual(keys(uiDe).sort());
     expect(keys(uiAr).sort()).toEqual(keys(uiDe).sort());
+    expect(keys(uiUk).sort()).toEqual(keys(uiDe).sort());
+    expect(keys(uiEs).sort()).toEqual(keys(uiDe).sort());
+    expect(keys(uiTr).sort()).toEqual(keys(uiDe).sort());
   });
 });
 
@@ -160,7 +172,7 @@ describe('positively asked merkmale', () => {
     const all = FORMS.flatMap((f) => f.groups.flatMap((g) => g.merkmale));
     for (const id of INVERTED) {
       expect(all.some((m) => m.id === id && m.sign === '-'), id).toBe(true);
-      for (const feat of [featDe, featEn, featAr]) expect(feat[id]?.q, id).toBeTruthy();
+      for (const feat of [featDe, featEn, featAr, featUk, featEs, featTr]) expect(feat[id]?.q, id).toBeTruthy();
     }
   });
 });
