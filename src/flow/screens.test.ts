@@ -55,6 +55,26 @@ describe('Pflichtfragen', () => {
     expect(blocked({ ...complete, buildYear: '1980' })).toEqual(['flat.east']);
   });
 
+  it('fragen nur, was für die gewählten Dokumente nötig ist', () => {
+    const ids = (documents: Answers['documents']) => buildScreens({ ...complete, documents }, t).map((s) => s.id);
+    const ruege = ids('ruege');
+    expect(ruege).toContain('exceptions.disclosed');
+    expect(ruege).toContain('persons.landlord');
+    expect(ruege).toContain('summary.letter');
+    expect(ruege.some((id) => /^(flat|energy|sonder|remarks)\./.test(id))).toBe(false);
+    expect(ruege).not.toContain('contract.municipal');
+    const form = ids('pruefbogen');
+    expect(form).toContain('flat.area');
+    expect(form).toContain('remarks.wistg');
+    expect(form).not.toContain('exceptions.disclosed');
+    expect(form).not.toContain('persons.landlord');
+    expect(form).not.toContain('summary.letter');
+  });
+
+  it('sperren bei „nur Rüge“ keine Fragen des Prüfbogens', () => {
+    expect(blocked({ ...complete, documents: 'ruege', wistg: '', area: '' })).toEqual([]);
+  });
+
   it('sperren die PDF-Kapitel mit Liste der offenen Kapitel', () => {
     const summary = buildScreens({ ...complete, rent: '', wistg: '' }, t).find((s) => s.id === 'summary.download');
     expect(summary?.element).toMatchObject({ props: { missing: ['contract', 'remarks'] } });

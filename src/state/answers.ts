@@ -17,7 +17,12 @@ export type HouseVariant = 'renoviert' | 'unrenoviert';
 export const LANDLORD_EXCEPTIONS = ['vormiete', 'modernisierung', 'neubau', 'umfassend'] as const;
 export type LandlordException = (typeof LANDLORD_EXCEPTIONS)[number];
 
+/** Welche PDFs erstellt werden – danach richtet sich, welche Fragen gestellt werden */
+export type Documents = 'beide' | 'pruefbogen' | 'ruege';
+
 export interface Answers {
+  documents: Documents;
+
   /* Haus-Modus (z. B. Excelsior): Aufgang und Zustand der Wohnung */
   houseNo: string;
   houseVariant: '' | HouseVariant;
@@ -82,9 +87,14 @@ export interface Answers {
   demandInfo: boolean;
 }
 
+/** Spanneneinordnung: Prüfbogen 169A für den Mieterverein */
+export const wantsPruefbogen = (a: Answers) => a.documents !== 'ruege';
+export const wantsRuege = (a: Answers) => a.documents !== 'pruefbogen';
+
 export const emptyAddress: Address = { name: '', street: '', zip: '', city: '' };
 
 export const initialAnswers: Answers = {
+  documents: 'beide',
   houseNo: '',
   houseVariant: '',
   contractDate: '',

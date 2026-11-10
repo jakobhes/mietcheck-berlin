@@ -1,7 +1,7 @@
 import type { TFunction } from 'i18next';
 import { FORMS, selectFormVersion } from '../data/forms';
 import { isPrefilled, type HousePreset } from '../house/presets';
-import type { Answers } from '../state/answers';
+import { wantsPruefbogen, wantsRuege, type Answers } from '../state/answers';
 import { contractScreens } from '../steps/ContractStep';
 import { energyScreens } from '../steps/EnergyStep';
 import { exceptionsScreens } from '../steps/ExceptionsStep';
@@ -13,6 +13,12 @@ import { remarksScreens } from '../steps/RemarksStep';
 import { sonderScreens } from '../steps/SonderStep';
 import { summaryScreens } from '../steps/SummaryStep';
 import type { ChapterId, Screen } from './types';
+
+/** Fragen, die nur der Prüfbogen braucht – die Rüge nimmt Wohnungsangaben und Merkmale nur auf, wenn sie vorliegen */
+const PRUEFBOGEN_CHAPTERS = new Set<ChapterId>(['flat', 'energy', 'sonder', 'bad', 'kueche', 'wohnung', 'gebaeude', 'umfeld', 'remarks']);
+const PRUEFBOGEN_SCREENS = new Set(['contract.municipal']);
+/** Fragen, die nur die Rüge braucht */
+const RUEGE_SCREENS = new Set(['exceptions.disclosed', 'persons.landlord']);
 
 /** Alle Bildschirme in Reihenfolge. Ohne gültiges Vertragsdatum dient der neueste Bogen als Vorschau für den Fortschritt. */
 export function buildScreens(a: Answers, t: TFunction, house?: HousePreset): Screen[] {
@@ -30,6 +36,8 @@ export function buildScreens(a: Answers, t: TFunction, house?: HousePreset): Scr
     ...personsScreens(form, a, t),
   ]
     .filter((s) => !hidden.has(s.id))
+    .filter((s) => wantsPruefbogen(a) || !(PRUEFBOGEN_CHAPTERS.has(s.chapter) || PRUEFBOGEN_SCREENS.has(s.id)))
+    .filter((s) => wantsRuege(a) || !RUEGE_SCREENS.has(s.id))
     .map((s) => (s.required && !s.answered ? { ...s, blocked: true } : s));
   // Kapitel mit offenen Pflichtfragen – ohne sie lassen sich die PDFs nicht korrekt erstellen
   const missing = [...new Set(questions.filter((s) => s.blocked).map((s) => s.chapter))] as ChapterId[];

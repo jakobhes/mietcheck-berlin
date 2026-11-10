@@ -5,7 +5,7 @@ import { CheckField, Question, TextField } from '../components/fields';
 import type { FormVersion } from '../data/types';
 import { ChapterIntro } from '../flow/chapters';
 import type { Screen } from '../flow/types';
-import type { Answers } from '../state/answers';
+import { wantsPruefbogen, type Answers } from '../state/answers';
 import { useAnswers } from '../state/AnswersContext';
 
 function usePersons() {
@@ -46,7 +46,7 @@ function Contact({ form }: { form: FormVersion }) {
         <TextField type="email" label={t('persons.email')} autoComplete="email" value={a.tenant.email} onChange={tenant('email')} />
         <TextField type="tel" label={t('persons.phone')} autoComplete="tel" value={a.tenant.phone} onChange={tenant('phone')} />
         <TextField label={t('persons.reachable')} value={a.tenant.reachable} onChange={tenant('reachable')} />
-        {form.asksMemberNo && <TextField label={t('persons.memberNo')} value={a.tenant.memberNo} onChange={tenant('memberNo')} />}
+        {form.asksMemberNo && wantsPruefbogen(a) && <TextField label={t('persons.memberNo')} value={a.tenant.memberNo} onChange={tenant('memberNo')} />}
       </Stack>
     </Question>
   );

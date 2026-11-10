@@ -12,7 +12,7 @@ import { CHAPTER_ICONS, ChapterIntro } from '../flow/chapters';
 import type { ChapterId, Screen } from '../flow/types';
 import { featureText } from '../i18n';
 import { INVERTED } from '../i18n/features/types';
-import type { Answers } from '../state/answers';
+import { wantsPruefbogen, wantsRuege, type Answers } from '../state/answers';
 import { useAnswers } from '../state/AnswersContext';
 import { groupStats, rentCalculation } from '../state/derive';
 
@@ -39,55 +39,66 @@ function Deadline() {
 }
 
 function Result({ form }: { form: FormVersion }) {
+  const { t } = useTranslation();
+  const { a } = useAnswers();
+  return (
+    <ChapterIntro chapter="summary" title={t('summary.title')}>
+      <Stack gap="md" w="100%" ta="start">
+        {wantsRuege(a) && <Deadline />}
+        {wantsPruefbogen(a) && <Groups form={form} />}
+      </Stack>
+    </ChapterIntro>
+  );
+}
+
+/** Tendenz je Merkmalgruppe – nur für die Spanneneinordnung */
+function Groups({ form }: { form: FormVersion }) {
   const { t, i18n } = useTranslation();
   const { a } = useAnswers();
   const stats = groupStats(form, a);
   const unsure = stats.reduce((n, s) => n + s.unsure.length, 0);
   return (
-    <ChapterIntro chapter="summary" title={t('summary.title')}>
-      <Stack gap="md" w="100%" ta="start">
-        <Deadline />
-        <Title order={2} size="h4">
-          {t('summary.groupsTitle')}
-        </Title>
-        <Accordion variant="separated" radius="lg" chevronPosition="right" className="result-groups">
-          {stats.map((s) => {
-            const Icon = CHAPTER_ICONS[s.group.id];
-            const items = [...s.minus, ...s.plus];
-            return (
-              <Accordion.Item key={s.group.id} value={s.group.id}>
-                <Accordion.Control disabled={items.length === 0} icon={<ThemeIcon variant="light" radius="md" size="lg"><Icon size={20} /></ThemeIcon>}>
-                  <Group justify="space-between" wrap="nowrap" gap="xs">
-                    <div>
-                      <Text fw={600}>{t(`steps.${s.group.id}`)}</Text>
-                      <Text size="sm" c={s.tendency === 'minus' ? 'orange.6' : s.tendency === 'plus' ? 'teal.6' : 'dimmed'}>
-                        {s.tendency === 'minus' ? t('summary.tendencyMinus') : s.tendency === 'plus' ? t('summary.tendencyPlus') : t('summary.tendencyNeutral')}
-                      </Text>
-                    </div>
-                    <Group gap={4} wrap="nowrap">
-                      <Badge color="orange" variant="light" leftSection={<IconMinus size={12} />}>{s.minus.length}</Badge>
-                      <Badge color="teal" variant="light" leftSection={<IconPlus size={12} />}>{s.plus.length}</Badge>
-                    </Group>
+    <>
+      <Title order={2} size="h4">
+        {t('summary.groupsTitle')}
+      </Title>
+      <Accordion variant="separated" radius="lg" chevronPosition="right" className="result-groups">
+        {stats.map((s) => {
+          const Icon = CHAPTER_ICONS[s.group.id];
+          const items = [...s.minus, ...s.plus];
+          return (
+            <Accordion.Item key={s.group.id} value={s.group.id}>
+              <Accordion.Control disabled={items.length === 0} icon={<ThemeIcon variant="light" radius="md" size="lg"><Icon size={20} /></ThemeIcon>}>
+                <Group justify="space-between" wrap="nowrap" gap="xs">
+                  <div>
+                    <Text fw={600}>{t(`steps.${s.group.id}`)}</Text>
+                    <Text size="sm" c={s.tendency === 'minus' ? 'orange.6' : s.tendency === 'plus' ? 'teal.6' : 'dimmed'}>
+                      {s.tendency === 'minus' ? t('summary.tendencyMinus') : s.tendency === 'plus' ? t('summary.tendencyPlus') : t('summary.tendencyNeutral')}
+                    </Text>
+                  </div>
+                  <Group gap={4} wrap="nowrap">
+                    <Badge color="orange" variant="light" leftSection={<IconMinus size={12} />}>{s.minus.length}</Badge>
+                    <Badge color="teal" variant="light" leftSection={<IconPlus size={12} />}>{s.plus.length}</Badge>
                   </Group>
-                </Accordion.Control>
-                <Accordion.Panel>
-                  <List spacing={6} size="sm">
-                    {items.map((m) => (
-                      <List.Item key={m.id} icon={m.sign === '+' ? <IconPlus size={14} color="var(--mantine-color-teal-7)" /> : <IconMinus size={14} color="var(--mantine-color-orange-7)" />}>
-                        {featureText(i18n.language, m.id, m.de).q}
-                        {INVERTED.has(m.id) && ` – ${t('common.no')}`}
-                      </List.Item>
-                    ))}
-                  </List>
-                </Accordion.Panel>
-              </Accordion.Item>
-            );
-          })}
-        </Accordion>
-        <Help>{t('summary.tendencyExplain')}</Help>
-        {unsure > 0 && <Notice>{t('summary.unsureCount', { count: unsure })}</Notice>}
-      </Stack>
-    </ChapterIntro>
+                </Group>
+              </Accordion.Control>
+              <Accordion.Panel>
+                <List spacing={6} size="sm">
+                  {items.map((m) => (
+                    <List.Item key={m.id} icon={m.sign === '+' ? <IconPlus size={14} color="var(--mantine-color-teal-7)" /> : <IconMinus size={14} color="var(--mantine-color-orange-7)" />}>
+                      {featureText(i18n.language, m.id, m.de).q}
+                      {INVERTED.has(m.id) && ` – ${t('common.no')}`}
+                    </List.Item>
+                  ))}
+                </List>
+              </Accordion.Panel>
+            </Accordion.Item>
+          );
+        })}
+      </Accordion>
+      <Help>{t('summary.tendencyExplain')}</Help>
+      {unsure > 0 && <Notice>{t('summary.unsureCount', { count: unsure })}</Notice>}
+    </>
   );
 }
 
@@ -187,11 +198,11 @@ function Downloads({ form, missing }: { form: FormVersion; missing: ChapterId[] 
   );
 
   return (
-    <Question title={t('summary.downloadTitle')} lead={t('summary.downloadLead')}>
+    <Question title={t('summary.downloadTitle')} lead={t(a.documents === 'beide' ? 'summary.downloadLead' : 'summary.downloadLeadOne')}>
       {missing.length > 0 && <Notice kind="warn">{t('summary.missing', { fields: missing.map((c) => t(`steps.${c}`)).join(' · ') })}</Notice>}
-      <SimpleGrid cols={{ base: 1, xs: 2 }} spacing="md">
-        {card('form', IconFileText, t('summary.downloadForm', { year: form.id }), t('summary.formCardText'))}
-        {card('ruege', IconMail, t('summary.downloadRuege'), t('summary.ruegeCardText'))}
+      <SimpleGrid cols={{ base: 1, xs: a.documents === 'beide' ? 2 : 1 }} spacing="md">
+        {wantsPruefbogen(a) && card('form', IconFileText, t('summary.downloadForm', { year: form.id }), t('summary.formCardText'))}
+        {wantsRuege(a) && card('ruege', IconMail, t('summary.downloadRuege'), t('summary.ruegeCardText'))}
       </SimpleGrid>
     </Question>
   );
@@ -199,11 +210,13 @@ function Downloads({ form, missing }: { form: FormVersion; missing: ChapterId[] 
 
 function NextSteps({ form }: { form: FormVersion }) {
   const { t } = useTranslation();
+  const { a } = useAnswers();
   const credits = photoCredits();
+  const steps = [...(wantsPruefbogen(a) ? ['next1'] : []), ...(wantsRuege(a) ? ['next2', 'next3'] : []), 'next4'];
   return (
     <Question title={t('summary.nextTitle')}>
       <Timeline active={-1} bulletSize={28} lineWidth={2}>
-        {(['next1', 'next2', 'next3', 'next4'] as const).map((k, i) => (
+        {steps.map((k, i) => (
           <Timeline.Item key={k} bullet={<Text size="xs" fw={700}>{i + 1}</Text>}>
             <Text>{t(`summary.${k}`, { address: form.sendTo.post.join(', '), email: form.sendTo.email ? ` · ${form.sendTo.email}` : '' })}</Text>
           </Timeline.Item>
@@ -232,10 +245,10 @@ function NextSteps({ form }: { form: FormVersion }) {
   );
 }
 
-export function summaryScreens(form: FormVersion, _a: Answers, t: TFunction, missing: ChapterId[]): Screen[] {
+export function summaryScreens(form: FormVersion, a: Answers, t: TFunction, missing: ChapterId[]): Screen[] {
   return [
     { id: 'summary.result', chapter: 'summary', intro: true, nextLabel: t('common.next'), element: <Result form={form} /> },
-    { id: 'summary.letter', chapter: 'summary', answered: true, element: <LetterOptions form={form} /> },
+    ...(wantsRuege(a) ? [{ id: 'summary.letter', chapter: 'summary', answered: true, element: <LetterOptions form={form} /> } as Screen] : []),
     { id: 'summary.download', chapter: 'summary', answered: true, element: <Downloads form={form} missing={missing} /> },
     { id: 'summary.next', chapter: 'summary', answered: true, element: <NextSteps form={form} /> },
   ];

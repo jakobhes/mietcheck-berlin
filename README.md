@@ -6,6 +6,8 @@ Step-by-step assistant for Berlin tenants: check rent-relevant features under th
 
 ## Was die App macht
 
+Auf der Startseite wählt man, was erstellt werden soll: Spanneneinordnung (Prüfbogen), Rüge oder beides. Bei „nur Rüge“ entfallen Wohnung, Energie, Merkmalgruppen und Bemerkungen; bei „nur Spanneneinordnung“ entfallen Ausnahmen, Vermieteranschrift und die Rüge-Optionen.
+
 1. **Mietvertrag**: Das Vertragsdatum wählt automatisch den passenden BMV-Prüfbogen 169A (Mietspiegel 2015, 2017, 2019, 2021, 2023, 2024 oder 2026). Dazu kommen Mietbeginn, Nettokaltmiete, Index-/Staffelmiete und städtischer Vermieter.
 2. **Ausnahmen**: Gefragt wird nur, ob der Vermieter vor Vertragsschluss schriftlich eine Ausnahme behauptet hat, meist auf dem Vorblatt zum Mietvertrag (§ 556g Abs. 1a BGB; ja / nein / weiß nicht). Bei „ja“ kreuzt man die behaupteten Ausnahmen an (Vormiete, Modernisierung in den letzten 3 Jahren, Neubau, umfassende Modernisierung); sie werden in der Rüge benannt und bestritten, bei „weiß nicht“ ein allgemeiner Bezug. Ob tatsächlich eine Ausnahme vorliegt (Neubau, Vormiete, Modernisierung), fragt das Rügeschreiben beim Vermieter ab.
 3. **Wohnung & Energie** – inkl. automatischer Einordnung des Energiekennwerts.
