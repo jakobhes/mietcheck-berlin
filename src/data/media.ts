@@ -3,6 +3,8 @@
  * - Fotos: Wikimedia Commons, lokal unter public/media/photos/ abgelegt, mit Lizenzangabe
  *   (Metadaten in media-photos.json, erzeugt mit scripts/fetch-commons.mjs).
  * - Illustrationen: eigene SVGs unter public/media/illustrations/ (MIT-Lizenz wie das Projekt).
+ * - Eigene Fotos: public/media/own/ (eigene Aufnahmen, außerhalb von photos/, weil
+ *   fetch-commons.mjs diesen Ordner neu anlegt).
  */
 import photos from './media-photos.json';
 
@@ -43,6 +45,11 @@ const ILLUSTRATIONS: [file: string, alt: string, ids: string[]][] = [
   ['energie-skala.svg', 'Energieausweis-Skala von grün (sparsam) bis rot (hoher Verbrauch)', ['energie_minus_1', 'energie_minus_2', 'energie_minus_3', 'energie_plus_1', 'energie_plus_2', 'energie_plus_3']],
 ];
 
+const OWN_PHOTOS: [file: string, alt: string, ids: string[]][] = [
+  ['wc-wandhaengend.jpg', 'Wandhängendes WC, der Spülkasten ist in der Wand versteckt', ['bad_wandhaengendes_wc']],
+  ['fenster-verschattung.jpg', 'Fenster mit Jalousie', ['wohnung_rolllaeden']],
+];
+
 export const MEDIA: Record<string, MediaItem[]> = {};
 
 function add(id: string, item: MediaItem) {
@@ -60,6 +67,10 @@ for (const p of photos as PhotoMeta[]) {
     sourceUrl: p.sourceUrl,
   };
   p.ids.forEach((id) => add(id, item));
+}
+
+for (const [file, alt, ids] of OWN_PHOTOS) {
+  ids.forEach((id) => add(id, { src: `${base}media/own/${file}`, kind: 'photo', alt }));
 }
 
 for (const [file, alt, ids] of ILLUSTRATIONS) {

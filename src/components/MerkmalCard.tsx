@@ -55,7 +55,7 @@ export function MerkmalCard({ m, siblings }: { m: Merkmal; siblings: Merkmal[] }
       {media.map((img) => (
         <figure key={img.src} className={`media media-${img.kind}`}>
           <Image src={img.src} alt={img.alt} loading="lazy" radius="md" />
-          {img.kind === 'photo' && (
+          {img.license && (
             <Text component="figcaption" size="xs" c="dimmed" mt={4}>
               {t('common.imageCredit')}: {img.author} ·{' '}
               <Anchor href={img.sourceUrl} target="_blank" rel="noopener noreferrer" size="xs">

@@ -269,7 +269,7 @@ const es: UiStrings = {
   },
   credits: {
     title: 'Créditos de las imágenes',
-    intro: 'Fotos de Wikimedia Commons bajo las licencias libres indicadas. Ilustraciones: dibujos propios (licencia MIT).',
+    intro: 'Fotos de Wikimedia Commons bajo las licencias libres indicadas. Ilustraciones: dibujos propios (licencia MIT). Fotos sin crédito: fotos propias.',
     open: 'Mostrar créditos de las imágenes',
   },
 };

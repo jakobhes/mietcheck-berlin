@@ -269,7 +269,7 @@ const tr: UiStrings = {
   },
   credits: {
     title: 'Görsel kaynakları',
-    intro: 'Belirtilen özgür lisanslar altında Wikimedia Commons’tan fotoğraflar. Çizimler: kendi çizimlerimiz (MIT lisansı).',
+    intro: 'Belirtilen özgür lisanslar altında Wikimedia Commons’tan fotoğraflar. Çizimler: kendi çizimlerimiz (MIT lisansı). Kaynak belirtilmeyen fotoğraflar: kendi çektiğimiz fotoğraflar.',
     open: 'Görsel kaynaklarını göster',
   },
 };

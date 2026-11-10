@@ -23,7 +23,6 @@ const PHOTOS = [
   { title: 'Clawfoot bathtub.jpg', alt: 'Freistehende Badewanne auf Füßen', ids: ['bad_freistehende_wanne'] },
   { title: 'Handtuchwärmer - Badheizkörper.jpg', alt: 'Handtuch-Heizkörper (Strukturheizkörper) im Bad', ids: ['bad_strukturheizkoerper'] },
   { title: 'GER — BY — München — Bahnhofplatz 1 (Doppelwaschbecken) 2020.JPG', alt: 'Doppelwaschbecken', ids: ['bad_grosses_waschbecken'] },
-  { title: 'Geberit Vorwand-Installationselement für ein WC, Neubau Wohnblock Frida-Mager-Allee, 53121 Bonn 02.jpg', alt: 'Vorwandelement für ein wandhängendes WC (vor dem Verkleiden)', ids: ['bad_wandhaengendes_wc'] },
   { title: 'Bathroom-mold.jpg', alt: 'Schimmel und Feuchtigkeit an der Wand', ids: ['gebaeude_instandhaltung_schlecht'] },
   { title: 'Ceranfeld.jpg', alt: 'Ceran-Kochfeld', ids: ['kueche_ceran'] },
   { title: 'California Kitchen Range Hood.jpg', alt: 'Dunstabzugshaube über dem Herd', ids: ['kueche_dunstabzug'] },

@@ -269,7 +269,7 @@ const en: UiStrings = {
   },
   credits: {
     title: 'Image credits',
-    intro: 'Photos from Wikimedia Commons under the free licences stated. Illustrations: own drawings (MIT licence).',
+    intro: 'Photos from Wikimedia Commons under the free licences stated. Illustrations: own drawings (MIT licence). Photos without a credit: our own pictures.',
     open: 'Show image credits',
   },
 };

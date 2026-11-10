@@ -267,7 +267,7 @@ const de = {
   },
   credits: {
     title: 'Bildnachweise',
-    intro: 'Fotos von Wikimedia Commons unter den jeweils genannten freien Lizenzen. Illustrationen: eigene Darstellungen (MIT-Lizenz).',
+    intro: 'Fotos von Wikimedia Commons unter den jeweils genannten freien Lizenzen. Illustrationen: eigene Darstellungen (MIT-Lizenz). Fotos ohne Bildnachweis: eigene Aufnahmen.',
     open: 'Bildnachweise anzeigen',
   },
 };
