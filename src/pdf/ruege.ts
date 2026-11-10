@@ -5,7 +5,7 @@
 import { formatDateDe, parseNumber, refundRule } from '../data/logic';
 import type { RentCalculation } from '../data/mietspiegel';
 import type { FormVersion } from '../data/types';
-import type { Answers } from '../state/answers';
+import { LANDLORD_EXCEPTIONS, type Answers, type LandlordException } from '../state/answers';
 import { equipmentList, flatAddressLine, flatDetailLine, groupStats } from '../state/derive';
 import { Layout, MM } from './layout';
 
@@ -83,6 +83,14 @@ function addDays(iso: string, days: number): string {
   d.setUTCDate(d.getUTCDate() + days);
   return d.toISOString().slice(0, 10);
 }
+
+/** Vom Vermieter behauptete Ausnahme, als Nebensatz nach „mitgeteilt, dass …“ */
+const CLAIMED_EXCEPTION: Record<LandlordException, string> = {
+  vormiete: 'die Vormiete höher gewesen sei als die nach § 556d BGB zulässige Miete (§ 556e Abs. 1 BGB)',
+  modernisierung: 'in den letzten drei Jahren vor Beginn des Mietverhältnisses Modernisierungsmaßnahmen durchgeführt worden seien (§ 556e Abs. 2 BGB)',
+  neubau: 'die Wohnung nach dem 1. Oktober 2014 erstmals genutzt und vermietet worden sei (§ 556f Satz 1 BGB)',
+  umfassend: 'es sich um die erste Vermietung nach umfassender Modernisierung handle (§ 556f Satz 2 BGB)',
+};
 
 /** Baut die Absätze des Briefes – getrennt vom Layout, damit sie testbar sind. */
 export function ruegeParagraphs(
@@ -179,9 +187,10 @@ export function ruegeParagraphs(
   p.push('Soweit ich die Miete bis zur Klärung weiterhin in voller Höhe zahle, geschieht dies ausschließlich unter dem Vorbehalt der Rückforderung.');
 
   if (a.landlordDisclosed === 'ja') {
+    const claimed = LANDLORD_EXCEPTIONS.filter((k) => a.landlordExceptions[k]).map((k) => CLAIMED_EXCEPTION[k]);
     p.push(
-      `Vor Vertragsschluss haben Sie mir gemäß § 556g Abs. 1a BGB Folgendes mitgeteilt: „${a.landlordDisclosedText.trim().replace(/[.!]+$/, '') || '__________'}“. ` +
-        'Diese Rüge bezieht sich ausdrücklich auch auf diese Auskunft. Ich bestreite, dass die Voraussetzungen der von Ihnen genannten Ausnahme vorliegen bzw. dass sie die vereinbarte Miethöhe rechtfertigen, und bitte um entsprechende Nachweise.',
+      `Vor Vertragsschluss haben Sie mir gemäß § 556g Abs. 1a BGB mitgeteilt, dass ${claimed.join(' sowie dass ') || '__________'}. ` +
+        `Diese Rüge bezieht sich ausdrücklich auch auf diese Auskunft. Ich bestreite, dass die Voraussetzungen der von Ihnen genannten ${claimed.length > 1 ? 'Ausnahmen' : 'Ausnahme'} vorliegen bzw. dass sie die vereinbarte Miethöhe rechtfertigen, und bitte um entsprechende Nachweise.`,
     );
   } else if (a.landlordDisclosed !== 'nein') {
     // Mieter:in weiß es nicht (oder hat die Frage übersprungen): allgemeiner Bezug, ohne eine Auskunft zu behaupten

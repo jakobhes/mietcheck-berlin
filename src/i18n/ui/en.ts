@@ -112,9 +112,13 @@ const en: UiStrings = {
     invalidDate: 'Please enter a valid date.',
   },
   exceptions: {
-    disclosed: 'Did your landlord tell you in writing before you signed that an exception to the rent cap applies to your flat?',
-    disclosedHelp: 'For example in the tenancy agreement, an annex or by email: “the previous rent was higher”, “the flat was modernised” or “new build”. If so, your objection must refer to it (§ 556g (1a) and (2) BGB). A spoken remark at the viewing does not count. If you are not sure, check your tenancy agreement.',
-    disclosedText: 'What were you told?',
+    disclosed: 'Does your landlord claim that an exception to the rent cap applies to your flat?',
+    disclosedHelp: 'Look at the very front of your tenancy agreement: there is often a cover sheet, e.g. “Vorblatt für Mietverträge im Geltungsbereich der sog. Mietpreisbremse, Auskünfte über Vormiete und weitere Ausnahmen”. On it the landlord ticks which exception supposedly applies. That does not mean it is true – but your objection must refer to it (§ 556g (1a) BGB). If there is no such sheet and no other written notice before signing (e.g. by email), answer “No”. A spoken remark at the viewing does not count.',
+    which: 'Which exception does the landlord claim? Tick everything that is ticked there.',
+    vormiete: 'The previous rent was already this high (§ 556e (1) BGB)',
+    modernisierung: 'Modernisation in the 3 years before the tenancy began (§ 556e (2) BGB)',
+    neubau: 'New build: first used and let after 1 Oct 2014 (§ 556f sentence 1 BGB)',
+    umfassend: 'First letting after comprehensive modernisation (§ 556f sentence 2 BGB)',
   },
   flat: {
     title: 'About the flat',

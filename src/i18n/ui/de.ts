@@ -110,9 +110,13 @@ const de = {
     invalidDate: 'Bitte ein gültiges Datum eingeben.',
   },
   exceptions: {
-    disclosed: 'Hat der Vermieter Ihnen vor Vertragsschluss schriftlich mitgeteilt, dass für Ihre Wohnung eine Ausnahme von der Mietpreisbremse gilt?',
-    disclosedHelp: 'Zum Beispiel im Mietvertrag, in einer Anlage dazu oder per E-Mail: „Die Vormiete war höher“, „Die Wohnung wurde modernisiert“ oder „Neubau“. Hat er das getan, muss sich Ihre Rüge darauf beziehen (§ 556g Abs. 1a und 2 BGB). Eine mündliche Bemerkung bei der Besichtigung zählt nicht. Wenn Sie sich nicht erinnern: Schauen Sie in Ihren Mietvertrag.',
-    disclosedText: 'Was wurde Ihnen mitgeteilt?',
+    disclosed: 'Behauptet der Vermieter, dass für Ihre Wohnung eine Ausnahme von der Mietpreisbremse gilt?',
+    disclosedHelp: 'Schauen Sie ganz vorne in Ihren Mietvertrag: Dort liegt oft ein Vorblatt, z. B. „Vorblatt für Mietverträge im Geltungsbereich der sog. Mietpreisbremse, Auskünfte über Vormiete und weitere Ausnahmen“. Darauf kreuzt der Vermieter an, welche Ausnahme angeblich gilt. Ob das stimmt, ist damit nicht gesagt – Ihre Rüge muss sich aber darauf beziehen (§ 556g Abs. 1a BGB). Gibt es kein solches Blatt und auch sonst keine schriftliche Mitteilung vor Vertragsschluss (z. B. per E-Mail), antworten Sie „Nein“. Eine mündliche Bemerkung bei der Besichtigung zählt nicht.',
+    which: 'Welche Ausnahme behauptet der Vermieter? Alles ankreuzen, was angekreuzt ist.',
+    vormiete: 'Die Vormiete war schon so hoch (§ 556e Abs. 1 BGB)',
+    modernisierung: 'Modernisierung in den letzten 3 Jahren vor Mietbeginn (§ 556e Abs. 2 BGB)',
+    neubau: 'Neubau: nach dem 1.10.2014 erstmals genutzt und vermietet (§ 556f Satz 1 BGB)',
+    umfassend: 'Erste Vermietung nach umfassender Modernisierung (§ 556f Satz 2 BGB)',
   },
   flat: {
     title: 'Angaben zur Wohnung',

@@ -113,8 +113,8 @@ const es: FeatureTexts = {
     help: '«No» si la cocina no se puede calentar en absoluto o solo con una estufa de carbón.',
   },
   kueche_kein_geschirrspueler: {
-    q: '¿Se puede conectar un lavavajillas en la cocina?',
-    help: 'Hay espacio y toma de agua y desagüe.',
+    q: '¿Se puede conectar un lavavajillas en la cocina, o ya lo ha instalado el arrendador?',
+    help: '«Sí» si hay espacio y toma de agua y desagüe, o si ya hay conectado un lavavajillas del arrendador.',
   },
   kueche_keine_wandfliesen: {
     q: '¿Hay azulejos o protección contra salpicaduras en la pared detrás de la cocina y el fregadero?',
@@ -167,8 +167,8 @@ const es: FeatureTexts = {
     help: 'Tuberías visibles en el baño, la cocina u otras habitaciones. Indique en qué habitaciones, por favor.',
   },
   wohnung_keine_waschmaschine: {
-    q: '¿Se puede conectar una lavadora en el baño o en la cocina?',
-    help: 'Hay espacio y toma en el baño o en la cocina. «No» si no es posible en ninguno de los dos.',
+    q: '¿Se puede conectar una lavadora en el baño o en la cocina, o ya hay una allí?',
+    help: '«Sí» si hay espacio y toma en el baño o en la cocina, o si ya hay una lavadora conectada allí. «No» si no es posible en ninguno de los dos.',
   },
   wohnung_schlechter_schnitt: {
     q: '¿Tiene la vivienda una mala distribución?',

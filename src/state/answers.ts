@@ -13,6 +13,10 @@ export interface Address {
 
 export type HouseVariant = 'renoviert' | 'unrenoviert';
 
+/** Ausnahmen, die der Vermieter auf dem Vorblatt zum Mietvertrag ankreuzen kann (§§ 556e, 556f BGB) */
+export const LANDLORD_EXCEPTIONS = ['vormiete', 'modernisierung', 'neubau', 'umfassend'] as const;
+export type LandlordException = (typeof LANDLORD_EXCEPTIONS)[number];
+
 export interface Answers {
   /* Haus-Modus (z. B. Excelsior): Aufgang und Zustand der Wohnung */
   houseNo: string;
@@ -29,7 +33,7 @@ export interface Answers {
   /* Auskunft des Vermieters über Ausnahmen (§ 556g Abs. 1a BGB) */
   /** 'unsicher' → allgemeiner Bezug in der Rüge („Soweit Sie mir … mitgeteilt haben“) */
   landlordDisclosed: YesNo | 'unsicher';
-  landlordDisclosedText: string;
+  landlordExceptions: Record<LandlordException, boolean>;
 
   /* Wohnung */
   buildYear: string;
@@ -90,7 +94,7 @@ export const initialAnswers: Answers = {
   staffelRent: '',
   municipal: '',
   landlordDisclosed: '',
-  landlordDisclosedText: '',
+  landlordExceptions: { vormiete: false, modernisierung: false, neubau: false, umfassend: false },
   buildYear: '',
   east: '',
   area: '',

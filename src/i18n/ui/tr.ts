@@ -112,9 +112,13 @@ const tr: UiStrings = {
     invalidDate: 'Lütfen geçerli bir tarih girin.',
   },
   exceptions: {
-    disclosed: 'Ev sahibiniz imzadan önce size yazılı olarak dairenize kira freninin bir istisnasının uygulandığını bildirdi mi?',
-    disclosedHelp: 'Örneğin kira sözleşmesinde, bir ekte veya e-postayla: “önceki kira daha yüksekti”, “daire modernize edildi” veya “yeni yapı”. Öyleyse itirazınız buna değinmelidir (§ 556g fıkra 1a ve 2 BGB). Daire gezisinde sözlü bir açıklama geçerli değildir. Emin değilseniz kira sözleşmenize bakın.',
-    disclosedText: 'Size ne bildirildi?',
+    disclosed: 'Ev sahibi, dairenize kira freninin bir istisnasının uygulandığını iddia ediyor mu?',
+    disclosedHelp: 'Kira sözleşmenizin en başına bakın: Orada genellikle bir ön sayfa bulunur, ör. “Vorblatt für Mietverträge im Geltungsbereich der sog. Mietpreisbremse, Auskünfte über Vormiete und weitere Ausnahmen”. Ev sahibi bu sayfada hangi istisnanın geçerli olduğunu iddia ettiğini işaretler. Bu, doğru olduğu anlamına gelmez – ama itirazınız buna değinmelidir (§ 556g fıkra 1a BGB). Böyle bir sayfa ve imzadan önce başka yazılı bir bildirim (ör. e-posta) yoksa “hayır” deyin. Daire gezisinde sözlü bir açıklama geçerli değildir.',
+    which: 'Ev sahibi hangi istisnayı iddia ediyor? Orada işaretli olanların hepsini işaretleyin.',
+    vormiete: 'Önceki kira zaten bu kadar yüksekti (§ 556e fıkra 1 BGB)',
+    modernisierung: 'Kira başlangıcından önceki 3 yıl içinde modernizasyon (§ 556e fıkra 2 BGB)',
+    neubau: 'Yeni yapı: 1.10.2014’ten sonra ilk kez kullanıldı ve kiralandı (§ 556f cümle 1 BGB)',
+    umfassend: 'Kapsamlı modernizasyondan sonra ilk kiralama (§ 556f cümle 2 BGB)',
   },
   flat: {
     title: 'Daire hakkında',

@@ -117,8 +117,8 @@ const de: FeatureTexts = {
     help: '„Nein“, wenn die Küche gar nicht oder nur mit einem Kohleofen geheizt werden kann.',
   },
   kueche_kein_geschirrspueler: {
-    q: 'Kann man in der Küche eine Spülmaschine anschließen?',
-    help: 'Es gibt Platz dafür und einen Anschluss für Wasser und Abwasser.',
+    q: 'Kann man in der Küche eine Spülmaschine anschließen – oder hat der Vermieter schon eine eingebaut?',
+    help: '„Ja“, wenn es Platz und einen Anschluss für Wasser und Abwasser gibt oder schon eine Spülmaschine des Vermieters angeschlossen ist.',
   },
   kueche_keine_wandfliesen: {
     q: 'Gibt es an der Wand hinter Herd und Spüle Fliesen oder einen Spritzschutz?',
@@ -171,8 +171,8 @@ const de: FeatureTexts = {
     help: 'Sichtbare Sanitärleitungen in Bad, Küche oder anderen Räumen. Bitte Räume angeben.',
   },
   wohnung_keine_waschmaschine: {
-    q: 'Kann man in Bad oder Küche eine Waschmaschine anschließen?',
-    help: 'Es gibt in Bad oder Küche Platz dafür und einen Anschluss. „Nein“, wenn das in beiden Räumen nicht geht.',
+    q: 'Kann man in Bad oder Küche eine Waschmaschine anschließen – oder steht dort schon eine?',
+    help: '„Ja“, wenn es in Bad oder Küche Platz und einen Anschluss gibt oder dort schon eine Waschmaschine angeschlossen ist. „Nein“, wenn das in beiden Räumen nicht geht.',
   },
   wohnung_schlechter_schnitt: {
     q: 'Hat die Wohnung einen schlechten Schnitt?',

@@ -112,9 +112,13 @@ const es: UiStrings = {
     invalidDate: 'Introduzca una fecha válida, por favor.',
   },
   exceptions: {
-    disclosed: '¿Le comunicó su arrendador por escrito, antes de la firma, que a su vivienda se le aplica una excepción al freno al alquiler?',
-    disclosedHelp: 'Por ejemplo en el contrato, en un anexo o por correo electrónico: «el alquiler anterior era más alto», «la vivienda fue modernizada» u «obra nueva». En ese caso, su reclamación debe referirse a ello (§ 556g apdo. 1a y 2 BGB). Un comentario oral en la visita no cuenta. Si no está seguro, revise su contrato de alquiler.',
-    disclosedText: '¿Qué se le comunicó?',
+    disclosed: '¿Afirma su arrendador que a su vivienda se le aplica una excepción al freno al alquiler?',
+    disclosedHelp: 'Mire al principio de su contrato de alquiler: a menudo hay una hoja inicial, p. ej. «Vorblatt für Mietverträge im Geltungsbereich der sog. Mietpreisbremse, Auskünfte über Vormiete und weitere Ausnahmen». En ella el arrendador marca qué excepción supuestamente se aplica. Eso no significa que sea cierto, pero su reclamación debe referirse a ello (§ 556g apdo. 1a BGB). Si no hay tal hoja ni ninguna otra comunicación escrita antes de la firma (p. ej. por correo electrónico), responda «No». Un comentario oral en la visita no cuenta.',
+    which: '¿Qué excepción afirma el arrendador? Marque todo lo que esté marcado allí.',
+    vormiete: 'El alquiler anterior ya era así de alto (§ 556e apdo. 1 BGB)',
+    modernisierung: 'Modernización en los 3 años anteriores al inicio del alquiler (§ 556e apdo. 2 BGB)',
+    neubau: 'Obra nueva: usada y alquilada por primera vez después del 1/10/2014 (§ 556f frase 1 BGB)',
+    umfassend: 'Primer alquiler tras una modernización integral (§ 556f frase 2 BGB)',
   },
   flat: {
     title: 'Sobre la vivienda',

@@ -113,8 +113,8 @@ const en: FeatureTexts = {
     help: '“No” if the kitchen cannot be heated at all or only with a coal stove.',
   },
   kueche_kein_geschirrspueler: {
-    q: 'Can you connect a dishwasher in the kitchen?',
-    help: 'There is space for it and a water and drain connection.',
+    q: 'Can you connect a dishwasher in the kitchen – or has the landlord already installed one?',
+    help: '“Yes” if there is space and a water and drain connection, or a dishwasher from the landlord is already connected.',
   },
   kueche_keine_wandfliesen: {
     q: 'Are there tiles or a splash guard on the wall behind the cooker and sink?',
@@ -167,8 +167,8 @@ const en: FeatureTexts = {
     help: 'Visible plumbing in bathroom, kitchen or other rooms. Please state which rooms.',
   },
   wohnung_keine_waschmaschine: {
-    q: 'Can you connect a washing machine in the bathroom or kitchen?',
-    help: 'There is space and a connection in the bathroom or kitchen. “No” if this is not possible in either room.',
+    q: 'Can you connect a washing machine in the bathroom or kitchen – or is one already there?',
+    help: '“Yes” if there is space and a connection in the bathroom or kitchen, or a washing machine is already connected there. “No” if this is not possible in either room.',
   },
   wohnung_schlechter_schnitt: {
     q: 'Does the flat have a poor layout?',

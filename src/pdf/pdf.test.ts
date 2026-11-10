@@ -49,7 +49,7 @@ function sample(formId: string): Answers {
     tenant: { name: 'Erika Mustermann', street: 'Musterstraße 12', zip: '10999', city: 'Berlin', email: 'erika@example.org', phone: '030 1234567', reachable: '18', memberNo: '' },
     landlord: { name: 'Muster Immobilien GmbH', street: 'Hauptstraße 1', zip: '10115', city: 'Berlin' },
     landlordDisclosed: 'ja',
-    landlordDisclosedText: 'Die Vormiete habe 1.200 € betragen.',
+    landlordExceptions: { vormiete: true, modernisierung: false, neubau: false, umfassend: true },
   };
 }
 
@@ -84,7 +84,7 @@ describe('PDF generation', () => {
   it('Rüge refers to the landlord’s disclosure only as far as the tenant knows it', () => {
     const form = FORMS.find((f) => f.id === '2026')!;
     const text = (landlordDisclosed: Answers['landlordDisclosed']) => ruegeParagraphs(form, { ...sample('2026'), landlordDisclosed }, '2026-11-02').paragraphs.join(' ');
-    expect(text('ja')).toContain('Die Vormiete habe 1.200 € betragen');
+    expect(text('ja')).toContain('die Vormiete höher gewesen sei als die nach § 556d BGB zulässige Miete (§ 556e Abs. 1 BGB) sowie dass es sich um die erste Vermietung nach umfassender Modernisierung handle');
     expect(text('unsicher')).toContain('Soweit Sie mir vor Vertragsschluss eine Auskunft');
     expect(text('')).toContain('Soweit Sie mir vor Vertragsschluss eine Auskunft');
     expect(text('nein')).not.toContain('556g Abs. 1a');

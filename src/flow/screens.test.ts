@@ -44,7 +44,7 @@ describe('Pflichtfragen', () => {
 
   it('verlangen den Wortlaut, wenn der Vermieter eine Ausnahme mitgeteilt hat', () => {
     expect(blocked({ ...complete, landlordDisclosed: 'ja' })).toEqual(['exceptions.disclosed']);
-    expect(blocked({ ...complete, landlordDisclosed: 'ja', landlordDisclosedText: 'Vormiete 1.000 €' })).toEqual([]);
+    expect(blocked({ ...complete, landlordDisclosed: 'ja', landlordExceptions: { ...complete.landlordExceptions, neubau: true } })).toEqual([]);
   });
 
   it('verlangen vollständige Anschriften und ungültige Zahlen gelten als unbeantwortet', () => {

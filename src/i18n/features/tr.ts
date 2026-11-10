@@ -113,8 +113,8 @@ const tr: FeatureTexts = {
     help: 'Mutfak hiç ısıtılamıyorsa veya yalnızca kömür sobasıyla ısıtılabiliyorsa “hayır”.',
   },
   kueche_kein_geschirrspueler: {
-    q: 'Mutfakta bulaşık makinesi bağlayabilir misiniz?',
-    help: 'Yer ve su ile gider bağlantısı var.',
+    q: 'Mutfakta bulaşık makinesi bağlayabilir misiniz – ya da ev sahibi zaten bir tane taktı mı?',
+    help: 'Yer ve su ile gider bağlantısı varsa ya da ev sahibine ait bir bulaşık makinesi zaten bağlıysa “evet”.',
   },
   kueche_keine_wandfliesen: {
     q: 'Ocak ve evyenin arkasındaki duvarda fayans veya sıçrama koruması var mı?',
@@ -167,8 +167,8 @@ const tr: FeatureTexts = {
     help: 'Banyo, mutfak veya diğer odalarda görünür tesisat. Lütfen hangi odalar olduğunu belirtin.',
   },
   wohnung_keine_waschmaschine: {
-    q: 'Banyoda veya mutfakta çamaşır makinesi bağlayabilir misiniz?',
-    help: 'Banyoda veya mutfakta yer ve bağlantı var. İki odada da mümkün değilse “hayır”.',
+    q: 'Banyoda veya mutfakta çamaşır makinesi bağlayabilir misiniz – ya da orada zaten bir tane var mı?',
+    help: 'Banyoda veya mutfakta yer ve bağlantı varsa ya da orada zaten bir çamaşır makinesi bağlıysa “evet”. İki odada da mümkün değilse “hayır”.',
   },
   wohnung_schlechter_schnitt: {
     q: 'Dairenin planı kötü mü?',
