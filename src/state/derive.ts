@@ -59,6 +59,17 @@ export function flatAddressLine(a: Answers): string {
   return [street, [zip, city].filter(Boolean).join(' ')].filter(Boolean).join(', ');
 }
 
+/**
+ * Dateiname mit dem Nachnamen der Mieterin/des Mieters vorne, z. B. „Mustermann_Pruefbogen-….pdf“.
+ * Nachname: Teil vor dem Komma („Mustermann, Erika“), sonst das letzte Wort.
+ */
+export function pdfFileName(a: Answers, base: string): string {
+  const name = a.tenant.name.trim();
+  const last = name.includes(',') ? name.split(',')[0] : (name.split(/\s+/).pop() ?? '');
+  const safe = last.trim().replace(/[^\p{L}\p{N}-]+/gu, '');
+  return safe ? `${safe}_${base}` : base;
+}
+
 export function flatDetailLine(a: Answers): string {
   if (a.flatDiffers && a.flat.detail) return a.flat.detail;
   const parts = [a.position, a.floor ? `${a.floor}. OG` : ''].filter(Boolean);

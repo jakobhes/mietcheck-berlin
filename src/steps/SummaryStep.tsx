@@ -14,7 +14,7 @@ import { featureText } from '../i18n';
 import { INVERTED } from '../i18n/features/types';
 import { wantsPruefbogen, wantsRuege, type Answers } from '../state/answers';
 import { useAnswers } from '../state/AnswersContext';
-import { groupStats, rentCalculation } from '../state/derive';
+import { groupStats, pdfFileName, rentCalculation } from '../state/derive';
 
 function download(bytes: Uint8Array, filename: string) {
   const blob = new Blob([bytes as BlobPart], { type: 'application/pdf' });
@@ -184,10 +184,10 @@ function Downloads({ form, missing }: { form: FormVersion; missing: ChapterId[] 
     try {
       if (kind === 'form') {
         const { fillPruefbogen, loadOriginal } = await import('../pdf/original');
-        download(await fillPruefbogen(await loadOriginal(form), form, a, today, { remarks: !house?.brief }), `Pruefbogen-169A-Mietspiegel-${form.id}.pdf`);
+        download(await fillPruefbogen(await loadOriginal(form), form, a, today, { remarks: !house?.brief }), pdfFileName(a, `Pruefbogen-169A-Mietspiegel-${form.id}.pdf`));
       } else {
         const { buildRuege } = await import('../pdf/ruege');
-        download(await buildRuege(form, a, today, calc), `Ruege-556g-BGB-${today}.pdf`);
+        download(await buildRuege(form, a, today, calc), pdfFileName(a, `Ruege-556g-BGB-${today}.pdf`));
       }
     } finally {
       setBusy(null);
