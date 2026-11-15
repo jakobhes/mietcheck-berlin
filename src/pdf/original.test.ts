@@ -29,7 +29,7 @@ describe.each(FORMS.map((f) => f.id))('Original-Prüfbogen %s', (id) => {
     expect(refs.filter((n) => !names.has(n))).toEqual([]);
   });
 
-  it('fills the original and keeps its pages', async () => {
+  it('fills the original, keeps its pages and adds the summary', async () => {
     const a: Answers = {
       ...initialAnswers,
       contractDate: form.validFrom,
@@ -41,7 +41,8 @@ describe.each(FORMS.map((f) => f.id))('Original-Prüfbogen %s', (id) => {
       tenant: { ...initialAnswers.tenant, name: 'Erika Mustermann' },
     };
     const pdf = await PDFDocument.load(await fillPruefbogen(original(id), form, a, '2026-11-15'));
-    expect(pdf.getPageCount()).toBe(6);
+    // 6 Seiten Original + Zusammenfassung
+    expect(pdf.getPageCount()).toBe(7);
     // eingebrannt: keine Formularfelder mehr
     expect(pdf.getForm().getFields()).toHaveLength(0);
   });

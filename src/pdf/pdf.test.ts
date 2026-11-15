@@ -105,9 +105,9 @@ describe('PDF generation', () => {
 });
 
 describe('Haus-Modus', () => {
-  it('Prüfbogen 2026 mit Excelsior-Vorbelegung', async () => {
-    const a = applyHouse({ ...sample('2026'), features: {}, houseNo: '72', houseVariant: 'renoviert' }, HOUSES.excelsior);
-    const bytes = await buildPruefbogen(FORMS[0], a, '2026-11-02');
+  it('Prüfbogen 2026 mit Excelsior-Vorbelegung und Zusammenfassung', async () => {
+    const a = applyHouse({ ...sample('2026'), features: {}, houseNo: '72', houseVariant: 'renoviert', area: '72' }, HOUSES.excelsior);
+    const bytes = await fillPruefbogen(original('2026'), FORMS[0], a, '2026-11-02', { calc: rentCalculation(FORMS[0], a) });
     expect(bytes.length).toBeGreaterThan(10_000);
     if (OUT) writeFileSync(join(OUT, 'Pruefbogen-2026-excelsior.pdf'), bytes);
   });

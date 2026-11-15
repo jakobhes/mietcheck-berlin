@@ -184,7 +184,7 @@ function Downloads({ form, missing }: { form: FormVersion; missing: ChapterId[] 
     try {
       if (kind === 'form') {
         const { fillPruefbogen, loadOriginal } = await import('../pdf/original');
-        download(await fillPruefbogen(await loadOriginal(form), form, a, today, { remarks: !house?.brief }), pdfFileName(a, `Pruefbogen-169A-Mietspiegel-${form.id}.pdf`));
+        download(await fillPruefbogen(await loadOriginal(form), form, a, today, { remarks: !house?.brief, calc }), pdfFileName(a, `Pruefbogen-169A-Mietspiegel-${form.id}.pdf`));
       } else {
         const { buildRuege } = await import('../pdf/ruege');
         download(await buildRuege(form, a, today, calc), pdfFileName(a, `Ruege-556g-BGB-${today}.pdf`));

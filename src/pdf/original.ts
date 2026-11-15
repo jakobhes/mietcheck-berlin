@@ -6,7 +6,8 @@
  * Welche Stelle zu welcher Angabe gehört, steht in original-fields.json (aus Feldpositionen und Wortlaut erzeugt).
  */
 import { PDFCheckBox, PDFDocument, PDFRadioGroup, PDFRef, PDFTextField, StandardFonts, rgb, type PDFFont, type PDFPage } from 'pdf-lib';
-import { formatDateDe } from '../data/logic';
+import { formatDateDe, parseNumber } from '../data/logic';
+import type { RentCalculation } from '../data/mietspiegel';
 import type { FormId, FormVersion, SonderId } from '../data/types';
 import type { Answers } from '../state/answers';
 import { conditionContext, merkmalState } from '../state/derive';
@@ -271,11 +272,54 @@ function fillOverlay(pages: PDFPage[], map: OverlayMapping, a: Filled, values: R
   }
 }
 
+const euro = (n: number) => `${n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`;
+
+/** Zusätzliche letzte Seite: Ergebnis der Berechnung; ohne Berechnung bleiben die Rechenwerte zum Ausfüllen frei */
+async function addSummaryPage(pdf: PDFDocument, form: FormVersion, a: Answers, calc: RentCalculation | undefined, font: PDFFont, clean: (s: string) => string) {
+  const bold = await pdf.embedFont(StandardFonts.HelveticaBold);
+  const { width, height } = pdf.getPage(0).getSize();
+  const page = pdf.addPage([width, height]);
+  const left = 70;
+  const right = width - 70;
+  const valueX = 340;
+  const rent = parseNumber(a.rent);
+  const area = calc?.area ?? parseNumber(a.area);
+  const rows: [label: string, value: string, strong?: boolean][] = [
+    ['Name der Mieterin/des Mieters:', a.tenant.name.trim()],
+    ['Mietvertrag vom:', formatDateDe(a.contractDate)],
+    ['Mietspiegel (Jahr):', form.id],
+    ['Ortsübliche Vergleichsmiete pro qm:', calc ? `${euro(calc.ovmPerSqm)}/m²` : ''],
+    ['Wohnungsgröße:', area !== undefined ? `${area.toLocaleString('de-DE')} m²` : ''],
+    ['Ortsübliche Vergleichsmiete pro Monat:', calc ? euro(calc.ovm) : ''],
+    ['+10%:', calc ? euro(calc.maxRent - calc.ovm) : ''],
+    ['Höchstzulässige monatliche Nettokaltmiete:', calc ? euro(calc.maxRent) : '', true],
+    ['Derzeit verlangte Miete:', rent !== undefined ? euro(rent) : ''],
+    ['Überzahlung pro Monat:', calc && rent !== undefined ? euro(Math.max(0, rent - calc.maxRent)) : '', true],
+  ];
+  let y = height - 90;
+  page.drawText('Zusammenfassung', { x: left, y, size: 18, font: bold, color: INK });
+  y -= 50;
+  for (const [label, value, strong] of rows) {
+    const f = strong ? bold : font;
+    page.drawText(clean(label), { x: left, y, size: 11, font: f, color: INK });
+    page.drawText(clean(value), { x: valueX + 4, y, size: 11, font: f, color: INK });
+    page.drawLine({ start: { x: valueX, y: y - 4 }, end: { x: right, y: y - 4 }, thickness: 0.5, color: INK });
+    y -= 40;
+  }
+}
+
 /**
  * Original-Prüfbogen ausfüllen. `original`: Inhalt von public/forms/169A-<jahr>.pdf (siehe `loadOriginal`).
  * `remarks: false` lässt „Weitere Bemerkungen“ leer (Haus-Modus mit kurzem Ablauf).
+ * `calc`: Berechnung der zulässigen Miete für die angehängte Zusammenfassung.
  */
-export async function fillPruefbogen(original: ArrayBuffer | Uint8Array, form: FormVersion, answers: Answers, today: string, { remarks = true } = {}): Promise<Uint8Array> {
+export async function fillPruefbogen(
+  original: ArrayBuffer | Uint8Array,
+  form: FormVersion,
+  answers: Answers,
+  today: string,
+  { remarks = true, calc }: { remarks?: boolean; calc?: RentCalculation } = {},
+): Promise<Uint8Array> {
   const pdf = await PDFDocument.load(original);
   const font = await pdf.embedFont(StandardFonts.Helvetica);
   const charset = new Set(font.getCharacterSet());
@@ -292,5 +336,6 @@ export async function fillPruefbogen(original: ArrayBuffer | Uint8Array, form: F
   const map = ORIGINAL_FIELDS[form.id];
   if (map.kind === 'acro') fillAcro(pdf, map, a, values, font, clean);
   else fillOverlay(pdf.getPages(), map, a, values, font, clean);
+  await addSummaryPage(pdf, form, answers, calc, font, clean);
   return pdf.save();
 }
