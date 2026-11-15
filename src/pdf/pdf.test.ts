@@ -41,8 +41,6 @@ function sample(formId: string): Answers {
     energyValue: '182',
     sonder: { sm_kueche: 'ja', sm_aufzug: 'nein' },
     features,
-    followUps: { raeumeEinfachfenster: 'Küche, Bad', laerm: 'tagsüber und nachts' },
-    laermArt: { strasse: true, schiene: false, flug: true },
     remarks: 'Wohnfläche erscheint kleiner als angegeben.',
     wistg: 'ja',
     tenant: { name: 'Erika Mustermann', street: 'Musterstraße 12', zip: '10999', city: 'Berlin', email: 'erika@example.org', phone: '030 1234567', reachable: '18', memberNo: '' },

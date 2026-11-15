@@ -37,7 +37,7 @@ Für ein bestimmtes Gebäude lässt sich vieles vorausfüllen, damit nur noch ge
 - `…/?haus=excelsior` – Excelsior, Stresemannstraße 68–76 (Baujahr 1966)
 - `…/?haus=aus` – zurück zur normalen App (oder im Menü „Excelsior-Modus beenden“)
 
-Der Modus bleibt im Browser gespeichert, auch nach „Neu beginnen“. Zuerst wird nach dem Aufgang und dem Zustand der Wohnung (renoviert / unrenoviert) gefragt – im Excelsior über ein sichtbares Merkmal: wie die Fenster aufgehen (`variantQuestion`). Danach entfallen Baujahr, Wohnlage, Vorderhaus/Seitenflügel, Dachgeschoss, Altbau-Modernisierung, Ein-/Zweifamilienhaus, Ausstattung, Energie, Index-/Staffelmiete, städtischer Vermieter und alle Merkmale (2015 auch Sondermerkmale), die für das Haus feststehen. Im PDF sind die vorausgefüllten Merkmale trotzdem angekreuzt. Im Excelsior erstellt die App nur den Prüfbogen (die Rügen schreibt der Anwalt); die Auswahl der PDFs auf der Startseite entfällt dort, ebenso Zusatzfragen zu Merkmalen, Besonderheiten und Erreichbarkeit (`brief`). Soweit die Mietspiegeltabelle in `src/data/mietspiegel.ts` erfasst ist (bisher Mietspiegel 2015–2026, Baujahr 1965–1972; 2015 inkl. Sondermerkmale), trägt die App außerdem das Mietspiegelfeld in den Prüfbogen ein, berechnet die ortsübliche Vergleichsmiete nach der Orientierungshilfe und schreibt die zulässige Miete samt Rechenweg ins Rügeschreiben. Definition: `src/house/presets.ts` (je Zustand `yes` = angekreuzt, `ask` = wird gefragt, übrige Merkmale des Bogens 2026 = trifft nicht zu).
+Der Modus bleibt im Browser gespeichert, auch nach „Neu beginnen“. Zuerst wird nach dem Aufgang und dem Zustand der Wohnung (renoviert / unrenoviert) gefragt – im Excelsior über ein sichtbares Merkmal: wie die Fenster aufgehen (`variantQuestion`). Danach entfallen Baujahr, Wohnlage, Vorderhaus/Seitenflügel, Dachgeschoss, Altbau-Modernisierung, Ein-/Zweifamilienhaus, Ausstattung, Energie, Index-/Staffelmiete, städtischer Vermieter und alle Merkmale (2015 auch Sondermerkmale), die für das Haus feststehen. Im PDF sind die vorausgefüllten Merkmale trotzdem angekreuzt. Im Excelsior erstellt die App nur den Prüfbogen (die Rügen schreibt der Anwalt); die Auswahl der PDFs auf der Startseite entfällt dort, ebenso Besonderheiten und Erreichbarkeit (`brief`). Soweit die Mietspiegeltabelle in `src/data/mietspiegel.ts` erfasst ist (bisher Mietspiegel 2015–2026, Baujahr 1965–1972; 2015 inkl. Sondermerkmale), trägt die App außerdem das Mietspiegelfeld in den Prüfbogen ein, berechnet die ortsübliche Vergleichsmiete nach der Orientierungshilfe und schreibt die zulässige Miete samt Rechenweg ins Rügeschreiben. Definition: `src/house/presets.ts` (je Zustand `yes` = angekreuzt, `ask` = wird gefragt, übrige Merkmale des Bogens 2026 = trifft nicht zu).
 
 ## Entwicklung
 
@@ -54,7 +54,7 @@ Beispiel-PDFs aller Jahrgänge erzeugen: `PDF_OUT=/tmp/pdfs npx vitest run src/p
 
 | Pfad | Inhalt |
 |---|---|
-| `src/data/forms.ts` | Kataloge aller Prüfbogen-Versionen (Wortlaut, Bedingungen, Folgefragen) |
+| `src/data/forms.ts` | Kataloge aller Prüfbogen-Versionen (Wortlaut, Bedingungen) |
 | `src/data/logic.ts` | Versionsauswahl, Baujahr-Bedingungen, Energiekennwert, Rüge-Fristen |
 | `src/data/mietspiegel.ts` | Mietspiegeltabellen (bisher Baujahr 1965–1972) und Berechnung der zulässigen Miete |
 | `src/i18n/features/{de,en,ar}.ts` | Fragen & Erläuterungen je Merkmal |

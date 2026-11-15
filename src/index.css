@@ -275,17 +275,6 @@ main {
   color: light-dark(var(--mantine-color-brand-7), var(--mantine-color-brand-3));
 }
 
-.followup {
-  padding: 1rem;
-  border-radius: var(--mantine-radius-lg);
-  background: var(--app-surface);
-  border: 1px dashed light-dark(var(--mantine-color-gray-4), #3a3c4a);
-}
-
-.q-card .followup {
-  background: light-dark(var(--mantine-color-gray-0), #15161d);
-}
-
 /* ---------- Hilfe ---------- */
 .help-toggle {
   display: inline-flex;

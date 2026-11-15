@@ -126,7 +126,7 @@ const tr: FeatureTexts = {
   },
   kueche_gross: {
     q: 'Mutfak en az 14 m² olan ayrı bir oda mı?',
-    help: 'Lütfen mutfağın büyüklüğünü m² olarak belirtin.',
+    help: 'Yemek yenebilen mutfak: yemek pişirmek ve yemek için ayrı bir oda.',
   },
   kueche_einbaukueche: {
     q: 'Ev sahibi üst ve alt dolaplı, ocaklı ve evyeli bir ankastre mutfak sağlıyor mu?',
@@ -153,7 +153,6 @@ const tr: FeatureTexts = {
   wohnung_einfachverglasung: {
     q: 'Pencerelerin çoğu yalnızca tek camlı mı?',
     help: 'Tek cam: her pencere kanadında bir cam. Dikkat: kutu pencereler (arka arkaya iki pencere) kastedilmiyor.',
-    followUpHelp: 'Lütfen hangi odalar olduğunu belirtin.',
   },
   wohnung_elektro_unzureichend: {
     q: 'Elektrik tesisatı eski veya yetersiz mi?',
@@ -162,12 +161,10 @@ const tr: FeatureTexts = {
   wohnung_elektro_aufputz: {
     q: 'Elektrik kabloları çoğunlukla duvar üzerinden açıkta mı gidiyor?',
     help: 'Kablolar veya kablo kanalları duvarın içinde değil, sıva üzerinde görünüyor.',
-    followUpHelp: 'Lütfen hangi odalar olduğunu belirtin.',
   },
   wohnung_leitungen_aufputz: {
     q: 'Su ve atık su boruları çoğunlukla duvar üzerinden açıkta mı gidiyor?',
     help: 'Banyo, mutfak veya diğer odalarda görünür tesisat.',
-    followUpHelp: 'Lütfen hangi odalar olduğunu belirtin.',
   },
   wohnung_keine_waschmaschine: {
     q: 'Banyoda veya mutfakta çamaşır makinesi bağlayabilir misiniz – ya da orada zaten bir tane var mı?',
@@ -179,7 +176,7 @@ const tr: FeatureTexts = {
   },
   wohnung_kein_balkon: {
     q: 'Balkon, teras, loggia veya kış bahçesi var mı?',
-    help: 'Yoksa: balkon yapısal veya hukuki nedenlerle mi mümkün değil (örn. tescilli bina)? O zaman biliyorsanız nedenini belirtin.',
+    help: 'Balkon yapısal veya hukuki nedenlerle mümkün değilse (örn. tescilli bina), “bilmiyorum”u seçin.',
   },
   wohnung_eg_kein_einbruchschutz: {
     q: 'Zemin kat: pencerelerde hırsızlığa veya dışarıdan görünmeye karşı koruma eksik mi?',
@@ -200,12 +197,10 @@ const tr: FeatureTexts = {
   wohnung_fussbodenheizung: {
     q: 'Daire ağırlıklı olarak yerden ısıtmayla mı ısıtılıyor?',
     help: 'Odaların çoğunda.',
-    followUpHelp: 'Lütfen hangi odalar olduğunu belirtin.',
   },
   wohnung_stuck: {
     q: 'Oturma odalarının çoğunda iyi durumda alçı süsleme (Stuck) veya ahşap kaplama var mı?',
     help: 'Özenli tavan süslemeleri veya duvar lambrileri.',
-    followUpHelp: 'Lütfen hangi odalar olduğunu belirtin.',
   },
   wohnung_heizungsrohre: {
     q: 'Kalorifer boruları çoğunlukla gizli mi (duvarda veya zeminde)?',
@@ -247,7 +242,7 @@ const tr: FeatureTexts = {
   /* ---------------- Bina ---------------- */
   gebaeude_treppenhaus_schlecht: {
     q: 'Merdiven boşluğu / giriş alanı çoğunlukla kötü durumda mı?',
-    help: 'Örneğin dökülen boya, grafiti, bozuk aydınlatma, hasarlı basamaklar. Lütfen son yenileme tarihini ve kusurları belirtin.',
+    help: 'Örneğin dökülen boya, grafiti, bozuk aydınlatma, hasarlı basamaklar.',
   },
   gebaeude_kein_keller: {
     q: 'Daire dışında size ait bir bodrum veya depo var mı?',
@@ -259,12 +254,11 @@ const tr: FeatureTexts = {
   },
   gebaeude_instandhaltung_schlecht: {
     q: 'Binanın bakımı kötü mü?',
-    help: 'Örneğin sürekli nemli duvarlar (bodrumda da), cephede büyük sıva hasarları, ciddi çatı hasarları. Lütfen kusurları ve yerlerini açıklayın.',
+    help: 'Örneğin sürekli nemli duvarlar (bodrumda da), cephede büyük sıva hasarları, ciddi çatı hasarları.',
   },
   gebaeude_seitenfluegel: {
     q: 'Daire, yoğun yapılaşmış bir avludaki yan kanatta veya arka binada mı?',
     help: 'Arka avlulu Berlin eski binaları için tipiktir.',
-    followUpHelp: 'Lütfen orada hangi odalar olduğunu belirtin.',
   },
   gebaeude_kein_aufzug_ab5: {
     q: 'Daire 5. katta veya daha yukarıda mı – asansörsüz?',
@@ -276,7 +270,7 @@ const tr: FeatureTexts = {
   },
   gebaeude_daemmung_schlecht: {
     q: 'Bina kötü yalıtılmış mı ya da ısıtma sistemi eski ve verimsiz mi?',
-    help: 'Isıtma sistemi orijinal metinde belirtilen yıldan önce kurulmuş veya yalıtım yetersiz. Alan ve ısıtma sisteminin yaşı hakkında ayrıntılar yardımcı olur.',
+    help: 'Isıtma sistemi orijinal metinde belirtilen yıldan önce kurulmuş veya yalıtım yetersiz.',
   },
   gebaeude_fahrradraum: {
     q: 'Arsada kilitlenebilir bir bisiklet odası veya bisiklet parkı var mı?',
@@ -285,7 +279,6 @@ const tr: FeatureTexts = {
   gebaeude_zusatzraeume: {
     q: 'Ek ortak alanlar var mı (örn. ortak salon, çamaşır kurutma odası, misafir dairesi)?',
     help: 'Daire dışında ortak kullanabileceğiniz alanlar.',
-    followUpHelp: 'Lütfen hangileri olduğunu belirtin.',
   },
   gebaeude_garage: {
     q: 'Daireyle birlikte ek ücretsiz bir garaj veya park yeri var mı?',
@@ -347,15 +340,15 @@ const tr: FeatureTexts = {
   /* ---------------- Çevre ---------------- */
   umfeld_vernachlaessigt: {
     q: 'Daire çok bakımsız bir mahallede mi?',
-    help: 'Örneğin harap binalar, çok sayıda boş daire, çöp. Lütfen açıklayın.',
+    help: 'Örneğin harap binalar, çok sayıda boş daire, çöp.',
   },
   umfeld_laerm: {
     q: 'Konum özellikle gürültülü mü?',
-    help: 'Örneğin ana cadde, demiryolu, havalimanı yakını, ticari veya eğlence gürültüsü. Senato’nun stratejik gürültü haritaları her binanın maruz kaldığı gürültüyü gösterir. Lütfen gürültü türünü belirtin.',
+    help: 'Örneğin ana cadde, demiryolu, havalimanı yakını, ticari veya eğlence gürültüsü. Senato’nun stratejik gürültü haritaları her binanın maruz kaldığı gürültüyü gösterir.',
   },
   umfeld_geruch: {
     q: 'Konum özellikle kokulardan etkileniyor mu?',
-    help: 'Örneğin işletmelerden, restoranlardan veya sanayiden. Lütfen ne zaman olduğunu belirtin.',
+    help: 'Örneğin işletmelerden, restoranlardan veya sanayiden.',
   },
   umfeld_keine_fahrradplaetze: {
     q: 'Arsada bisiklet park edebiliyor musunuz?',
@@ -375,7 +368,7 @@ const tr: FeatureTexts = {
   },
   umfeld_gestaltet: {
     q: 'Arsa özenle düzenlenmiş mi (oyun alanı, banklar, yeşil alanlar, aydınlatma)?',
-    help: 'Basit bir avludan belirgin şekilde fazlası. Lütfen açıklayın.',
+    help: 'Basit bir avludan belirgin şekilde fazlası.',
   },
   umfeld_parkplatz: {
     q: 'Ev sahibi yakında yeterli otopark sağlıyor mu?',

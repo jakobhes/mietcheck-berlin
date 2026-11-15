@@ -42,7 +42,7 @@ export interface HousePreset {
   questions: Record<string, string>;
   /** Merkmale, deren Erläuterung im Haus nicht passt und weggelassen wird */
   noHelp: string[];
-  /** kurzer Ablauf: keine Zusatzfragen zu Merkmalen, keine Erreichbarkeit, „Weitere Bemerkungen“ im Prüfbogen leer */
+  /** kurzer Ablauf: keine Erreichbarkeit, „Weitere Bemerkungen“ im Prüfbogen leer */
   brief?: boolean;
   /** zusätzliche Bilder zu Merkmalen, nur in diesem Haus (unter public/, Bildunterschrift als UI-Übersetzungsschlüssel) */
   media: Record<string, { src: string; caption: string }[]>;
@@ -173,7 +173,7 @@ const excelsior: HousePreset = {
       ],
     },
   },
-  // Mängel im Treppenhaus kennt nicht jede·r – „weiß nicht“, ohne Fußnotentext
+  // Mängel im Treppenhaus kennt nicht jede·r – „weiß nicht“
   unsure: ['gebaeude_treppenhaus_schlecht'],
   oldForms: {
     yes: ['umfeld_muell'],

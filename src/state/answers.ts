@@ -1,4 +1,4 @@
-import type { FollowUpKey, SonderId } from '../data/types';
+import type { SonderId } from '../data/types';
 import type { EnergyKind } from '../data/logic';
 
 export type YesNo = '' | 'ja' | 'nein';
@@ -70,8 +70,6 @@ export interface Answers {
   /* Merkmale */
   sonder: Partial<Record<SonderId, YesNo>>;
   features: Record<string, FeatureAnswer>;
-  followUps: Partial<Record<FollowUpKey, string>>;
-  laermArt: { strasse: boolean; schiene: boolean; flug: boolean };
   remarks: string;
   wistg: YesNo;
 
@@ -122,8 +120,6 @@ export const initialAnswers: Answers = {
   energyDecentralWater: false,
   sonder: {},
   features: {},
-  followUps: {},
-  laermArt: { strasse: false, schiene: false, flug: false },
   remarks: '',
   wistg: '',
   tenant: { ...emptyAddress, email: '', phone: '', reachable: '', memberNo: '' },

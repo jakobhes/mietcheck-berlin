@@ -126,7 +126,7 @@ const es: FeatureTexts = {
   },
   kueche_gross: {
     q: '¿Es la cocina una habitación aparte de al menos 14 m²?',
-    help: 'Indique el tamaño de la cocina en m², por favor.',
+    help: 'Una cocina comedor: una habitación aparte para cocinar y comer.',
   },
   kueche_einbaukueche: {
     q: '¿Pone el arrendador una cocina equipada con muebles altos y bajos, cocina y fregadero?',
@@ -153,7 +153,6 @@ const es: FeatureTexts = {
   wohnung_einfachverglasung: {
     q: '¿Tienen la mayoría de las ventanas un solo cristal?',
     help: 'Vidrio simple: un cristal por hoja de ventana. Ojo: no se refiere a las ventanas dobles de cajón (dos ventanas una detrás de otra).',
-    followUpHelp: 'Indique en qué habitaciones, por favor.',
   },
   wohnung_elektro_unzureichend: {
     q: '¿Es la instalación eléctrica anticuada o insuficiente?',
@@ -162,12 +161,10 @@ const es: FeatureTexts = {
   wohnung_elektro_aufputz: {
     q: '¿Van los cables eléctricos mayoritariamente vistos sobre la pared?',
     help: 'Los cables o canaletas se ven sobre el revoque en lugar de ir dentro de la pared.',
-    followUpHelp: 'Indique en qué habitaciones, por favor.',
   },
   wohnung_leitungen_aufputz: {
     q: '¿Van las tuberías de agua y desagüe mayoritariamente vistas sobre la pared?',
     help: 'Tuberías visibles en el baño, la cocina u otras habitaciones.',
-    followUpHelp: 'Indique en qué habitaciones, por favor.',
   },
   wohnung_keine_waschmaschine: {
     q: '¿Se puede conectar una lavadora en el baño o en la cocina, o ya hay una allí?',
@@ -179,7 +176,7 @@ const es: FeatureTexts = {
   },
   wohnung_kein_balkon: {
     q: '¿Hay un balcón, terraza, loggia o galería acristalada?',
-    help: 'Si no: ¿sería imposible un balcón por motivos constructivos o legales (p. ej. edificio protegido)? Entonces indique el motivo si lo conoce.',
+    help: 'Si un balcón es imposible por motivos constructivos o legales (p. ej. edificio protegido), elija «no lo sé».',
   },
   wohnung_eg_kein_einbruchschutz: {
     q: 'Planta baja: ¿faltan protecciones antirrobo o contra miradas en las ventanas?',
@@ -200,12 +197,10 @@ const es: FeatureTexts = {
   wohnung_fussbodenheizung: {
     q: '¿Se calienta la vivienda principalmente con suelo radiante?',
     help: 'En la mayoría de las habitaciones.',
-    followUpHelp: 'Indique en qué habitaciones, por favor.',
   },
   wohnung_stuck: {
     q: '¿Tienen la mayoría de las habitaciones estucos o revestimientos de madera en buen estado?',
     help: 'Decoraciones de techo elaboradas o paneles de pared.',
-    followUpHelp: 'Indique en qué habitaciones, por favor.',
   },
   wohnung_heizungsrohre: {
     q: '¿Van los tubos de calefacción mayoritariamente ocultos (en pared o suelo)?',
@@ -247,7 +242,7 @@ const es: FeatureTexts = {
   /* ---------------- Edificio ---------------- */
   gebaeude_treppenhaus_schlecht: {
     q: '¿Están la escalera / la zona de entrada mayoritariamente en mal estado?',
-    help: 'Por ejemplo pintura desconchada, grafitis, iluminación rota, escalones dañados. Indique la fecha de la última renovación y los defectos, por favor.',
+    help: 'Por ejemplo pintura desconchada, grafitis, iluminación rota, escalones dañados.',
   },
   gebaeude_kein_keller: {
     q: '¿Tiene usted su propio sótano o trastero fuera de la vivienda?',
@@ -259,12 +254,11 @@ const es: FeatureTexts = {
   },
   gebaeude_instandhaltung_schlecht: {
     q: '¿Está el edificio en mal estado de conservación?',
-    help: 'Por ejemplo paredes permanentemente húmedas (también en el sótano), grandes daños de revoque en la fachada, daños considerables en el tejado. Describa los defectos y su ubicación, por favor.',
+    help: 'Por ejemplo paredes permanentemente húmedas (también en el sótano), grandes daños de revoque en la fachada, daños considerables en el tejado.',
   },
   gebaeude_seitenfluegel: {
     q: '¿Está la vivienda en un ala lateral o un edificio trasero de un patio densamente edificado?',
     help: 'Típico de los edificios antiguos de Berlín con patios traseros.',
-    followUpHelp: 'Indique qué habitaciones están allí, por favor.',
   },
   gebaeude_kein_aufzug_ab5: {
     q: '¿Está la vivienda en la 5.ª planta o más arriba, sin ascensor?',
@@ -276,7 +270,7 @@ const es: FeatureTexts = {
   },
   gebaeude_daemmung_schlecht: {
     q: '¿Está el edificio mal aislado o la calefacción es vieja e ineficiente?',
-    help: 'La calefacción se instaló antes del año indicado en el texto original, o el aislamiento es insuficiente. Ayudan los detalles sobre la zona y la antigüedad de la calefacción.',
+    help: 'La calefacción se instaló antes del año indicado en el texto original, o el aislamiento es insuficiente.',
   },
   gebaeude_fahrradraum: {
     q: '¿Hay un cuarto para bicicletas con cerradura o aparcabicis en la finca?',
@@ -285,7 +279,6 @@ const es: FeatureTexts = {
   gebaeude_zusatzraeume: {
     q: '¿Hay espacios comunes adicionales (p. ej. sala común, tendedero, vivienda de invitados)?',
     help: 'Espacios utilizables fuera de la vivienda que puede usar compartidos.',
-    followUpHelp: 'Indique cuáles, por favor.',
   },
   gebaeude_garage: {
     q: '¿Viene con la vivienda un garaje o plaza de aparcamiento sin coste adicional?',
@@ -347,15 +340,15 @@ const es: FeatureTexts = {
   /* ---------------- Entorno ---------------- */
   umfeld_vernachlaessigt: {
     q: '¿Está la vivienda en un barrio muy descuidado?',
-    help: 'Por ejemplo edificios en ruinas, muchas viviendas vacías, basura. Descríbalo, por favor.',
+    help: 'Por ejemplo edificios en ruinas, muchas viviendas vacías, basura.',
   },
   umfeld_laerm: {
     q: '¿Es la ubicación especialmente ruidosa?',
-    help: 'Por ejemplo una calle principal, vías de tren, cerca de un aeropuerto, ruido comercial o de ocio nocturno. Los mapas estratégicos de ruido del Senado muestran la exposición de cada edificio. Indique el tipo de ruido, por favor.',
+    help: 'Por ejemplo una calle principal, vías de tren, cerca de un aeropuerto, ruido comercial o de ocio nocturno. Los mapas estratégicos de ruido del Senado muestran la exposición de cada edificio.',
   },
   umfeld_geruch: {
     q: '¿Es la ubicación especialmente afectada por olores?',
-    help: 'Por ejemplo de comercios, restaurantes o industria. Indique cuándo, por favor.',
+    help: 'Por ejemplo de comercios, restaurantes o industria.',
   },
   umfeld_keine_fahrradplaetze: {
     q: '¿Se pueden aparcar bicicletas en la finca?',
@@ -375,7 +368,7 @@ const es: FeatureTexts = {
   },
   umfeld_gestaltet: {
     q: '¿Está la finca cuidadosamente ajardinada (parque infantil, bancos, zonas verdes, iluminación)?',
-    help: 'Claramente más que un patio sencillo. Descríbalo, por favor.',
+    help: 'Claramente más que un patio sencillo.',
   },
   umfeld_parkplatz: {
     q: '¿Pone el arrendador suficientes plazas de aparcamiento cerca?',

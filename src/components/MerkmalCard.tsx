@@ -10,9 +10,7 @@ import { featureText } from '../i18n';
 import { INVERTED } from '../i18n/features/types';
 import type { FeatureAnswer } from '../state/answers';
 import { useAnswers } from '../state/AnswersContext';
-import { CheckField, ExtLink, OptionList, Question, TextField } from './fields';
-
-const NOISE_MAP = 'https://www.berlin.de/sen/uvk/umwelt/laerm/laermminderungsplanung-berlin/laermkarten/';
+import { OptionList, Question } from './fields';
 
 /** Ja/Nein der positiv gestellten Frage ↔ trifft zu/trifft nicht zu (siehe INVERTED) */
 const flip = (v: FeatureAnswer): FeatureAnswer => (v === 'yes' ? 'no' : v === 'no' ? 'yes' : v);
@@ -23,13 +21,12 @@ export function MerkmalCard({ m, siblings }: { m: Merkmal; siblings: Merkmal[] }
   const { a, set, house } = useAnswers();
   const { advance } = useFlow();
   const [showOriginal, setShowOriginal] = useState(false);
-  // im Haus-Modus kann ein Merkmal anders gefragt werden, dann ohne Folgefragen
+  // im Haus-Modus kann ein Merkmal anders gefragt werden
   const houseQuestion = house?.questions[m.id];
-  const followUp = houseQuestion || house?.brief ? undefined : m.followUp;
   const feature = featureText(i18n.language, m.id, m.de);
   const text = houseQuestion
     ? { q: t(`${houseQuestion}.title`), help: t(`${houseQuestion}.help`) }
-    : { q: feature.q, help: house?.noHelp.includes(m.id) ? '' : [feature.help, followUp && feature.followUpHelp].filter(Boolean).join(' ') };
+    : { q: feature.q, help: house?.noHelp.includes(m.id) ? '' : feature.help };
   const answer = a.features[m.id];
   const inverted = INVERTED.has(m.id);
   const shown = answer && inverted ? flip(answer) : answer;
@@ -51,9 +48,7 @@ export function MerkmalCard({ m, siblings }: { m: Merkmal; siblings: Merkmal[] }
       }
       return { features };
     });
-    // Bei Zusatzfragen auf dem Bildschirm bleiben
-    const hasExtra = (v === 'yes' || v === 'unsure') && !!followUp;
-    if (!deselect && !hasExtra) advance();
+    if (!deselect) advance();
   }
 
   const mediaEl = media.length > 0 && (
@@ -80,41 +75,15 @@ export function MerkmalCard({ m, siblings }: { m: Merkmal; siblings: Merkmal[] }
   );
 
   const answerEl = (
-    <>
-      <OptionList<FeatureAnswer>
-        value={shown ?? ''}
-        onChange={choose}
-        options={[
-          { value: 'yes', label: t('common.yes'), icon: <IconCheck size={20} /> },
-          { value: 'no', label: t('common.no'), icon: <IconX size={20} /> },
-          { value: 'unsure', label: t('common.unsure'), icon: <IconQuestionMark size={20} /> },
-        ]}
-      />
-
-      {(answer === 'yes' || answer === 'unsure') && followUp && (
-        <Stack gap="sm" className="followup">
-          {followUp === 'laerm' && (
-            <>
-              {(['strasse', 'schiene', 'flug'] as const).map((k) => (
-                <CheckField
-                  key={k}
-                  label={t(`groups.laerm${k[0].toUpperCase()}${k.slice(1)}`)}
-                  checked={a.laermArt[k]}
-                  onChange={(v) => set((prev) => ({ laermArt: { ...prev.laermArt, [k]: v } }))}
-                />
-              ))}
-              <ExtLink href={NOISE_MAP}>{t('groups.noiseMapLink')}</ExtLink>
-            </>
-          )}
-          <TextField
-            label={t(`followUp.${followUp}`)}
-            value={a.followUps[followUp] ?? ''}
-            pdf
-            onChange={(v) => set((prev) => ({ followUps: { ...prev.followUps, [followUp]: v } }))}
-          />
-        </Stack>
-      )}
-    </>
+    <OptionList<FeatureAnswer>
+      value={shown ?? ''}
+      onChange={choose}
+      options={[
+        { value: 'yes', label: t('common.yes'), icon: <IconCheck size={20} /> },
+        { value: 'no', label: t('common.no'), icon: <IconX size={20} /> },
+        { value: 'unsure', label: t('common.unsure'), icon: <IconQuestionMark size={20} /> },
+      ]}
+    />
   );
 
   return (

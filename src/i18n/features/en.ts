@@ -126,7 +126,7 @@ const en: FeatureTexts = {
   },
   kueche_gross: {
     q: 'Is the kitchen a separate room of at least 14 m²?',
-    help: 'Please state the kitchen size in m².',
+    help: 'A kitchen-diner: a separate room for cooking and eating.',
   },
   kueche_einbaukueche: {
     q: 'Does the landlord provide a fitted kitchen with wall and base units, cooker and sink?',
@@ -153,7 +153,6 @@ const en: FeatureTexts = {
   wohnung_einfachverglasung: {
     q: 'Do most windows have only a single pane of glass?',
     help: 'Single glazing: one pane per window sash. Note: box windows (two windows one behind the other) are not meant.',
-    followUpHelp: 'Please state which rooms.',
   },
   wohnung_elektro_unzureichend: {
     q: 'Is the electrical installation outdated or insufficient?',
@@ -162,12 +161,10 @@ const en: FeatureTexts = {
   wohnung_elektro_aufputz: {
     q: 'Do the electric cables mostly run visibly on the wall surface?',
     help: 'Cables or cable ducts are visible on the plaster instead of inside the wall.',
-    followUpHelp: 'Please state which rooms.',
   },
   wohnung_leitungen_aufputz: {
     q: 'Do the water and waste pipes mostly run visibly on the wall surface?',
     help: 'Visible plumbing in bathroom, kitchen or other rooms.',
-    followUpHelp: 'Please state which rooms.',
   },
   wohnung_keine_waschmaschine: {
     q: 'Can you connect a washing machine in the bathroom or kitchen – or is one already there?',
@@ -179,7 +176,7 @@ const en: FeatureTexts = {
   },
   wohnung_kein_balkon: {
     q: 'Is there a balcony, terrace, loggia or conservatory?',
-    help: 'If not: would a balcony be impossible for structural or legal reasons (e.g. listed building)? Then please give the reason if known.',
+    help: 'If a balcony is impossible for structural or legal reasons (e.g. listed building), choose “don’t know”.',
   },
   wohnung_eg_kein_einbruchschutz: {
     q: 'Ground floor: are burglary or privacy protections missing on the windows?',
@@ -200,12 +197,10 @@ const en: FeatureTexts = {
   wohnung_fussbodenheizung: {
     q: 'Is the flat mainly heated by underfloor heating?',
     help: 'In most rooms.',
-    followUpHelp: 'Please state which rooms.',
   },
   wohnung_stuck: {
     q: 'Do most living rooms have stucco or wood panelling in good condition?',
     help: 'Elaborate ceiling decorations or wall panelling.',
-    followUpHelp: 'Please state which rooms.',
   },
   wohnung_heizungsrohre: {
     q: 'Are the heating pipes mostly hidden (in wall or floor)?',
@@ -247,7 +242,7 @@ const en: FeatureTexts = {
   /* ---------------- Building ---------------- */
   gebaeude_treppenhaus_schlecht: {
     q: 'Is the staircase / entrance area mostly in poor condition?',
-    help: 'For example peeling paint, graffiti, broken lighting, damaged steps. Please give the last renovation date and the defects.',
+    help: 'For example peeling paint, graffiti, broken lighting, damaged steps.',
   },
   gebaeude_kein_keller: {
     q: 'Do you have your own cellar or storage room outside the flat?',
@@ -259,12 +254,11 @@ const en: FeatureTexts = {
   },
   gebaeude_instandhaltung_schlecht: {
     q: 'Is the building in poor repair?',
-    help: 'For example permanently damp walls (also in the cellar), large plaster damage on the façade, considerable roof damage. Please describe defects and location.',
+    help: 'For example permanently damp walls (also in the cellar), large plaster damage on the façade, considerable roof damage.',
   },
   gebaeude_seitenfluegel: {
     q: 'Is the flat in a side wing or rear building of a densely built courtyard?',
     help: 'Typical for Berlin old buildings with back courtyards.',
-    followUpHelp: 'Please state which rooms are there.',
   },
   gebaeude_kein_aufzug_ab5: {
     q: 'Is the flat on the 5th floor or higher – without a lift?',
@@ -276,7 +270,7 @@ const en: FeatureTexts = {
   },
   gebaeude_daemmung_schlecht: {
     q: 'Is the building poorly insulated or the heating old and inefficient?',
-    help: 'The heating system was installed before the year named in the original wording, or the insulation is inadequate. Details on area and heating age help.',
+    help: 'The heating system was installed before the year named in the original wording, or the insulation is inadequate.',
   },
   gebaeude_fahrradraum: {
     q: 'Is there a lockable bicycle room or bicycle stands on the property?',
@@ -285,7 +279,6 @@ const en: FeatureTexts = {
   gebaeude_zusatzraeume: {
     q: 'Are there additional shared rooms (e.g. common room, drying room, guest flat)?',
     help: 'Usable rooms outside the flat that you may share.',
-    followUpHelp: 'Please state which.',
   },
   gebaeude_garage: {
     q: 'Does a garage or parking space come with the flat at no extra cost?',
@@ -347,15 +340,15 @@ const en: FeatureTexts = {
   /* ---------------- Surroundings ---------------- */
   umfeld_vernachlaessigt: {
     q: 'Is the flat in a severely neglected neighbourhood?',
-    help: 'For example derelict buildings, many vacancies, rubbish. Please describe.',
+    help: 'For example derelict buildings, many vacancies, rubbish.',
   },
   umfeld_laerm: {
     q: 'Is the location particularly noisy?',
-    help: 'For example a main road, railway, near an airport, commercial or party noise. The Senate’s strategic noise maps show the exposure per building. Please state the type of noise.',
+    help: 'For example a main road, railway, near an airport, commercial or party noise. The Senate’s strategic noise maps show the exposure per building.',
   },
   umfeld_geruch: {
     q: 'Is the location particularly affected by smells?',
-    help: 'For example from businesses, restaurants or industry. Please state when.',
+    help: 'For example from businesses, restaurants or industry.',
   },
   umfeld_keine_fahrradplaetze: {
     q: 'Can you park bicycles on the property?',
@@ -375,7 +368,7 @@ const en: FeatureTexts = {
   },
   umfeld_gestaltet: {
     q: 'Is the property elaborately landscaped (playground, benches, green areas, lighting)?',
-    help: 'Clearly more than a basic courtyard. Please describe.',
+    help: 'Clearly more than a basic courtyard.',
   },
   umfeld_parkplatz: {
     q: 'Does the landlord provide enough car parking nearby?',

@@ -2,25 +2,6 @@ export type FormId = '2015' | '2017' | '2019' | '2021' | '2023' | '2024' | '2026
 
 export type GroupId = 'bad' | 'kueche' | 'wohnung' | 'gebaeude' | 'umfeld';
 
-/** Zusatzfrage aus den Fußnoten der Prüfbögen, z. B. „(3) In welchen Räumen?“ */
-export type FollowUpKey =
-  | 'kuecheGroesse'
-  | 'raeumeEinfachfenster'
-  | 'raeumeElektro'
-  | 'raeumeLeitungen'
-  | 'balkonGrund'
-  | 'raeumeFussbodenheizung'
-  | 'raeumeStuck'
-  | 'treppenhausDetails'
-  | 'zusatzraeume'
-  | 'maengel'
-  | 'seitenfluegelRaeume'
-  | 'daemmung'
-  | 'vernachlaessigung'
-  | 'laerm'
-  | 'geruch'
-  | 'wohnumfeld';
-
 /**
  * Einschränkung eines Merkmals nach Baualter bzw. (nur 2015) nach Sondermerkmalen.
  * Jahreszahlen beziehen sich auf die Bezugsfertigkeit.
@@ -45,7 +26,6 @@ export interface Merkmal {
   /** Wortlaut aus dem BMV-Prüfbogen (wird ins PDF übernommen) */
   de: string;
   cond?: Condition;
-  followUp?: FollowUpKey;
   /** Merkmale, von denen höchstens eines gewählt werden darf (Energiekennwert-Stufen) */
   exclusive?: string;
 }

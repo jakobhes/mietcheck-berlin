@@ -19,17 +19,17 @@ Derzeit keine offenen Fragen.
 - Die App erstellt im Excelsior nur die Spanneneinordnung (Prüfbogen). Die Rügen schreibt der Anwalt. Die Auswahl der PDFs, Mietbeginn, die Frage nach den Ausnahmen und die Anschrift des Vermieters entfallen deshalb.
 - Kein städtisches Wohnungsunternehmen, keine Index- oder Staffelmietverträge im Haus (beides fest auf „nein“, wird nicht gefragt)
 - Kein Neubau, keine Sozialwohnung (wird in der App gar nicht mehr gefragt)
-- Kurzer Ablauf: keine Zusatzfragen zu Merkmalen (z. B. „In welchen Räumen?“, „Zu welchen Zeiten?“), keine Frage nach Besonderheiten, keine Erreichbarkeit für Rückfragen. „Weitere Bemerkungen“ bleibt im Prüfbogen leer.
+- Kurzer Ablauf: keine Zusatzfragen zu Merkmalen (gilt inzwischen in der ganzen App), keine Frage nach Besonderheiten, keine Erreichbarkeit für Rückfragen. „Weitere Bemerkungen“ bleibt im Prüfbogen leer.
 - Renoviert oder unrenoviert erkennt die App an den Fenstern: neue Fenster öffnen an der Seite wie eine Tür (renoviert), alte Schwingfenster drehen sich um eine senkrechte Achse in der Mitte (unrenoviert). Zu beiden gibt es ein Foto.
 
 ### Wohnung und Ausstattung
 
 - Ausstattung: Bad mit WC, Sammelheizung (Fernwärme) und Fahrstuhl in allen Wohnungen. Wird nicht gefragt.
-- Kein Balkon (trifft zu) und kein schlechter Schnitt, renoviert wie unrenoviert. Wird nicht gefragt.
+- Keine Wohnung hat einen Balkon, renoviert wie unrenoviert: „Kein Balkon“ trifft zu. Kein schlechter Schnitt. Beides wird nicht gefragt.
 - Bad ohne Fenster: wird gefragt, ohne den Hinweis zu Plattenbauten.
 - Aufzug in allen Aufgängen, auch in der 68 (mindestens 6 Stockwerke). „Aufzug bei weniger als fünf Obergeschossen“ trifft nicht zu.
 - Fahrradabstellmöglichkeit vorhanden (renoviert und unrenoviert)
-- Treppenhaus in schlechtem Zustand: ist als „weiß nicht“ eingetragen, ohne Fußnotentext. Wird nicht gefragt.
+- Treppenhaus in schlechtem Zustand: ist als „weiß nicht“ eingetragen. Wird nicht gefragt.
 - Lärm: Geht ein Fenster zur Stresemannstraße, gilt die Wohnung als lärmbelastet (Straßenverkehrslärm). Gefragt wird nur das.
 - Wohnungsbezogener Kaltwasserzähler (Bögen 2015–2023): wird gefragt, mit Foto der Wasserzähler.
 
