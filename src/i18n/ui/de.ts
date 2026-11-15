@@ -260,9 +260,11 @@ const de = {
     maxRent: 'Kennen Sie die zulässige Höchstmiete schon (z. B. aus der Berechnung des Mietervereins)?',
     maxRentHelp: 'Dann wird sie in die Rüge übernommen. Sonst bleibt der Betrag offen und Sie fordern zunächst Auskunft.',
     calcResult:
-      'Zulässige Miete nach dem Mietspiegel {{year}} (Zeile {{row}}): {{maxRent}} netto kalt im Monat. Das sind {{perSqm}} je m² ortsübliche Vergleichsmiete × {{area}} m², plus 10 %. Die Berechnung steht in der Rüge. Als „unsicher“ markierte Merkmale zählen dabei nicht mit.',
+      'Zulässige Miete nach dem Mietspiegel {{year}} (Zeile {{row}}): {{maxRent}} netto kalt im Monat. Das sind {{perSqm}} je m² ortsübliche Vergleichsmiete × {{area}} m², plus 10 %. Als „unsicher“ markierte Merkmale zählen dabei nicht mit.',
     calcExcess: 'Ihre Miete liegt {{excess}} im Monat über der zulässigen Miete.',
-    calcNoExcess: 'Nach dieser Berechnung liegt Ihre Miete nicht über der zulässigen Miete. Lassen Sie das bitte vom Mieterverein prüfen, bevor Sie die Rüge verschicken.',
+    calcNoExcess: 'Nach dieser Berechnung liegt Ihre Miete nicht über der zulässigen Miete.',
+    calcNoExcessRuege: 'Lassen Sie das bitte vom Mieterverein prüfen, bevor Sie die Rüge verschicken.',
+    calcInRuege: 'Die Berechnung steht in der Rüge.',
     calcUnavailable: 'Die zulässige Miete berechnet die App bisher nur für Wohnungen, deren Mietspiegeltabelle erfasst ist (Baujahr 1965 bis 1972, Mietspiegel 2015 bis 2026).',
     calcNeedsArea: 'Geben Sie die Wohnfläche an, dann berechnet die App die zulässige Miete.',
     demandInfo: 'In der Rüge Auskunft verlangen (Vormiete, Modernisierung, Erstvermietung) – empfohlen',

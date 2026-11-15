@@ -262,9 +262,11 @@ const es: UiStrings = {
     maxRent: '¿Conoce ya el alquiler máximo permitido (p. ej. por el cálculo del Mieterverein)?',
     maxRentHelp: 'Entonces se incluye en la reclamación. Si no, el importe queda abierto y primero solicita información.',
     calcResult:
-      'Alquiler permitido según el Mietspiegel {{year}} (fila {{row}}): {{maxRent}} de alquiler neto en frío al mes. Es decir, {{perSqm}} por m² de alquiler de referencia local × {{area}} m², más un 10 %. El cálculo se incluye en la carta de reclamación. Las características marcadas como «no lo sé» no se tienen en cuenta.',
+      'Alquiler permitido según el Mietspiegel {{year}} (fila {{row}}): {{maxRent}} de alquiler neto en frío al mes. Es decir, {{perSqm}} por m² de alquiler de referencia local × {{area}} m², más un 10 %. Las características marcadas como «no lo sé» no se tienen en cuenta.',
     calcExcess: 'Su alquiler supera en {{excess}} al mes el alquiler permitido.',
-    calcNoExcess: 'Según este cálculo, su alquiler no supera el alquiler permitido. Hágalo revisar por el Mieterverein antes de enviar la reclamación.',
+    calcNoExcess: 'Según este cálculo, su alquiler no supera el alquiler permitido.',
+    calcNoExcessRuege: 'Hágalo revisar por el Mieterverein antes de enviar la reclamación.',
+    calcInRuege: 'El cálculo se incluye en la carta de reclamación.',
     calcUnavailable: 'Por ahora la aplicación solo puede calcular el alquiler permitido para viviendas cuya tabla del Mietspiegel está incluida (construidas de 1965 a 1972, Mietspiegel 2015 a 2026).',
     calcNeedsArea: 'Introduzca la superficie y la aplicación calculará el alquiler permitido.',
     demandInfo: 'Solicitar información en la reclamación (alquiler anterior, modernización, primer arrendamiento): recomendado',

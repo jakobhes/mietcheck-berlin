@@ -262,9 +262,11 @@ const tr: UiStrings = {
     maxRent: 'İzin verilen en yüksek kirayı zaten biliyor musunuz (örn. Mieterverein’in hesaplamasından)?',
     maxRentHelp: 'O zaman itiraza eklenir. Aksi halde tutar açık kalır ve önce bilgi talep edersiniz.',
     calcResult:
-      'Mietspiegel {{year}}’e göre izin verilen kira (satır {{row}}): aylık {{maxRent}} net soğuk kira. Bu, m² başına {{perSqm}} yerel karşılaştırma kirası × {{area}} m², artı %10 demektir. Hesaplama itiraz yazısına eklenir. “Bilmiyorum” olarak işaretlenen özellikler hesaba katılmaz.',
+      'Mietspiegel {{year}}’e göre izin verilen kira (satır {{row}}): aylık {{maxRent}} net soğuk kira. Bu, m² başına {{perSqm}} yerel karşılaştırma kirası × {{area}} m², artı %10 demektir. “Bilmiyorum” olarak işaretlenen özellikler hesaba katılmaz.',
     calcExcess: 'Kiranız izin verilen kiradan aylık {{excess}} fazla.',
-    calcNoExcess: 'Bu hesaplamaya göre kiranız izin verilen kiranın üzerinde değil. İtirazı göndermeden önce lütfen Mieterverein’e kontrol ettirin.',
+    calcNoExcess: 'Bu hesaplamaya göre kiranız izin verilen kiranın üzerinde değil.',
+    calcNoExcessRuege: 'İtirazı göndermeden önce lütfen Mieterverein’e kontrol ettirin.',
+    calcInRuege: 'Hesaplama itiraz yazısına eklenir.',
     calcUnavailable: 'Uygulama şimdilik izin verilen kirayı yalnızca Mietspiegel tablosu dahil edilmiş daireler için hesaplayabilir (1965–1972 yapımı, Mietspiegel 2015–2026).',
     calcNeedsArea: 'Konut alanını girin, uygulama izin verilen kirayı hesaplasın.',
     demandInfo: 'İtirazda bilgi talep et (önceki kira, modernizasyon, ilk kiralama) – önerilir',

@@ -262,9 +262,11 @@ const en: UiStrings = {
     maxRent: 'Do you already know the maximum permitted rent (e.g. from the Mieterverein’s calculation)?',
     maxRentHelp: 'Then it is included in the objection. Otherwise the amount stays open and you first request information.',
     calcResult:
-      'Permitted rent under the Mietspiegel {{year}} (row {{row}}): {{maxRent}} net cold rent per month. That is {{perSqm}} per m² local comparative rent × {{area}} m², plus 10 %. The calculation is included in the objection letter. Features marked “not sure” are not counted.',
+      'Permitted rent under the Mietspiegel {{year}} (row {{row}}): {{maxRent}} net cold rent per month. That is {{perSqm}} per m² local comparative rent × {{area}} m², plus 10 %. Features marked “not sure” are not counted.',
     calcExcess: 'Your rent is {{excess}} per month above the permitted rent.',
-    calcNoExcess: 'According to this calculation, your rent is not above the permitted rent. Please have the Mieterverein check this before you send the objection.',
+    calcNoExcess: 'According to this calculation, your rent is not above the permitted rent.',
+    calcNoExcessRuege: 'Please have the Mieterverein check this before you send the objection.',
+    calcInRuege: 'The calculation is included in the objection letter.',
     calcUnavailable: 'So far the app can only calculate the permitted rent for flats whose Mietspiegel table is included (built 1965 to 1972, Mietspiegel 2015 to 2026).',
     calcNeedsArea: 'Enter the floor area and the app will calculate the permitted rent.',
     demandInfo: 'Request information in the objection (previous rent, modernisation, first letting) – recommended',

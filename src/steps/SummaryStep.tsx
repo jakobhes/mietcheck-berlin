@@ -45,6 +45,8 @@ function Result({ form }: { form: FormVersion }) {
     <ChapterIntro chapter="summary" title={t('summary.title')}>
       <Stack gap="md" w="100%" ta="start">
         {wantsRuege(a) && <Deadline />}
+        {/* ohne Rüge (sonst im Schritt „Schreiben“) */}
+        {!wantsRuege(a) && <RentResult form={form} />}
         {wantsPruefbogen(a) && <Groups form={form} />}
       </Stack>
     </ChapterIntro>
@@ -114,6 +116,7 @@ function RentCalculationNotice({ form, calc }: { form: FormVersion; calc: RentCa
   const { t } = useTranslation();
   const { a } = useAnswers();
   const rent = parseNumber(a.rent);
+  const ruege = wantsRuege(a);
   return (
     <>
       <Notice kind="ok">
@@ -124,11 +127,26 @@ function RentCalculationNotice({ form, calc }: { form: FormVersion; calc: RentCa
           area: calc.area.toLocaleString('de-DE'),
           row: calc.field.row,
         })}
+        {ruege && ` ${t('summary.calcInRuege')}`}
       </Notice>
       {rent !== undefined && rent > calc.maxRent && <Text size="sm">{t('summary.calcExcess', { excess: money(rent - calc.maxRent) })}</Text>}
-      {rent !== undefined && rent <= calc.maxRent && <Notice kind="warn">{t('summary.calcNoExcess')}</Notice>}
+      {rent !== undefined && rent <= calc.maxRent && (
+        <Notice kind="warn">
+          {t('summary.calcNoExcess')}
+          {ruege && ` ${t('summary.calcNoExcessRuege')}`}
+        </Notice>
+      )}
     </>
   );
+}
+
+/** Berechnung auf der Ergebnisseite, wenn keine Rüge erstellt wird */
+function RentResult({ form }: { form: FormVersion }) {
+  const { a, house } = useAnswers();
+  const { t } = useTranslation();
+  const calc = useRentCalculation(form);
+  if (calc) return <RentCalculationNotice form={form} calc={calc} />;
+  return house ? <Notice>{t(a.area ? 'summary.calcUnavailable' : 'summary.calcNeedsArea')}</Notice> : null;
 }
 
 function LetterOptions({ form }: { form: FormVersion }) {
