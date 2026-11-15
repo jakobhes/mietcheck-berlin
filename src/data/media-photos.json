@@ -132,5 +132,29 @@
       "gebaeude_fahrradraum",
       "umfeld_keine_fahrradplaetze"
     ]
+  },
+  {
+    "file": "einhebelmischer.jpg",
+    "alt": "Einhebel-Mischbatterie: ein Hebel für Wassermenge und Temperatur",
+    "caption": "media.einhebel",
+    "author": "Cschirp",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Einhebelmischer.jpg",
+    "ids": [
+      "bad_einhebelmischer"
+    ]
+  },
+  {
+    "file": "handmengkraan.jpg",
+    "alt": "Zweigriff-Armatur: je ein Drehgriff für kaltes und warmes Wasser",
+    "caption": "media.zweigriff",
+    "author": "Philip Bosma at Dutch Wikipedia (Original text: Philip Bosma)",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Handmengkraan.jpg",
+    "ids": [
+      "bad_einhebelmischer"
+    ]
   }
 ]

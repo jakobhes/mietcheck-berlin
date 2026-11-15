@@ -90,7 +90,11 @@ const es: UiStrings = {
     unrenoviert: 'sin renovar',
     prefilled: '{{count}} característica(s) ya están rellenadas para su edificio.',
     leave: 'Salir del modo {{name}}',
-    excelsiorLaermHint: '¿Sus ventanas dan a la Stresemannstraße? Según el mapa de ruido, la fachada de ese lado está muy afectada: elija entonces «sí» y «ruido del tráfico rodado». Si dan al patio: más bien «no».',
+    excelsiorLaerm: {
+      title: '¿Da al menos una ventana de su vivienda a la Stresemannstraße?',
+      help: 'La Stresemannstraße es una calle principal ruidosa. Si una ventana da a ella, su vivienda se considera afectada por el ruido. Ventanas solo al patio: «no».',
+    },
+    excelsiorWaterMeter: 'Los contadores de agua suelen estar en el baño, detrás de una tapa redonda cromada en la pared: azul = agua fría, rojo = agua caliente.',
     excelsiorWindows: {
       title: '¿Cómo se abren sus ventanas?',
       help: 'Así sabemos si su vivienda está renovada: las viviendas renovadas del Excelsior tienen ventanas nuevas que se abren por un lado, como una puerta. Las ventanas antiguas de las viviendas sin renovar giran sobre un eje vertical en el centro: una mitad se abre hacia dentro y la otra hacia fuera. De esto depende qué preguntas siguen.',
@@ -277,6 +281,10 @@ const es: UiStrings = {
     next3: 'Siga pagando de momento el alquiler completo (si acaso «con reserva») hasta que se aclare el importe; de lo contrario, se arriesga a un desahucio por impago.',
     next4: '¿Preguntas? Berliner Mieterverein, teléfono 030 226260, u otro servicio de asesoramiento a inquilinos.',
     missing: 'Los PDF solo pueden crearse cuando estén respondidas todas las preguntas obligatorias. Aún faltan datos en: {{fields}}',
+  },
+  media: {
+    einhebel: 'Grifo monomando: una palanca para caudal y temperatura → «sí»',
+    zweigriff: 'Dos mandos para fría y caliente → «no»',
   },
   credits: {
     title: 'Créditos de las imágenes',

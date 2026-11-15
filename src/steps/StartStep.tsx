@@ -32,7 +32,7 @@ function DocumentChoice() {
 
 export function StartStep({ onStart, canResume, onResume }: { onStart: () => void; canResume: boolean; onResume: () => void }) {
   const { t } = useTranslation();
-  const { a } = useAnswers();
+  const { a, house } = useAnswers();
   return (
     <Stack gap="xl" className="start">
       <Stack gap="md">
@@ -55,7 +55,7 @@ export function StartStep({ onStart, canResume, onResume }: { onStart: () => voi
         </Group>
       </Stack>
 
-      <DocumentChoice />
+      {!house?.documents && <DocumentChoice />}
 
       <Stack gap="sm">
         <Button size="xl" onClick={canResume ? onResume : onStart}>

@@ -90,7 +90,11 @@ const tr: UiStrings = {
     unrenoviert: 'yenilenmemiş',
     prefilled: 'Binanız için {{count}} özellik zaten doldurulmuş.',
     leave: '{{name}} modundan çık',
-    excelsiorLaermHint: 'Pencereleriniz Stresemannstraße’ye mi bakıyor? Gürültü haritasına göre oradaki cephe yoğun şekilde etkileniyor – o zaman “evet” ve “karayolu trafik gürültüsü”nü seçin. Avluya bakıyorsa: daha çok “hayır”.',
+    excelsiorLaerm: {
+      title: 'Dairenizin en az bir penceresi Stresemannstraße’ye bakıyor mu?',
+      help: 'Stresemannstraße gürültülü bir ana caddedir. Bir pencere oraya bakıyorsa daireniz gürültüden etkilenmiş sayılır. Pencereler yalnızca avluya bakıyorsa: “hayır”.',
+    },
+    excelsiorWaterMeter: 'Su sayaçları genellikle banyoda, duvardaki yuvarlak krom bir kapağın arkasındadır: mavi = soğuk su, kırmızı = sıcak su.',
     excelsiorWindows: {
       title: 'Pencereleriniz nasıl açılıyor?',
       help: 'Böylece dairenizin yenilenmiş olup olmadığını anlarız: Excelsior’daki yenilenmiş dairelerde yandan – kapı gibi – açılan yeni pencereler vardır. Yenilenmemiş dairelerdeki eski pencereler ortadaki dikey bir eksen etrafında döner: bir yarısı içeri, diğer yarısı dışarı açılır. Hangi soruların geleceği buna bağlıdır.',
@@ -277,6 +281,10 @@ const tr: UiStrings = {
     next3: 'Tutar netleşene kadar şimdilik kiranın tamamını ödemeye devam edin (gerekirse “çekince ile”) – aksi halde kira borcu nedeniyle fesih riskiyle karşılaşırsınız.',
     next4: 'Sorularınız mı var? Berliner Mieterverein, telefon 030 226260, veya başka bir kiracı danışma merkezi.',
     missing: 'PDF’ler ancak tüm zorunlu sorular yanıtlandığında oluşturulabilir. Hâlâ eksik bilgi olan bölümler: {{fields}}',
+  },
+  media: {
+    einhebel: 'Tek kollu batarya: debi ve sıcaklık için tek kol → “evet”',
+    zweigriff: 'Soğuk ve sıcak için iki musluk → “hayır”',
   },
   credits: {
     title: 'Görsel kaynakları',

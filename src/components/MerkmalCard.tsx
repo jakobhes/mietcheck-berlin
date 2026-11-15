@@ -2,7 +2,7 @@ import { Anchor, Badge, Collapse, Group, Image, SimpleGrid, Stack, Text, Unstyle
 import { IconCheck, IconChevronDown, IconMinus, IconPlus, IconQuestionMark, IconX } from '@tabler/icons-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MEDIA } from '../data/media';
+import { MEDIA, type MediaItem } from '../data/media';
 import type { Merkmal } from '../data/types';
 import { useFlow } from '../flow/FlowContext';
 import { useLayout } from '../flow/LayoutContext';
@@ -10,7 +10,7 @@ import { featureText } from '../i18n';
 import { INVERTED } from '../i18n/features/types';
 import type { FeatureAnswer } from '../state/answers';
 import { useAnswers } from '../state/AnswersContext';
-import { CheckField, ExtLink, Notice, OptionList, Question, TextField } from './fields';
+import { CheckField, ExtLink, OptionList, Question, TextField } from './fields';
 
 const NOISE_MAP = 'https://www.berlin.de/sen/uvk/umwelt/laerm/laermminderungsplanung-berlin/laermkarten/';
 
@@ -23,14 +23,17 @@ export function MerkmalCard({ m, siblings }: { m: Merkmal; siblings: Merkmal[] }
   const { a, set, house } = useAnswers();
   const { advance } = useFlow();
   const [showOriginal, setShowOriginal] = useState(false);
-  const text = featureText(i18n.language, m.id, m.de);
+  // im Haus-Modus kann ein Merkmal anders gefragt werden, dann ohne Folgefragen
+  const houseQuestion = house?.questions[m.id];
+  const text = houseQuestion ? { q: t(`${houseQuestion}.title`), help: t(`${houseQuestion}.help`) } : featureText(i18n.language, m.id, m.de);
+  const followUp = houseQuestion ? undefined : m.followUp;
   const answer = a.features[m.id];
   const inverted = INVERTED.has(m.id);
   const shown = answer && inverted ? flip(answer) : answer;
-  const media = MEDIA[m.id] ?? [];
+  const houseMedia = (house?.media[m.id] ?? []).map((img): MediaItem => ({ src: `${import.meta.env.BASE_URL}${img.src}`, kind: 'photo', alt: t(img.caption), caption: img.caption }));
+  const media = [...houseMedia, ...(MEDIA[m.id] ?? [])];
   const plus = m.sign === '+';
   const stacked = useLayout() === 'stacked';
-  const houseHint = house?.hints[m.id];
 
   function choose(picked: FeatureAnswer) {
     const v = inverted ? flip(picked) : picked;
@@ -46,7 +49,7 @@ export function MerkmalCard({ m, siblings }: { m: Merkmal; siblings: Merkmal[] }
       return { features };
     });
     // Bei Zusatzfragen auf dem Bildschirm bleiben
-    const hasExtra = (v === 'yes' || v === 'unsure') && !!m.followUp;
+    const hasExtra = (v === 'yes' || v === 'unsure') && !!followUp;
     if (!deselect && !hasExtra) advance();
   }
 
@@ -55,6 +58,11 @@ export function MerkmalCard({ m, siblings }: { m: Merkmal; siblings: Merkmal[] }
       {media.map((img) => (
         <figure key={img.src} className={`media media-${img.kind}`}>
           <Image src={img.src} alt={img.alt} loading="lazy" radius="md" />
+          {img.caption && (
+            <Text component="figcaption" size="sm" mt={4}>
+              {t(img.caption)}
+            </Text>
+          )}
           {img.license && (
             <Text component="figcaption" size="xs" c="dimmed" mt={4}>
               {t('common.imageCredit')}: {img.author} ·{' '}
@@ -70,7 +78,6 @@ export function MerkmalCard({ m, siblings }: { m: Merkmal; siblings: Merkmal[] }
 
   const answerEl = (
     <>
-      {houseHint && <Notice>{t(houseHint, { name: house!.name })}</Notice>}
       <OptionList<FeatureAnswer>
         value={shown ?? ''}
         onChange={choose}
@@ -81,9 +88,9 @@ export function MerkmalCard({ m, siblings }: { m: Merkmal; siblings: Merkmal[] }
         ]}
       />
 
-      {(answer === 'yes' || answer === 'unsure') && m.followUp && (
+      {(answer === 'yes' || answer === 'unsure') && followUp && (
         <Stack gap="sm" className="followup">
-          {m.followUp === 'laerm' && (
+          {followUp === 'laerm' && (
             <>
               {(['strasse', 'schiene', 'flug'] as const).map((k) => (
                 <CheckField
@@ -97,10 +104,10 @@ export function MerkmalCard({ m, siblings }: { m: Merkmal; siblings: Merkmal[] }
             </>
           )}
           <TextField
-            label={t(`followUp.${m.followUp}`)}
-            value={a.followUps[m.followUp] ?? ''}
+            label={t(`followUp.${followUp}`)}
+            value={a.followUps[followUp] ?? ''}
             pdf
-            onChange={(v) => set((prev) => ({ followUps: { ...prev.followUps, [m.followUp!]: v } }))}
+            onChange={(v) => set((prev) => ({ followUps: { ...prev.followUps, [followUp]: v } }))}
           />
         </Stack>
       )}

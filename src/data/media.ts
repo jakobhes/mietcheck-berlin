@@ -13,6 +13,8 @@ export interface MediaItem {
   kind: 'photo' | 'illustration';
   /** Kurzer Alternativtext (deutsch) */
   alt: string;
+  /** sichtbare Bildunterschrift (UI-Übersetzungsschlüssel), z. B. bei Gegenüberstellungen */
+  caption?: string;
   author?: string;
   license?: string;
   licenseUrl?: string;
@@ -22,6 +24,7 @@ export interface MediaItem {
 interface PhotoMeta {
   file: string;
   alt: string;
+  caption?: string;
   author: string;
   license: string;
   licenseUrl?: string;
@@ -61,6 +64,7 @@ for (const p of photos as PhotoMeta[]) {
     src: `${base}media/photos/${p.file}`,
     kind: 'photo',
     alt: p.alt,
+    caption: p.caption,
     author: p.author,
     license: p.license,
     licenseUrl: p.licenseUrl,

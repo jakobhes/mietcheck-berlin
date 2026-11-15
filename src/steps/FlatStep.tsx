@@ -54,11 +54,13 @@ function RowColumn({ form }: { form: FormVersion }) {
 
 function Equipment() {
   const { t } = useTranslation();
-  const { a, set } = useAnswers();
+  const { a, set, house } = useAnswers();
+  // was im Haus für alle gilt, wird nicht angezeigt
+  const shown = EQUIPMENT.filter((k) => !(house && k in house.equipment));
   return (
     <Question title={t('flat.equipment')} help={t('flat.equipmentHelp')}>
       <Stack gap="sm">
-        {EQUIPMENT.map((k) => (
+        {shown.map((k) => (
           <CheckField key={k} label={t(`flat.${k}`)} checked={a.equipment[k]} onChange={(v) => set((p) => ({ equipment: { ...p.equipment, [k]: v } }))} />
         ))}
       </Stack>

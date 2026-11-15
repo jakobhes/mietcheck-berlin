@@ -1,6 +1,6 @@
 import type { TFunction } from 'i18next';
 import { FORMS, selectFormVersion } from '../data/forms';
-import { isPrefilled, type HousePreset } from '../house/presets';
+import { isPrefilled, isSonderPrefilled, type HousePreset } from '../house/presets';
 import { wantsPruefbogen, wantsRuege, type Answers } from '../state/answers';
 import { contractScreens } from '../steps/ContractStep';
 import { energyScreens } from '../steps/EnergyStep';
@@ -30,7 +30,7 @@ export function buildScreens(a: Answers, t: TFunction, house?: HousePreset): Scr
     ...exceptionsScreens(a),
     ...flatScreens(form, a, t),
     ...energyScreens(form, a, t),
-    ...sonderScreens(form, a, t),
+    ...sonderScreens(form, a, t, (id) => isSonderPrefilled(house, a, id)),
     ...form.groups.flatMap((g) => groupScreens(g, a, t, (id) => isPrefilled(house, a, id))),
     ...remarksScreens(a, t),
     ...personsScreens(form, a, t),

@@ -136,11 +136,15 @@ describe('Haus-Modus', () => {
     if (OUT) writeFileSync(join(OUT, 'Ruege-2019-excelsior.pdf'), await buildRuege(form, a, '2026-11-02', calc));
   });
 
-  it('Rüge 2015 mit Sondermerkmal', async () => {
+  it('Rüge 2015 mit Sondermerkmalen', async () => {
     const form = FORMS.find((f) => f.id === '2015')!;
-    const a = applyHouse({ ...sample('2015'), features: {}, houseNo: '72', houseVariant: 'renoviert', area: '72', sonder: { sm_kueche: 'ja' } }, HOUSES.excelsior);
+    // renoviert: moderne Küche und modernes Bad stehen fest
+    const a = applyHouse({ ...sample('2015'), features: {}, houseNo: '72', houseVariant: 'renoviert', area: '72', sonder: {} }, HOUSES.excelsior);
     const calc = rentCalculation(form, a)!;
-    expect(calc.sonderItems).toEqual([{ id: 'sm_kueche', amount: 0.5 }]);
+    expect(calc.sonderItems).toEqual([
+      { id: 'sm_kueche', amount: 0.5 },
+      { id: 'sm_modernes_bad', amount: 0.12 },
+    ]);
     const text = ruegeParagraphs(form, a, '2026-11-02', calc).paragraphs.join(' ');
     expect(text).toContain('»Moderne Küchenausstattung« (+0,50 € je m²)');
     if (OUT) writeFileSync(join(OUT, 'Ruege-2015-excelsior.pdf'), await buildRuege(form, a, '2026-11-02', calc));

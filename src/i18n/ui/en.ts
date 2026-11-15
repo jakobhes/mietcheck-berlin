@@ -90,7 +90,11 @@ const en: UiStrings = {
     unrenoviert: 'unrenovated',
     prefilled: '{{count}} feature(s) are already filled in for your building.',
     leave: 'Leave {{name}} mode',
-    excelsiorLaermHint: 'Do your windows face Stresemannstraße? According to the noise map the façade there is heavily affected – then choose “yes” and “road traffic noise”. Facing the courtyard: rather “no”.',
+    excelsiorLaerm: {
+      title: 'Does at least one window of your flat face Stresemannstraße?',
+      help: 'Stresemannstraße is a loud main road. If a window faces it, your flat counts as affected by noise. Windows only facing the courtyard: “no”.',
+    },
+    excelsiorWaterMeter: 'Water meters are usually in the bathroom behind a round chrome cover in the wall: blue = cold water, red = hot water.',
     excelsiorWindows: {
       title: 'How do your windows open?',
       help: 'This tells us whether your flat is renovated: renovated flats in the Excelsior have new windows that open at the side – like a door. The old windows in unrenovated flats turn around a vertical axis in the middle: one half swings inwards, the other outwards. This decides which questions follow.',
@@ -277,6 +281,10 @@ const en: UiStrings = {
     next3: 'Keep paying the full rent for now (possibly “under reservation”) until the amount is clarified – otherwise you risk termination for arrears.',
     next4: 'Questions? Berliner Mieterverein, phone 030 226260, or another tenant advice service.',
     missing: 'The PDFs can only be created once all required questions are answered. Still missing information in: {{fields}}',
+  },
+  media: {
+    einhebel: 'Single-lever mixer: one lever for flow and temperature → “yes”',
+    zweigriff: 'Two taps for cold and hot → “no”',
   },
   credits: {
     title: 'Image credits',

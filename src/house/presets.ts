@@ -6,8 +6,8 @@
 import { FORMS, getForm, selectFormVersion } from '../data/forms';
 import { parseNumber, parseYear, suggestEnergyMerkmal } from '../data/logic';
 import { findMietspiegelField } from '../data/mietspiegel';
-import type { FormId } from '../data/types';
-import type { Answers, FeatureAnswer, HouseVariant } from '../state/answers';
+import type { FormId, SonderId } from '../data/types';
+import type { Answers, Documents, FeatureAnswer, HouseVariant, YesNo } from '../state/answers';
 
 export interface HousePreset {
   id: string;
@@ -16,10 +16,14 @@ export interface HousePreset {
   zip: string;
   city: string;
   houseNumbers: string[];
+  /** nur diese PDFs; die Auswahl auf der Startseite entfällt */
+  documents?: Documents;
   /** fest vorgegebene Antworten; die zugehörigen Bildschirme entfallen */
   fixed: (a: Answers) => Partial<Answers>;
   /** Bildschirme, deren Antwort über `fixed` feststeht */
   hiddenScreens: string[];
+  /** Ausstattung, die für alle Wohnungen feststeht; das Kästchen wird nicht angezeigt */
+  equipment: Partial<Answers['equipment']>;
   /** Vorbelegung beim Auswählen von Aufgang/Zustand, bleibt änderbar */
   defaults: (a: Answers) => Partial<Answers>;
   /**
@@ -28,12 +32,21 @@ export interface HousePreset {
    * Merkmale, die es nur in älteren Bögen gibt, werden weiter gefragt.
    */
   variants: Record<HouseVariant, { yes: string[]; ask: string[] }>;
-  /** Merkmale, die es nur in älteren Bögen gibt und die nicht zutreffen */
-  oldFormsNo: string[];
+  /** Merkmale, die als „weiß nicht“ eingetragen und nicht gefragt werden */
+  unsure: string[];
+  /** Merkmale, die es nur in älteren Bögen gibt und für alle feststehen; die übrigen werden gefragt */
+  oldForms: { yes: string[]; no: string[] };
+  /** Sondermerkmale 2015 je Zustand der Wohnung; nicht genannte werden gefragt */
+  sonder: Record<HouseVariant, Partial<Record<SonderId, YesNo>>>;
   /** Energieverbrauchskennwert für die Einordnung; die Stufe ergibt sich je Bogen aus dessen Grenzen */
   energyValue: number;
-  /** zusätzlicher Hinweis bei einem Merkmal (UI-Übersetzungsschlüssel) */
-  hints: Record<string, string>;
+  /**
+   * Merkmal im Haus anders fragen: Übersetzungen unter `<i18n>.title|help`.
+   * Die Folgefragen entfallen; was daraus folgt, setzt `fixed`.
+   */
+  questions: Record<string, string>;
+  /** zusätzliche Bilder zu Merkmalen, nur in diesem Haus (unter public/, Bildunterschrift als UI-Übersetzungsschlüssel) */
+  media: Record<string, { src: string; caption: string }[]>;
   /**
    * Frage nach dem Zustand über ein erkennbares Merkmal statt „renoviert/unrenoviert“:
    * Übersetzungen unter `<i18n>.title|help|renoviert|unrenoviert`, dazu je ein Beispielbild (unter public/).
@@ -41,7 +54,7 @@ export interface HousePreset {
   variantQuestion?: { i18n: string; images: Record<HouseVariant, string> };
 }
 
-const BOTH_YES = ['gebaeude_treppenhaus_schlecht', 'gebaeude_fahrradraum', 'gebaeude_kein_keller'];
+const BOTH_YES = ['gebaeude_fahrradraum', 'gebaeude_kein_keller'];
 
 /** Excelsior, Stresemannstraße 68–76 (Baujahr 1966) */
 const excelsior: HousePreset = {
@@ -51,6 +64,8 @@ const excelsior: HousePreset = {
   zip: '10963',
   city: 'Berlin',
   houseNumbers: ['68', '70', '72', '74', '76'],
+  // die Rügen schreibt der Anwalt, die App erstellt nur die Spanneneinordnung
+  documents: 'pruefbogen',
   fixed: (a) => ({
     buildYear: '1966',
     east: '',
@@ -67,6 +82,11 @@ const excelsior: HousePreset = {
     energyValue: a.houseNo === '72' ? '160' : '',
     energyKind: 'verbrauch',
     energyDecentralWater: false,
+    // gefragt wird nur, ob ein Fenster zur Stresemannstraße geht (siehe `questions`)
+    ...(a.features.umfeld_laerm === 'yes' && {
+      laermArt: { strasse: true, schiene: false, flug: false },
+      followUps: { ...a.followUps, laerm: 'Fenster zur Stresemannstraße (Hauptverkehrsstraße)' },
+    }),
   }),
   hiddenScreens: [
     'contract.indexRent',
@@ -85,6 +105,8 @@ const excelsior: HousePreset = {
     'energy.value',
     'energy.kind',
   ],
+  // Fernwärme
+  equipment: { sammelheizung: true },
   defaults: (a) => ({
     equipment: Object.values(a.equipment).some(Boolean) ? a.equipment : { ...a.equipment, badWC: true, fahrstuhl: true },
   }),
@@ -160,14 +182,24 @@ const excelsior: HousePreset = {
       ],
     },
   },
-  // laut Anwalt: weder stark vernachlässigte Umgebung noch bevorzugte Citylage
-  oldFormsNo: ['umfeld_vernachlaessigt', 'umfeld_citylage'],
+  // Mängel im Treppenhaus kennt nicht jede·r – „weiß nicht“, ohne Fußnotentext
+  unsure: ['gebaeude_treppenhaus_schlecht'],
+  oldForms: {
+    yes: ['umfeld_muell'],
+    // laut Anwalt: weder stark vernachlässigte Umgebung noch bevorzugte Citylage; Kabelanschluss überall, Vertrag schließt man selbst ab
+    no: ['umfeld_vernachlaessigt', 'umfeld_citylage', 'wohnung_kein_kabel', 'wohnung_breitband', 'gebaeude_garage', 'gebaeude_einbruchschutz', 'umfeld_muell_gepflegt', 'umfeld_villa'],
+  },
+  sonder: {
+    unrenoviert: { sm_parkett: 'nein', sm_dusche: 'nein', sm_isolierverglasung: 'nein', sm_aufzug: 'ja' },
+    renoviert: { sm_parkett: 'nein', sm_kueche: 'ja', sm_dusche: 'nein', sm_modernes_bad: 'ja', sm_isolierverglasung: 'ja', sm_aufzug: 'ja' },
+  },
   energyValue: 160,
-  hints: { umfeld_laerm: 'house.excelsiorLaermHint' },
+  questions: { umfeld_laerm: 'house.excelsiorLaerm' },
+  media: { wohnung_kaltwasserzaehler: [{ src: 'media/house/excelsior-wasserzaehler.jpg', caption: 'house.excelsiorWaterMeter' }] },
   // renovierte Wohnungen haben neue Dreh-Fenster, unrenovierte noch die alten Schwingfenster
   variantQuestion: {
     i18n: 'house.excelsiorWindows',
-    images: { renoviert: 'media/house/excelsior-fenster-neu.svg', unrenoviert: 'media/house/excelsior-fenster-alt.svg' },
+    images: { renoviert: 'media/house/excelsior-fenster-neu.jpg', unrenoviert: 'media/house/excelsior-fenster-alt.jpg' },
   },
 };
 
@@ -182,9 +214,11 @@ export function presetFeatures(house: HousePreset, variant: HouseVariant, formId
   const out: Record<string, FeatureAnswer> = {};
   for (const id of IDS_2026) {
     if (yes.includes(id)) out[id] = 'yes';
+    else if (house.unsure.includes(id)) out[id] = 'unsure';
     else if (!ask.includes(id)) out[id] = 'no';
   }
-  for (const id of house.oldFormsNo) out[id] = 'no';
+  for (const id of house.oldForms.yes) out[id] = 'yes';
+  for (const id of house.oldForms.no) out[id] = 'no';
   // Grenzen unterscheiden sich je Bogen (2015: > 170 statt > 145)
   const energy = suggestEnergyMerkmal(formId, house.energyValue, 'verbrauch', false);
   for (const id of ENERGY_IDS) out[id] = id === energy ? 'yes' : 'no';
@@ -200,7 +234,15 @@ export function applyHouse(a: Answers, house: HousePreset | undefined): Answers 
   if (!house) return a;
   const formId = formIdOf(a);
   const features = a.houseVariant ? { ...a.features, ...presetFeatures(house, a.houseVariant, formId) } : a.features;
-  const fixed = { ...a, ...house.fixed(a), features };
+  const sonder = a.houseVariant ? { ...a.sonder, ...house.sonder[a.houseVariant] } : a.sonder;
+  const fixed = {
+    ...a,
+    ...house.fixed(a),
+    ...(house.documents && { documents: house.documents }),
+    equipment: { ...a.equipment, ...house.equipment },
+    features,
+    sonder,
+  };
   const field = findMietspiegelField(formId, fixed.wohnlage, parseYear(fixed.buildYear), parseNumber(fixed.area));
   return field ? { ...fixed, row: field.field.row, column: field.column ?? '' } : fixed;
 }
@@ -208,4 +250,9 @@ export function applyHouse(a: Answers, house: HousePreset | undefined): Answers 
 /** Steht die Antwort auf dieses Merkmal durch das Haus bereits fest? */
 export function isPrefilled(house: HousePreset | undefined, a: Answers, merkmalId: string): boolean {
   return !!house && !!a.houseVariant && merkmalId in presetFeatures(house, a.houseVariant, formIdOf(a));
+}
+
+/** Steht die Antwort auf dieses Sondermerkmal (2015) durch das Haus bereits fest? */
+export function isSonderPrefilled(house: HousePreset | undefined, a: Answers, id: SonderId): boolean {
+  return !!house && !!a.houseVariant && id in house.sonder[a.houseVariant];
 }

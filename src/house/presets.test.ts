@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { getForm } from '../data/forms';
 import { initialAnswers, type Answers } from '../state/answers';
-import { applyHouse, HOUSES, isPrefilled, presetFeatures } from './presets';
+import { applyHouse, HOUSES, isPrefilled, isSonderPrefilled, presetFeatures } from './presets';
 
 const ids2026 = new Set(getForm('2026').groups.flatMap((g) => g.merkmale.map((m) => m.id)));
 const excelsior = HOUSES.excelsior;
@@ -34,7 +34,7 @@ describe('Excelsior', () => {
     const f = presetFeatures(excelsior, 'unrenoviert', '2026');
     const open = [...ids2026].filter((id) => !(id in f));
     expect(open).toHaveLength(38);
-    expect(f.gebaeude_treppenhaus_schlecht).toBe('yes');
+    expect(f.gebaeude_treppenhaus_schlecht).toBe('unsure');
     expect(f.gebaeude_fahrradraum).toBe('yes');
     expect(f.umfeld_keine_fahrradplaetze).toBe('no');
     expect(f.bad_hochwertig).toBe('no');
@@ -64,6 +64,41 @@ describe('Excelsior', () => {
     expect(isPrefilled(excelsior, raw, 'wohnung_kaltwasserzaehler')).toBe(false);
     expect(isPrefilled(excelsior, raw, 'gebaeude_aufzug')).toBe(true);
     expect(isPrefilled(undefined, raw, 'gebaeude_aufzug')).toBe(false);
+  });
+
+  it('2015: Sondermerkmale per variant, the rest is asked', () => {
+    const unrenoviert = a({ houseVariant: 'unrenoviert', contractDate: '2016-01-01' });
+    expect(applyHouse(unrenoviert, excelsior).sonder).toEqual({ sm_parkett: 'nein', sm_dusche: 'nein', sm_isolierverglasung: 'nein', sm_aufzug: 'ja' });
+    expect(isSonderPrefilled(excelsior, unrenoviert, 'sm_kueche')).toBe(false);
+    expect(isSonderPrefilled(excelsior, unrenoviert, 'sm_kleines_bad')).toBe(false);
+    const renoviert = applyHouse(a({ houseVariant: 'renoviert', contractDate: '2016-01-01', sonder: { sm_kueche: 'nein' } }), excelsior);
+    expect(renoviert.sonder.sm_kueche).toBe('ja');
+    expect(renoviert.sonder.sm_modernes_bad).toBe('ja');
+    expect(isSonderPrefilled(excelsior, a({}), 'sm_aufzug')).toBe(false);
+  });
+
+  it('2015: merkmale only in that form', () => {
+    const f = presetFeatures(excelsior, 'unrenoviert', '2015');
+    expect(f.umfeld_muell).toBe('yes');
+    expect(f.umfeld_muell_gepflegt).toBe('no');
+    expect(f.wohnung_kein_kabel).toBe('no');
+    expect(f.wohnung_breitband).toBe('no');
+    expect('bad_einhebelmischer' in f).toBe(false);
+  });
+
+  it('only the Prüfbogen, central heating fixed', () => {
+    const fixed = applyHouse(a({ documents: 'beide', equipment: { ...initialAnswers.equipment, badWC: true } }), excelsior);
+    expect(fixed.documents).toBe('pruefbogen');
+    expect(fixed.equipment.sammelheizung).toBe(true);
+    expect(fixed.equipment.badWC).toBe(true);
+  });
+
+  it('noise: a window to Stresemannstraße means road traffic noise', () => {
+    const yes = applyHouse(a({ houseVariant: 'unrenoviert', features: { umfeld_laerm: 'yes' } }), excelsior);
+    expect(yes.laermArt.strasse).toBe(true);
+    expect(yes.followUps.laerm).toContain('Stresemannstraße');
+    const no = applyHouse(a({ houseVariant: 'unrenoviert', features: { umfeld_laerm: 'no' } }), excelsior);
+    expect(no.followUps.laerm).toBeUndefined();
   });
 
   it('energy level follows the thresholds of the form', () => {

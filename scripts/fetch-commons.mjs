@@ -18,7 +18,7 @@ const JSON_OUT = join(ROOT, 'src/data/media-photos.json');
 const UA = 'MietCheckBerlin/0.1 (https://github.com/jakobhes/mietcheck-berlin)';
 const WIDTH = 800;
 
-/** @type {{ title: string; alt: string; ids: string[] }[]} */
+/** @type {{ title: string; alt: string; caption?: string; ids: string[] }[]} */
 const PHOTOS = [
   { title: 'Clawfoot bathtub.jpg', alt: 'Freistehende Badewanne auf Füßen', ids: ['bad_freistehende_wanne'] },
   { title: 'Handtuchwärmer - Badheizkörper.jpg', alt: 'Handtuch-Heizkörper (Strukturheizkörper) im Bad', ids: ['bad_strukturheizkoerper'] },
@@ -32,6 +32,9 @@ const PHOTOS = [
   { title: 'Albertstrasse balkon 21.11.2010 10-51-15.JPG', alt: 'Balkone an einem Berliner Wohnhaus', ids: ['wohnung_balkon', 'wohnung_kein_balkon'] },
   { title: 'Berlin - courtyard in Knesebeckstraße, Charlottenburg 01.jpg', alt: 'Berliner Hinterhof mit Seitenflügel und Quergebäude', ids: ['gebaeude_seitenfluegel'] },
   { title: '2 "staple" style bike racks in grey metal.jpg', alt: 'Fahrradbügel zum Anschließen', ids: ['gebaeude_fahrradraum', 'umfeld_keine_fahrradplaetze'] },
+  // Gegenüberstellung mit sichtbarer Bildunterschrift (UI-Übersetzungsschlüssel)
+  { title: 'Einhebelmischer.jpg', alt: 'Einhebel-Mischbatterie: ein Hebel für Wassermenge und Temperatur', caption: 'media.einhebel', ids: ['bad_einhebelmischer'] },
+  { title: 'Handmengkraan.jpg', alt: 'Zweigriff-Armatur: je ein Drehgriff für kaltes und warmes Wasser', caption: 'media.zweigriff', ids: ['bad_einhebelmischer'] },
 ];
 
 function slug(title) {
@@ -98,6 +101,7 @@ for (const p of PHOTOS) {
   result.push({
     file,
     alt: p.alt,
+    caption: p.caption,
     author: stripHtml(md.Artist?.value) || 'unbekannt',
     license,
     licenseUrl: md.LicenseUrl?.value,

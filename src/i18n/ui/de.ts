@@ -88,7 +88,11 @@ const de = {
     unrenoviert: 'unrenoviert',
     prefilled: '{{count}} Merkmal(e) sind für Ihr Haus bereits ausgefüllt.',
     leave: '{{name}}-Modus beenden',
-    excelsiorLaermHint: 'Gehen Ihre Fenster zur Stresemannstraße? Laut Lärmkarte ist die Fassade dort stark belastet – dann „ja“ und „Straßenverkehrslärm“ wählen. Zum Hof hin eher „nein“.',
+    excelsiorLaerm: {
+      title: 'Geht mindestens ein Fenster Ihrer Wohnung zur Stresemannstraße?',
+      help: 'Die Stresemannstraße ist eine laute Hauptverkehrsstraße. Geht ein Fenster dorthin, gilt Ihre Wohnung als lärmbelastet. Fenster nur zum Hof: „nein“.',
+    },
+    excelsiorWaterMeter: 'Wasserzähler sitzen meist im Bad hinter einer runden Chromblende in der Wand: blau = Kaltwasser, rot = Warmwasser.',
     excelsiorWindows: {
       title: 'Wie gehen Ihre Fenster auf?',
       help: 'Daran erkennen wir, ob Ihre Wohnung renoviert ist: Renovierte Wohnungen im Excelsior haben neue Fenster, die sich an der Seite öffnen – wie eine Tür. Die alten Fenster in unrenovierten Wohnungen drehen sich um eine senkrechte Achse in der Mitte: Eine Hälfte schwingt nach innen, die andere nach außen. Danach richtet sich, welche Fragen noch kommen.',
@@ -275,6 +279,10 @@ const de = {
     next3: 'Zahlen Sie die Miete zunächst weiter in voller Höhe (ggf. unter Vorbehalt), bis die Höhe geklärt ist – sonst riskieren Sie eine Kündigung wegen Zahlungsverzugs.',
     next4: 'Bei Fragen: Berliner Mieterverein, Telefon 030 226260, oder eine andere Mieterberatung.',
     missing: 'Die PDFs lassen sich erst erstellen, wenn alle Pflichtfragen beantwortet sind. Es fehlen noch Angaben in: {{fields}}',
+  },
+  media: {
+    einhebel: 'Einhebel-Mischbatterie: ein Hebel für Menge und Temperatur → „ja“',
+    zweigriff: 'Zwei Drehgriffe für kalt und warm → „nein“',
   },
   credits: {
     title: 'Bildnachweise',

@@ -1,6 +1,6 @@
 import type { TFunction } from 'i18next';
-import { YesNoField, Question } from '../components/fields';
-import type { FormVersion, SonderMerkmal } from '../data/types';
+import { Notice, YesNoField, Question } from '../components/fields';
+import type { FormVersion, SonderId, SonderMerkmal } from '../data/types';
 import { ChapterIntro } from '../flow/chapters';
 import type { Screen } from '../flow/types';
 import { featureText } from '../i18n';
@@ -32,10 +32,22 @@ function SonderQuestion({ s }: { s: SonderMerkmal }) {
   );
 }
 
-export function sonderScreens(form: FormVersion, a: Answers, t: TFunction): Screen[] {
+/** `prefilled`: Sondermerkmale, deren Antwort im Haus-Modus feststeht und die nicht gefragt werden */
+export function sonderScreens(form: FormVersion, a: Answers, t: TFunction, prefilled: (id: SonderId) => boolean = () => false): Screen[] {
   if (!form.sonder) return [];
+  const asked = form.sonder.filter((s) => !prefilled(s.id));
+  const known = form.sonder.length - asked.length;
   return [
-    { id: 'sonder.intro', chapter: 'sonder', intro: true, element: <ChapterIntro chapter="sonder" title={t('sonder.title')} lead={t('sonder.intro')} questions={form.sonder.length} /> },
-    ...form.sonder.map((s): Screen => ({ id: `sonder.${s.id}`, chapter: 'sonder', answered: !!a.sonder[s.id], required: true, element: <SonderQuestion s={s} /> })),
+    {
+      id: 'sonder.intro',
+      chapter: 'sonder',
+      intro: true,
+      element: (
+        <ChapterIntro chapter="sonder" title={t('sonder.title')} lead={t('sonder.intro')} questions={asked.length}>
+          {known > 0 && <Notice kind="ok">{t('house.prefilled', { count: known })}</Notice>}
+        </ChapterIntro>
+      ),
+    },
+    ...asked.map((s): Screen => ({ id: `sonder.${s.id}`, chapter: 'sonder', answered: !!a.sonder[s.id], required: true, element: <SonderQuestion s={s} /> })),
   ];
 }
