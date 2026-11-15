@@ -32,6 +32,22 @@ const REPLACEMENTS: Record<string, string> = {
   ' ': ' ',
 };
 
+/** Ersetzt Zeichen, die die Standardschrift nicht darstellen kann (`charset` = Zeichensatz der Schrift) */
+export function toWinAnsi(s: string, charset: Set<number>): string {
+  let out = '';
+  for (const ch of s) {
+    const r = REPLACEMENTS[ch];
+    if (r !== undefined) {
+      out += r;
+      continue;
+    }
+    const cp = ch.codePointAt(0)!;
+    if (ch === '\n' || charset.has(cp)) out += ch;
+    else out += '?';
+  }
+  return out;
+}
+
 /**
  * Einfache Layout-Hilfe für pdf-lib mit Standardschrift (WinAnsi):
  * Zeilenumbruch, automatischer Seitenumbruch, Kopf-/Fußzeilen.
@@ -86,18 +102,7 @@ export class Layout {
 
   /** Ersetzt Zeichen, die die Standardschrift nicht kennt. */
   clean(s: string): string {
-    let out = '';
-    for (const ch of s) {
-      const r = REPLACEMENTS[ch];
-      if (r !== undefined) {
-        out += r;
-        continue;
-      }
-      const cp = ch.codePointAt(0)!;
-      if (ch === '\n' || this.charset.has(cp)) out += ch;
-      else out += '?';
-    }
-    return out;
+    return toWinAnsi(s, this.charset);
   }
 
   font(o: TextOpts): PDFFont {
@@ -130,12 +135,6 @@ export class Layout {
       lines.push(line);
     }
     return lines;
-  }
-
-  measure(text: string, o: TextOpts = {}): number {
-    const size = o.size ?? 10;
-    const lh = o.lineHeight ?? size * 1.3;
-    return this.wrap(text, o.width ?? this.width, this.font(o), size).length * lh;
   }
 
   /** Schreibt Text am aktuellen y (fließend, mit Seitenumbruch). Gibt die Höhe zurück. */
@@ -173,43 +172,8 @@ export class Layout {
     this.y -= h;
   }
 
-  checkbox(x: number, yTop: number, checked: boolean, size = 8): void {
-    this.page.drawRectangle({ x, y: yTop - size, width: size, height: size, borderColor: rgb(0, 0, 0), borderWidth: 0.7 });
-    if (checked) {
-      const p = 1.5;
-      this.page.drawLine({ start: { x: x + p, y: yTop - p }, end: { x: x + size - p, y: yTop - size + p }, thickness: 1.1 });
-      this.page.drawLine({ start: { x: x + p, y: yTop - size + p }, end: { x: x + size - p, y: yTop - p }, thickness: 1.1 });
-    }
-  }
-
-  /** Mehrere Auswahloptionen in einer Zeile: [x] a  [ ] b */
-  choices(options: { label: string; checked: boolean }[], x: number, size = 10): void {
-    this.ensure(size * 1.4);
-    let cx = x;
-    for (const o of options) {
-      this.checkbox(cx, this.y - 1, o.checked, size * 0.85);
-      cx += size * 0.85 + 4;
-      const label = this.clean(o.label);
-      this.page.drawText(label, { x: cx, y: this.y - size, size, font: this.regular });
-      cx += this.regular.widthOfTextAtSize(label, size) + 14;
-    }
-    this.y -= size * 1.4;
-  }
-
   hline(y = this.y, x1 = this.left, x2 = this.right, thickness = 0.5, color = rgb(0, 0, 0)): void {
     this.page.drawLine({ start: { x: x1, y }, end: { x: x2, y }, thickness, color });
-  }
-
-  box(x: number, yTop: number, w: number, h: number, fill?: RGB, border = true): void {
-    this.page.drawRectangle({
-      x,
-      y: yTop - h,
-      width: w,
-      height: h,
-      color: fill,
-      borderColor: border ? rgb(0, 0, 0) : undefined,
-      borderWidth: border ? 0.6 : 0,
-    });
   }
 
   /** Fußzeilen auf allen Seiten nachträglich (für „Seite x von y“). */
@@ -222,7 +186,3 @@ export class Layout {
     return this.pdf.save();
   }
 }
-
-export const GREY = rgb(0.85, 0.85, 0.85);
-export const LIGHT = rgb(0.94, 0.94, 0.94);
-export const DARK = rgb(0.35, 0.35, 0.35);

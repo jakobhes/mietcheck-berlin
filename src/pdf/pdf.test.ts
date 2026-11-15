@@ -1,13 +1,17 @@
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { FORMS } from '../data/forms';
 import { applyHouse, HOUSES } from '../house/presets';
 import { initialAnswers, type Answers } from '../state/answers';
 import { Layout } from './layout';
-import { buildPruefbogen } from './pruefbogen';
 import { rentCalculation } from '../state/derive';
 import { buildRuege, ruegeParagraphs } from './ruege';
+import { fillPruefbogen } from './original';
+
+/** Original-Prüfbogen aus public/forms */
+const original = (id: string) => readFileSync(join('public/forms', `169A-${id}.pdf`));
+const buildPruefbogen = (form: (typeof FORMS)[number], a: Answers, today: string) => fillPruefbogen(original(form.id), form, a, today);
 
 /** Beispieldaten; mit PDF_OUT=<ordner> werden die PDFs zur Sichtprüfung gespeichert. */
 function sample(formId: string): Answers {

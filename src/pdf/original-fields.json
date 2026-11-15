@@ -1,0 +1,2038 @@
+{
+ "2015": {
+  "kind": "acro",
+  "texts": {
+   "date": "Datum",
+   "contractDate": "Datum Mieterhöhung",
+   "buildYear": "Datum bezugsfertig",
+   "area": "Wohnungsgröße",
+   "row": "Zeile",
+   "column": "Spalte",
+   "rent": "Kaltmiete",
+   "floor": "Etage",
+   "modernizedWhen": "Mod Alt seit",
+   "name": "Name, Vorname",
+   "street": "Srtasse, Hausnr",
+   "zip": "PLZ",
+   "email": "E-Mail",
+   "phone": "Tel-nr",
+   "reachable": "erreichbar",
+   "flatStreet": "Srtasse, Hausnr 2",
+   "flatZip": "PLZ 2",
+   "remarks": "Text1"
+  },
+  "choices": {
+   "wohnlage.einfache": {
+    "radio": "Wohnlage",
+    "value": "0"
+   },
+   "wohnlage.mittlere": {
+    "radio": "Wohnlage",
+    "value": "1"
+   },
+   "wohnlage.gute": {
+    "radio": "Wohnlage",
+    "value": "2"
+   },
+   "equipment.aussenWC": "AWC",
+   "equipment.innenWC": "IWC",
+   "equipment.badWC": "BWC",
+   "equipment.sammelheizung": "SH",
+   "equipment.ofenheizung": "OH",
+   "equipment.fahrstuhl": "FS",
+   "position.Vorderhaus": "VH",
+   "position.Seitenflügel": "SF",
+   "position.Hinterhaus": "HH",
+   "indexRent.ja": {
+    "radio": "Indexmiete ja",
+    "value": "Ja"
+   },
+   "indexRent.nein": {
+    "radio": "Indexmiete nein",
+    "value": "Ja"
+   },
+   "staffelRent.ja": {
+    "radio": "Staffelmiete ja",
+    "value": "Ja"
+   },
+   "staffelRent.nein": {
+    "radio": "Staffelmiete nein",
+    "value": "Ja"
+   },
+   "attic.ja": {
+    "radio": "DG",
+    "value": "0"
+   },
+   "attic.nein": {
+    "radio": "DG",
+    "value": "1"
+   },
+   "modernizedOld.nein": {
+    "radio": "Mod Altbau",
+    "value": "0"
+   },
+   "modernizedOld.ja": {
+    "radio": "Mod Altbau",
+    "value": "1"
+   },
+   "smallHouse.ja": {
+    "radio": "Reihenhaus",
+    "value": "0"
+   },
+   "smallHouse.nein": {
+    "radio": "Reihenhaus",
+    "value": "1"
+   },
+   "wistg.ja": {
+    "radio": "Bewerbung",
+    "value": "Ja"
+   },
+   "wistg.nein": {
+    "radio": "Bewerbung",
+    "value": "2"
+   }
+  },
+  "merkmale": {
+   "bad_kein_waschbecken": "11",
+   "bad_wc_keine_lueftung": "13",
+   "bad_dielen": "15",
+   "bad_nicht_beheizbar": "17",
+   "bad_kein_warmwasser": "19",
+   "bad_freistehende_wanne": "21",
+   "bad_waende_nicht_gefliest": "23",
+   "bad_ohne_fenster": "25",
+   "bad_keine_dusche": "27",
+   "bad_klein": "29",
+   "bad_grosses_waschbecken": "12",
+   "bad_hochwertig": "14",
+   "bad_innen_lueftung": "16",
+   "bad_zweites_wc": "18",
+   "bad_gross": "20",
+   "bad_fussbodenheizung": "22",
+   "bad_fliesen_hochwertig": "24",
+   "bad_wandhaengendes_wc": "26",
+   "bad_strukturheizkoerper": "28",
+   "bad_einhebelmischer": "30",
+   "bad_separate_dusche": "31",
+   "kueche_ohne_fenster": "32",
+   "kueche_kein_herd": "34",
+   "kueche_keine_spuele": "36",
+   "kueche_kein_warmwasser": "38",
+   "kueche_nicht_beheizbar": "40",
+   "kueche_kein_geschirrspueler": "42",
+   "kueche_boden": "33",
+   "kueche_gross": "35",
+   "kueche_einbaukueche": "37",
+   "kueche_ceran": "39",
+   "kueche_dunstabzug": "41",
+   "kueche_kuehlschrank": "43",
+   "wohnung_einfachverglasung": "44",
+   "wohnung_elektro_unzureichend": "46",
+   "wohnung_elektro_aufputz": "48",
+   "wohnung_leitungen_aufputz": "50",
+   "wohnung_keine_waschmaschine": "52",
+   "wohnung_schlechter_schnitt": "54",
+   "wohnung_kein_balkon": "56",
+   "wohnung_kein_kabel": "58",
+   "wohnung_einbauschrank": "45",
+   "wohnung_balkon": "47",
+   "wohnung_fussbodenheizung": "49",
+   "wohnung_stuck": "51",
+   "wohnung_heizungsrohre": "53",
+   "wohnung_breitband": "55",
+   "wohnung_rolllaeden": "57",
+   "wohnung_kaltwasserzaehler": "59",
+   "wohnung_raum_40": "60",
+   "wohnung_barrierearm": "61",
+   "wohnung_waermeschutzfenster": "62",
+   "wohnung_parkett": "63",
+   "gebaeude_treppenhaus_schlecht": "64",
+   "gebaeude_kein_keller": "66",
+   "gebaeude_haustuer_offen": "68",
+   "gebaeude_instandhaltung_schlecht": "70",
+   "gebaeude_seitenfluegel": "72",
+   "gebaeude_keine_sprechanlage": "74",
+   "umfeld_keine_fahrradplaetze": "76",
+   "gebaeude_daemmung_schlecht": "78",
+   "energie_minus_1": "80",
+   "energie_minus_2": "82",
+   "energie_minus_3": "84",
+   "gebaeude_fahrradraum": "65",
+   "gebaeude_zusatzraeume": "67",
+   "gebaeude_garage": "69",
+   "gebaeude_eingang_repraesentativ": "71",
+   "gebaeude_einbruchschutz": "73",
+   "gebaeude_videosprechanlage": "75",
+   "gebaeude_aufzug": "77",
+   "gebaeude_daemmung_gut": "79",
+   "energie_plus_1": "81",
+   "energie_plus_2": "83",
+   "energie_plus_3": "85",
+   "umfeld_vernachlaessigt": "86",
+   "umfeld_laerm": "88",
+   "umfeld_geruch": "90",
+   "umfeld_muell": "92",
+   "umfeld_citylage": "87",
+   "umfeld_ruhig": "89",
+   "umfeld_gestaltet": "91",
+   "umfeld_muell_gepflegt": "93",
+   "umfeld_villa": "94",
+   "umfeld_garten": "95"
+  },
+  "sonder": {
+   "sm_parkett": {
+    "ja": {
+     "radio": "Parkett",
+     "value": "0"
+    },
+    "nein": {
+     "radio": "Parkett",
+     "value": "1"
+    }
+   },
+   "sm_kueche": {
+    "ja": {
+     "radio": "Küche",
+     "value": "0"
+    },
+    "nein": {
+     "radio": "Küche",
+     "value": "1"
+    }
+   },
+   "sm_dusche": {
+    "ja": {
+     "radio": "Badewanne",
+     "value": "0"
+    },
+    "nein": {
+     "radio": "Badewanne",
+     "value": "1"
+    }
+   },
+   "sm_kleines_bad": {
+    "ja": {
+     "radio": "Kleines Bad",
+     "value": "0"
+    },
+    "nein": {
+     "radio": "Kleines Bad",
+     "value": "1"
+    }
+   },
+   "sm_modernes_bad": {
+    "ja": {
+     "radio": "Moderneses Bad",
+     "value": "0"
+    },
+    "nein": {
+     "radio": "Moderneses Bad",
+     "value": "1"
+    }
+   },
+   "sm_isolierverglasung": {
+    "ja": {
+     "radio": "Schallschutz",
+     "value": "0"
+    },
+    "nein": {
+     "radio": "Schallschutz",
+     "value": "1"
+    }
+   },
+   "sm_aufzug": {
+    "ja": {
+     "radio": "Aufzug",
+     "value": "0"
+    },
+    "nein": {
+     "radio": "Aufzug",
+     "value": "1"
+    }
+   }
+  }
+ },
+ "2017": {
+  "kind": "acro",
+  "texts": {
+   "date": "Datum",
+   "contractDate": "Datum Mieterhöhung",
+   "buildYear": "Datum bezugsfertig",
+   "area": "Wohnungsgröße",
+   "row": "Zeile",
+   "column": "Spalte",
+   "rent": "Kaltmiete",
+   "floor": "Etage",
+   "modernizedWhen": "Mod Alt seit",
+   "name": "Name, Vorname",
+   "street": "Srtasse, Hausnr",
+   "zip": "PLZ",
+   "email": "E-Mail",
+   "phone": "Tel-nr",
+   "reachable": "erreichbar",
+   "flatStreet": "Srtasse, Hausnr 2",
+   "flatZip": "PLZ 2",
+   "remarks": "Weitere Bemerkungen"
+  },
+  "choices": {
+   "wohnlage.einfache": {
+    "radio": "Wohnlage",
+    "value": "1"
+   },
+   "wohnlage.mittlere": {
+    "radio": "Wohnlage",
+    "value": "2"
+   },
+   "wohnlage.gute": {
+    "radio": "Wohnlage",
+    "value": "0"
+   },
+   "equipment.aussenWC": "AWC",
+   "equipment.innenWC": "IWC",
+   "equipment.badWC": "BWC",
+   "equipment.sammelheizung": "SH",
+   "equipment.ofenheizung": "OH",
+   "equipment.fahrstuhl": "FS",
+   "position.Vorderhaus": "VH",
+   "position.Seitenflügel": "SF",
+   "position.Hinterhaus": "HH",
+   "indexRent.ja": {
+    "radio": "Indexmiete ja",
+    "value": "Ja"
+   },
+   "indexRent.nein": {
+    "radio": "Indexmiete 2",
+    "value": "Ja"
+   },
+   "staffelRent.ja": {
+    "radio": "Staffelmiete ja",
+    "value": "Ja"
+   },
+   "staffelRent.nein": {
+    "radio": "Staffelmiete 2",
+    "value": "Ja"
+   },
+   "municipal.ja": {
+    "radio": "Städtisch1",
+    "value": "Ja"
+   },
+   "municipal.nein": {
+    "radio": "Städtisch1",
+    "value": "2"
+   },
+   "attic.ja": {
+    "radio": "DG",
+    "value": "0"
+   },
+   "attic.nein": {
+    "radio": "DG",
+    "value": "1"
+   },
+   "modernizedOld.nein": {
+    "radio": "Mod Altbau",
+    "value": "0"
+   },
+   "modernizedOld.ja": {
+    "radio": "Mod Altbau",
+    "value": "1"
+   },
+   "smallHouse.ja": {
+    "radio": "Reihenhaus",
+    "value": "0"
+   },
+   "smallHouse.nein": {
+    "radio": "Reihenhaus",
+    "value": "1"
+   },
+   "wistg.ja": {
+    "radio": "Bewerbung",
+    "value": "Ja"
+   },
+   "wistg.nein": {
+    "radio": "Bewerbung",
+    "value": "2"
+   }
+  },
+  "merkmale": {
+   "bad_kein_waschbecken": "Bad1",
+   "bad_wc_keine_lueftung": "WC2",
+   "bad_dielen": "Diele3",
+   "bad_nicht_beheizbar": "Ohneheiz4",
+   "bad_kein_warmwasser": "115",
+   "bad_freistehende_wanne": "116",
+   "bad_waende_nicht_gefliest": "117",
+   "bad_ohne_fenster": "118",
+   "bad_keine_dusche": "119",
+   "bad_klein": "120",
+   "bad_grosses_waschbecken": "121",
+   "bad_hochwertig": "122",
+   "bad_innen_lueftung": "123",
+   "bad_zweites_wc": "124",
+   "bad_gross": "125",
+   "bad_fussbodenheizung": "126",
+   "bad_fliesen_hochwertig": "127",
+   "bad_wandhaengendes_wc": "128",
+   "bad_strukturheizkoerper": "129",
+   "bad_separate_dusche": "130",
+   "kueche_ohne_fenster": "201",
+   "kueche_kein_herd": "202",
+   "kueche_keine_spuele": "203",
+   "kueche_kein_warmwasser": "204",
+   "kueche_nicht_beheizbar": "205",
+   "kueche_kein_geschirrspueler": "206",
+   "kueche_boden": "207",
+   "kueche_gross": "208",
+   "kueche_einbaukueche": "209",
+   "kueche_ceran": "210",
+   "kueche_dunstabzug": "211",
+   "kueche_kuehlschrank": "212",
+   "wohnung_einfachverglasung": "301",
+   "wohnung_elektro_unzureichend": "302",
+   "wohnung_elektro_aufputz": "303",
+   "wohnung_leitungen_aufputz": "304",
+   "wohnung_keine_waschmaschine": "305",
+   "wohnung_schlechter_schnitt": "306",
+   "wohnung_kein_balkon": "307",
+   "wohnung_einbauschrank": "308",
+   "wohnung_balkon": "309",
+   "wohnung_fussbodenheizung": "310",
+   "wohnung_stuck": "311",
+   "wohnung_heizungsrohre": "312",
+   "wohnung_rolllaeden": "313",
+   "wohnung_kaltwasserzaehler": "314",
+   "wohnung_raum_40": "315",
+   "wohnung_barrierearm": "316",
+   "wohnung_parkett": "317",
+   "wohnung_waermeschutzfenster": "318",
+   "wohnung_einbruchschutz_tuer": "319",
+   "gebaeude_treppenhaus_schlecht": "401",
+   "gebaeude_kein_keller": "402",
+   "gebaeude_haustuer_offen": "403",
+   "gebaeude_instandhaltung_schlecht": "404",
+   "gebaeude_seitenfluegel": "405",
+   "gebaeude_kein_aufzug_ab5": "406",
+   "gebaeude_keine_sprechanlage": "407",
+   "gebaeude_daemmung_schlecht": "408",
+   "energie_minus_1": "416",
+   "energie_minus_2": "417",
+   "energie_minus_3": "418",
+   "gebaeude_fahrradraum": "409",
+   "gebaeude_zusatzraeume": "410",
+   "gebaeude_eingang_repraesentativ": "411",
+   "gebaeude_instandhaltung_gut": "412",
+   "gebaeude_videosprechanlage": "413",
+   "gebaeude_aufzug": "414",
+   "gebaeude_daemmung_gut": "415",
+   "energie_plus_1": "419",
+   "energie_plus_2": "420",
+   "energie_plus_3": "421",
+   "umfeld_vernachlaessigt": "501",
+   "umfeld_laerm": "502",
+   "umfeld_geruch": "503",
+   "umfeld_keine_fahrradplaetze": "504",
+   "umfeld_citylage": "505",
+   "umfeld_ruhig": "506",
+   "umfeld_gestaltet": "507",
+   "umfeld_parkplatz": "508",
+   "umfeld_garten": "509"
+  }
+ },
+ "2019": {
+  "kind": "acro",
+  "texts": {
+   "date": "Datum",
+   "contractDate": "Datum Mieterhöhung",
+   "buildYear": "Datum bezugsfertig",
+   "area": "Wohnungsgröße",
+   "row": "Zeile",
+   "column": "Spalte",
+   "rent": "Kaltmiete",
+   "floor": "Etage",
+   "modernizedWhen": "Mod Alt seit",
+   "name": "Name, Vorname",
+   "street": "Srtasse, Hausnr",
+   "zip": "PLZ",
+   "email": "E-Mail",
+   "phone": "Tel-nr",
+   "reachable": "erreichbar",
+   "flatStreet": "Srtasse, Hausnr 2",
+   "flatZip": "PLZ 2",
+   "remarks": "Weitere Bemerkungen"
+  },
+  "choices": {
+   "wohnlage.einfache": {
+    "radio": "Wohnlage",
+    "value": "0"
+   },
+   "wohnlage.mittlere": {
+    "radio": "Wohnlage",
+    "value": "1"
+   },
+   "wohnlage.gute": {
+    "radio": "Wohnlage",
+    "value": "2"
+   },
+   "equipment.aussenWC": "AWC",
+   "equipment.innenWC": "IWC",
+   "equipment.badWC": "BWC",
+   "equipment.sammelheizung": "SH",
+   "equipment.ofenheizung": "OH",
+   "equipment.fahrstuhl": "FS",
+   "position.Vorderhaus": "VH",
+   "position.Seitenflügel": "SF",
+   "position.Hinterhaus": "HH",
+   "indexRent.ja": {
+    "radio": "Indexmiete",
+    "value": "0"
+   },
+   "indexRent.nein": {
+    "radio": "Indexmiete",
+    "value": "1"
+   },
+   "staffelRent.ja": {
+    "radio": "Staffelmiete",
+    "value": "Ja"
+   },
+   "staffelRent.nein": {
+    "radio": "Staffelmiete",
+    "value": "2"
+   },
+   "municipal.ja": {
+    "radio": "Städtisch1",
+    "value": "Ja"
+   },
+   "municipal.nein": {
+    "radio": "Städtisch1",
+    "value": "2"
+   },
+   "attic.ja": {
+    "radio": "DG",
+    "value": "0"
+   },
+   "attic.nein": {
+    "radio": "DG",
+    "value": "1"
+   },
+   "modernizedOld.nein": {
+    "radio": "Mod Altbau",
+    "value": "0"
+   },
+   "modernizedOld.ja": {
+    "radio": "Mod Altbau",
+    "value": "1"
+   },
+   "smallHouse.ja": {
+    "radio": "Reihenhaus",
+    "value": "0"
+   },
+   "smallHouse.nein": {
+    "radio": "Reihenhaus",
+    "value": "1"
+   },
+   "wistg.ja": {
+    "radio": "Bewerbung",
+    "value": "Ja"
+   },
+   "wistg.nein": {
+    "radio": "Bewerbung",
+    "value": "2"
+   }
+  },
+  "merkmale": {
+   "bad_kein_waschbecken": "Bad1",
+   "bad_wc_keine_lueftung": "WC2",
+   "bad_dielen": "Diele3",
+   "bad_nicht_beheizbar": "Ohneheiz4",
+   "bad_kein_warmwasser": "115",
+   "bad_freistehende_wanne": "116",
+   "bad_waende_nicht_gefliest": "117",
+   "bad_ohne_fenster": "118",
+   "bad_keine_dusche": "119",
+   "bad_klein": "120",
+   "bad_grosses_waschbecken": "121",
+   "bad_hochwertig": "122",
+   "bad_innen_lueftung": "123",
+   "bad_zweites_wc": "124",
+   "bad_gross": "125",
+   "bad_fussbodenheizung": "126",
+   "bad_fliesen_hochwertig": "127",
+   "bad_wandhaengendes_wc": "128",
+   "bad_strukturheizkoerper": "129",
+   "bad_separate_dusche": "130",
+   "kueche_ohne_fenster": "201",
+   "kueche_kein_herd": "202",
+   "kueche_keine_spuele": "203",
+   "kueche_kein_warmwasser": "204",
+   "kueche_nicht_beheizbar": "205",
+   "kueche_kein_geschirrspueler": "206",
+   "kueche_boden": "207",
+   "kueche_gross": "208",
+   "kueche_einbaukueche": "209",
+   "kueche_ceran": "210",
+   "kueche_dunstabzug": "211",
+   "kueche_kuehlschrank": "212",
+   "wohnung_einfachverglasung": "301",
+   "wohnung_elektro_unzureichend": "302",
+   "wohnung_elektro_aufputz": "303",
+   "wohnung_leitungen_aufputz": "304",
+   "wohnung_keine_waschmaschine": "305",
+   "wohnung_schlechter_schnitt": "306",
+   "wohnung_kein_balkon": "307",
+   "wohnung_einbauschrank": "308",
+   "wohnung_balkon": "309",
+   "wohnung_fussbodenheizung": "310",
+   "wohnung_stuck": "311",
+   "wohnung_heizungsrohre": "312",
+   "wohnung_rolllaeden": "313",
+   "wohnung_kaltwasserzaehler": "314",
+   "wohnung_raum_40": "315",
+   "wohnung_barrierearm": "316",
+   "wohnung_parkett": "317",
+   "wohnung_waermeschutzfenster": "318",
+   "wohnung_einbruchschutz_tuer": "319",
+   "gebaeude_treppenhaus_schlecht": "401",
+   "gebaeude_kein_keller": "402",
+   "gebaeude_haustuer_offen": "403",
+   "gebaeude_instandhaltung_schlecht": "404",
+   "gebaeude_seitenfluegel": "405",
+   "gebaeude_kein_aufzug_ab5": "406",
+   "gebaeude_keine_sprechanlage": "407",
+   "gebaeude_daemmung_schlecht": "408",
+   "energie_minus_1": "416",
+   "energie_minus_2": "417",
+   "energie_minus_3": "418",
+   "gebaeude_fahrradraum": "409",
+   "gebaeude_zusatzraeume": "410",
+   "gebaeude_eingang_repraesentativ": "411",
+   "gebaeude_instandhaltung_gut": "412",
+   "gebaeude_videosprechanlage": "413",
+   "gebaeude_aufzug": "414",
+   "gebaeude_daemmung_gut": "415",
+   "energie_plus_1": "419",
+   "energie_plus_2": "420",
+   "energie_plus_3": "421",
+   "umfeld_vernachlaessigt": "501",
+   "umfeld_laerm": "502",
+   "umfeld_geruch": "503",
+   "umfeld_keine_fahrradplaetze": "504",
+   "umfeld_citylage": "505",
+   "umfeld_ruhig": "506",
+   "umfeld_gestaltet": "507",
+   "umfeld_parkplatz": "508",
+   "umfeld_garten": "509"
+  }
+ },
+ "2021": {
+  "kind": "acro",
+  "texts": {
+   "date": "Datum",
+   "contractDate": "Datum Mieterhöhung",
+   "buildYear": "Datum bezugsfertig",
+   "area": "Wohnungsgröße",
+   "row": "Zeile",
+   "column": "Spalte",
+   "rent": "Kaltmiete",
+   "floor": "Etage",
+   "modernizedWhen": "Mod Alt seit",
+   "name": "Name, Vorname",
+   "street": "Srtasse, Hausnr",
+   "zip": "PLZ",
+   "email": "E-Mail",
+   "phone": "Tel-nr",
+   "reachable": "erreichbar",
+   "flatStreet": "Srtasse, Hausnr 2",
+   "flatZip": "PLZ 2",
+   "remarks": "Weitere Bemerkungen"
+  },
+  "choices": {
+   "wohnlage.einfache": {
+    "radio": "Wohnlage",
+    "value": "0"
+   },
+   "wohnlage.mittlere": {
+    "radio": "Wohnlage",
+    "value": "1"
+   },
+   "wohnlage.gute": {
+    "radio": "Wohnlage",
+    "value": "2"
+   },
+   "equipment.aussenWC": "AWC",
+   "equipment.innenWC": "IWC",
+   "equipment.badWC": "BWC",
+   "equipment.sammelheizung": "SH",
+   "equipment.ofenheizung": "OH",
+   "equipment.fahrstuhl": "FS",
+   "position.Vorderhaus": "VH",
+   "position.Seitenflügel": "SF",
+   "position.Hinterhaus": "HH",
+   "indexRent.ja": {
+    "radio": "Indexmiete",
+    "value": "0"
+   },
+   "indexRent.nein": {
+    "radio": "Indexmiete",
+    "value": "1"
+   },
+   "staffelRent.ja": {
+    "radio": "Staffelmiete",
+    "value": "Ja"
+   },
+   "staffelRent.nein": {
+    "radio": "Staffelmiete",
+    "value": "2"
+   },
+   "municipal.ja": {
+    "radio": "Städtisch1",
+    "value": "Ja"
+   },
+   "municipal.nein": {
+    "radio": "Städtisch1",
+    "value": "2"
+   },
+   "attic.ja": {
+    "radio": "DG",
+    "value": "0"
+   },
+   "attic.nein": {
+    "radio": "DG",
+    "value": "1"
+   },
+   "modernizedOld.nein": {
+    "radio": "Mod Altbau",
+    "value": "0"
+   },
+   "modernizedOld.ja": {
+    "radio": "Mod Altbau",
+    "value": "1"
+   },
+   "smallHouse.ja": {
+    "radio": "Reihenhaus",
+    "value": "0"
+   },
+   "smallHouse.nein": {
+    "radio": "Reihenhaus",
+    "value": "1"
+   },
+   "wistg.ja": {
+    "radio": "Bewerbung",
+    "value": "Ja"
+   },
+   "wistg.nein": {
+    "radio": "Bewerbung",
+    "value": "2"
+   }
+  },
+  "merkmale": {
+   "bad_kein_waschbecken": "Bad1",
+   "bad_wc_keine_lueftung": "WC2",
+   "bad_dielen": "Diele3",
+   "bad_nicht_beheizbar": "Ohneheiz4",
+   "bad_kein_warmwasser": "115",
+   "bad_freistehende_wanne": "116",
+   "bad_waende_nicht_gefliest": "117",
+   "bad_ohne_fenster": "118",
+   "bad_keine_dusche": "119",
+   "bad_klein": "120",
+   "bad_grosses_waschbecken": "121",
+   "bad_hochwertig": "122",
+   "bad_innen_lueftung": "123",
+   "bad_zweites_wc": "124",
+   "bad_gross": "125",
+   "bad_fussbodenheizung": "126",
+   "bad_fliesen_hochwertig": "127",
+   "bad_wandhaengendes_wc": "128",
+   "bad_strukturheizkoerper": "129",
+   "bad_separate_dusche": "130",
+   "kueche_ohne_fenster": "201",
+   "kueche_kein_herd": "202",
+   "kueche_keine_spuele": "203",
+   "kueche_kein_warmwasser": "204",
+   "kueche_nicht_beheizbar": "205",
+   "kueche_kein_geschirrspueler": "206",
+   "kueche_boden": "207",
+   "kueche_gross": "208",
+   "kueche_einbaukueche": "209",
+   "kueche_ceran": "210",
+   "kueche_dunstabzug": "211",
+   "kueche_kuehlschrank": "212",
+   "wohnung_einfachverglasung": "301",
+   "wohnung_elektro_unzureichend": "302",
+   "wohnung_elektro_aufputz": "303",
+   "wohnung_leitungen_aufputz": "304",
+   "wohnung_keine_waschmaschine": "305",
+   "wohnung_schlechter_schnitt": "306",
+   "wohnung_kein_balkon": "307",
+   "wohnung_einbauschrank": "308",
+   "wohnung_balkon": "309",
+   "wohnung_fussbodenheizung": "310",
+   "wohnung_stuck": "311",
+   "wohnung_heizungsrohre": "312",
+   "wohnung_rolllaeden": "313",
+   "wohnung_kaltwasserzaehler": "314",
+   "wohnung_raum_40": "315",
+   "wohnung_barrierearm": "316",
+   "wohnung_parkett": "317",
+   "wohnung_waermeschutzfenster": "318",
+   "wohnung_einbruchschutz_tuer": "319",
+   "gebaeude_treppenhaus_schlecht": "401",
+   "gebaeude_kein_keller": "402",
+   "gebaeude_haustuer_offen": "403",
+   "gebaeude_instandhaltung_schlecht": "404",
+   "gebaeude_seitenfluegel": "405",
+   "gebaeude_kein_aufzug_ab5": "406",
+   "gebaeude_keine_sprechanlage": "407",
+   "gebaeude_daemmung_schlecht": "408",
+   "energie_minus_1": "416",
+   "energie_minus_2": "417",
+   "energie_minus_3": "418",
+   "gebaeude_fahrradraum": "409",
+   "gebaeude_zusatzraeume": "410",
+   "gebaeude_eingang_repraesentativ": "411",
+   "gebaeude_instandhaltung_gut": "412",
+   "gebaeude_videosprechanlage": "413",
+   "gebaeude_aufzug": "414",
+   "gebaeude_daemmung_gut": "415",
+   "energie_plus_1": "419",
+   "energie_plus_2": "420",
+   "energie_plus_3": "421",
+   "umfeld_vernachlaessigt": "501",
+   "umfeld_laerm": "502",
+   "umfeld_geruch": "503",
+   "umfeld_keine_fahrradplaetze": "504",
+   "umfeld_citylage": "505",
+   "umfeld_ruhig": "506",
+   "umfeld_gestaltet": "507",
+   "umfeld_parkplatz": "508",
+   "umfeld_garten": "509"
+  }
+ },
+ "2023": {
+  "kind": "acro",
+  "texts": {
+   "date": "Datum",
+   "contractDate": "Datum Mieterhöhung",
+   "buildYear": "Datum bezugsfertig",
+   "area": "Wohnungsgröße",
+   "row": "Zeile",
+   "column": "Spalte",
+   "rent": "Kaltmiete",
+   "floor": "Etage",
+   "modernizedWhen": "Mod Alt seit",
+   "name": "Name, Vorname",
+   "street": "Srtasse, Hausnr",
+   "zip": "PLZ",
+   "email": "E-Mail",
+   "phone": "Tel-nr",
+   "reachable": "erreichbar",
+   "flatStreet": "Srtasse, Hausnr 2",
+   "flatZip": "PLZ 2",
+   "remarks": "Weitere Bemerkungen"
+  },
+  "choices": {
+   "wohnlage.einfache": "Wohnlage einfach",
+   "wohnlage.mittlere": "Wohnlage mittel",
+   "wohnlage.gute": "Wohnlage gut",
+   "equipment.aussenWC": "AWC",
+   "equipment.innenWC": "IWC",
+   "equipment.badWC": "BWC",
+   "equipment.sammelheizung": "SH",
+   "equipment.ofenheizung": "OH",
+   "equipment.fahrstuhl": "FS",
+   "position.Vorderhaus": "VH",
+   "position.Seitenflügel": "SF",
+   "position.Hinterhaus": "HH",
+   "indexRent.ja": {
+    "radio": "Indexmiete",
+    "value": "Ja"
+   },
+   "indexRent.nein": {
+    "radio": "Indexmiete",
+    "value": "2"
+   },
+   "staffelRent.ja": {
+    "radio": "Staffelmiete",
+    "value": "Ja"
+   },
+   "staffelRent.nein": {
+    "radio": "Staffelmiete",
+    "value": "2"
+   },
+   "municipal.ja": {
+    "radio": "Städtisch1",
+    "value": "Ja"
+   },
+   "municipal.nein": {
+    "radio": "Städtisch1",
+    "value": "2"
+   },
+   "attic.ja": {
+    "radio": "Dachgeschoss ja",
+    "value": "Ja"
+   },
+   "attic.nein": {
+    "radio": "Dachgeschoss nein",
+    "value": "Ja"
+   },
+   "modernizedOld.nein": {
+    "radio": "Modernisierung nein",
+    "value": "Ja"
+   },
+   "modernizedOld.ja": {
+    "radio": "Modernisierung ja",
+    "value": "Ja"
+   },
+   "smallHouse.ja": {
+    "radio": "Reihenhaus ja",
+    "value": "Ja"
+   },
+   "smallHouse.nein": {
+    "radio": "Reihenhaus nein",
+    "value": "2"
+   },
+   "wistg.ja": {
+    "radio": "Bewerbung",
+    "value": "Ja"
+   },
+   "wistg.nein": {
+    "radio": "Bewerbung",
+    "value": "2"
+   }
+  },
+  "merkmale": {
+   "bad_kein_waschbecken": "Bad1",
+   "bad_wc_keine_lueftung": "WC2",
+   "bad_dielen": "Diele3",
+   "bad_nicht_beheizbar": "Ohneheiz4",
+   "bad_kein_warmwasser": "115",
+   "bad_freistehende_wanne": "116",
+   "bad_waende_nicht_gefliest": "117",
+   "bad_ohne_fenster": "118",
+   "bad_keine_dusche": "119",
+   "bad_klein": "120",
+   "bad_grosses_waschbecken": "121",
+   "bad_hochwertig": "122",
+   "bad_innen_lueftung": "123",
+   "bad_zweites_wc": "124",
+   "bad_gross": "125",
+   "bad_fussbodenheizung": "126",
+   "bad_fliesen_hochwertig": "127",
+   "bad_wandhaengendes_wc": "128",
+   "bad_strukturheizkoerper": "129",
+   "bad_separate_dusche": "130",
+   "kueche_ohne_fenster": "201",
+   "kueche_kein_herd": "202",
+   "kueche_keine_spuele": "203",
+   "kueche_kein_warmwasser": "204",
+   "kueche_nicht_beheizbar": "205",
+   "kueche_kein_geschirrspueler": "206",
+   "kueche_boden": "207",
+   "kueche_gross": "208",
+   "kueche_einbaukueche": "209",
+   "kueche_ceran": "210",
+   "kueche_dunstabzug": "211",
+   "kueche_kuehlschrank": "212",
+   "wohnung_einfachverglasung": "301",
+   "wohnung_elektro_unzureichend": "302",
+   "wohnung_elektro_aufputz": "303",
+   "wohnung_leitungen_aufputz": "304",
+   "wohnung_keine_waschmaschine": "305",
+   "wohnung_schlechter_schnitt": "306",
+   "wohnung_kein_balkon": "307",
+   "wohnung_einbauschrank": "308",
+   "wohnung_balkon": "309",
+   "wohnung_fussbodenheizung": "310",
+   "wohnung_stuck": "311",
+   "wohnung_heizungsrohre": "312",
+   "wohnung_rolllaeden": "313",
+   "wohnung_kaltwasserzaehler": "314",
+   "wohnung_raum_40": "315",
+   "wohnung_barrierearm": "316",
+   "wohnung_parkett": "317",
+   "wohnung_waermeschutzfenster": "318",
+   "wohnung_einbruchschutz_tuer": "319",
+   "gebaeude_treppenhaus_schlecht": "401",
+   "gebaeude_kein_keller": "402",
+   "gebaeude_haustuer_offen": "403",
+   "gebaeude_instandhaltung_schlecht": "404",
+   "gebaeude_seitenfluegel": "405",
+   "gebaeude_kein_aufzug_ab5": "406",
+   "gebaeude_keine_sprechanlage": "407",
+   "gebaeude_daemmung_schlecht": "408",
+   "energie_minus_1": "416",
+   "energie_minus_2": "417",
+   "energie_minus_3": "418",
+   "gebaeude_fahrradraum": "409",
+   "gebaeude_zusatzraeume": "410",
+   "gebaeude_eingang_repraesentativ": "411",
+   "gebaeude_instandhaltung_gut": "412",
+   "gebaeude_videosprechanlage": "413",
+   "gebaeude_aufzug": "414",
+   "gebaeude_daemmung_gut": "415",
+   "energie_plus_1": "419",
+   "energie_plus_2": "420",
+   "energie_plus_3": "421",
+   "umfeld_vernachlaessigt": "501",
+   "umfeld_laerm": "502",
+   "umfeld_geruch": "503",
+   "umfeld_keine_fahrradplaetze": "504",
+   "umfeld_citylage": "505",
+   "umfeld_ruhig": "506",
+   "umfeld_gestaltet": "507",
+   "umfeld_parkplatz": "508",
+   "umfeld_garten": "509"
+  }
+ },
+ "2024": {
+  "kind": "acro",
+  "texts": {
+   "date": "DatumFragebogen",
+   "contractDate": "DatumMietvertrag",
+   "buildYear": "Baujahr",
+   "area": "Wohnungsgröße",
+   "row": "Zeile",
+   "rent": "Miete",
+   "floor": "Stockwerk",
+   "modernizedWhen": "Modernwann",
+   "energyValue": "Energieverbrauchskennwert",
+   "name": "Name",
+   "memberNo": "Mitgliedsnummer",
+   "street": "Adresse",
+   "zipCity": "PLZOrt",
+   "email": "Mailadresse",
+   "phone": "Telefonnummer",
+   "reachable": "erreichbar",
+   "flatAddress": "Prüfadresse",
+   "remarks": [
+    "WeitereBemerkungen1",
+    "WeitereBemerkungen2",
+    "WeitereBemerkungen3",
+    "WeitereBemerkungen4",
+    "WeitereBemerkungen5",
+    "WeitereBemerkungen6",
+    "WeitereBemerkungen7",
+    "WeitereBemerkungen8",
+    "WeitereBemerkungen9",
+    "WeitereBemerkungen10",
+    "WeitereBemerkungen11",
+    "WeitereBemerkungen12"
+   ]
+  },
+  "choices": {
+   "wohnlage.einfache": "einfach",
+   "wohnlage.mittlere": "mittel",
+   "wohnlage.gute": "gut",
+   "equipment.aussenWC": "AußenWC",
+   "equipment.innenWC": "InnenWC",
+   "equipment.badWC": "BadWC",
+   "equipment.sammelheizung": "Sammelheizung",
+   "equipment.ofenheizung": "Ofenheizung",
+   "equipment.fahrstuhl": "Fahrstuhl",
+   "position.Vorderhaus": "Vorderhaus",
+   "position.Seitenflügel": "Seitenflügel",
+   "position.Hinterhaus": "Hinterhaus",
+   "indexRent.ja": "Indexja",
+   "indexRent.nein": "Indexnein",
+   "staffelRent.ja": "Staffelja",
+   "staffelRent.nein": "Staffelnein",
+   "municipal.ja": "LWUja",
+   "municipal.nein": "LWUnein",
+   "attic.ja": "Dachgeschossja",
+   "attic.nein": "Dachgeschossnein",
+   "modernizedOld.nein": "Modernnein",
+   "modernizedOld.ja": "Modernja",
+   "smallHouse.ja": "EinFamja",
+   "smallHouse.nein": "EinFamnein",
+   "wistg.ja": "Bewerbungja",
+   "wistg.nein": "Bewerbungnein"
+  },
+  "merkmale": {
+   "bad_kein_waschbecken": "Kontrollkästchen1.1",
+   "bad_wc_keine_lueftung": "Kontrollkästchen1.3",
+   "bad_dielen": "Kontrollkästchen1.5",
+   "bad_nicht_beheizbar": "Kontrollkästchen1.7",
+   "bad_kein_warmwasser": "Kontrollkästchen1.9",
+   "bad_freistehende_wanne": "Kontrollkästchen1.11",
+   "bad_waende_nicht_gefliest": "Kontrollkästchen1.13",
+   "bad_ohne_fenster": "Kontrollkästchen1.15",
+   "bad_keine_dusche": "Kontrollkästchen1.17",
+   "bad_klein": "Kontrollkästchen1.19",
+   "bad_grosses_waschbecken": "Kontrollkästchen1.2",
+   "bad_hochwertig": "Kontrollkästchen1.4",
+   "bad_innen_lueftung": "Kontrollkästchen1.6",
+   "bad_zweites_wc": "Kontrollkästchen1.8",
+   "bad_gross": "Kontrollkästchen1.10",
+   "bad_fussbodenheizung": "Kontrollkästchen1.12",
+   "bad_fliesen_hochwertig": "Kontrollkästchen1.14",
+   "bad_wandhaengendes_wc": "Kontrollkästchen1.16",
+   "bad_strukturheizkoerper": "Kontrollkästchen1.18",
+   "bad_separate_dusche": "Kontrollkästchen1.20",
+   "bad_bodengleiche_dusche": "Kontrollkästchen1.21",
+   "kueche_ohne_fenster": "Kontrollkästchen2.1",
+   "kueche_kein_herd": "Kontrollkästchen2.3",
+   "kueche_keine_spuele": "Kontrollkästchen2.5",
+   "kueche_kein_warmwasser": "Kontrollkästchen2.7",
+   "kueche_nicht_beheizbar": "Kontrollkästchen2.9",
+   "kueche_kein_geschirrspueler": "Kontrollkästchen2.11",
+   "kueche_keine_wandfliesen": "Kontrollkästchen2.13",
+   "kueche_boden": "Kontrollkästchen2.2",
+   "kueche_gross": "Kontrollkästchen2.4",
+   "kueche_einbaukueche": "Kontrollkästchen2.6",
+   "kueche_ceran": "Kontrollkästchen2.8",
+   "kueche_dunstabzug": "Kontrollkästchen2.10",
+   "kueche_kuehlschrank": "Kontrollkästchen2.12",
+   "kueche_kochinsel": "Kontrollkästchen2.14",
+   "wohnung_einfachverglasung": "Kontrollkästchen3.1",
+   "wohnung_elektro_unzureichend": "Kontrollkästchen3.3",
+   "wohnung_elektro_aufputz": "Kontrollkästchen3.5",
+   "wohnung_leitungen_aufputz": "Kontrollkästchen3.7",
+   "wohnung_keine_waschmaschine": "Kontrollkästchen3.9",
+   "wohnung_schlechter_schnitt": "Kontrollkästchen3.11",
+   "wohnung_kein_balkon": "Kontrollkästchen3.13",
+   "wohnung_einbauschrank": "Kontrollkästchen3.2",
+   "wohnung_balkon": "Kontrollkästchen3.4",
+   "wohnung_fussbodenheizung": "Kontrollkästchen3.6",
+   "wohnung_stuck": "Kontrollkästchen3.8",
+   "wohnung_heizungsrohre": "Kontrollkästchen3.10",
+   "wohnung_rolllaeden": "Kontrollkästchen3.12",
+   "wohnung_barrierearm": "Kontrollkästchen3.14",
+   "wohnung_raum_40": "Kontrollkästchen3.15",
+   "wohnung_parkett": "Kontrollkästchen3.16",
+   "wohnung_waermeschutzfenster": "Kontrollkästchen3.17",
+   "wohnung_einbruchschutz_tuer": "Kontrollkästchen3.18",
+   "gebaeude_treppenhaus_schlecht": "Kontrollkästchen4.1",
+   "gebaeude_kein_keller": "Kontrollkästchen4.3",
+   "gebaeude_haustuer_offen": "Kontrollkästchen4.5",
+   "gebaeude_instandhaltung_schlecht": "Kontrollkästchen4.7",
+   "gebaeude_seitenfluegel": "Kontrollkästchen4.9",
+   "gebaeude_kein_aufzug_ab5": "Kontrollkästchen4.11",
+   "gebaeude_keine_sprechanlage": "Kontrollkästchen4.13",
+   "gebaeude_daemmung_schlecht": "Kontrollkästchen4.15",
+   "energie_minus_1": "Kontrollkästchen4.17",
+   "energie_minus_2": "Kontrollkästchen4.19",
+   "energie_minus_3": "Kontrollkästchen4.21",
+   "gebaeude_fahrradraum": "Kontrollkästchen4.2",
+   "gebaeude_zusatzraeume": "Kontrollkästchen4.4",
+   "gebaeude_eingang_repraesentativ": "Kontrollkästchen4.6",
+   "gebaeude_instandhaltung_gut": "Kontrollkästchen4.8",
+   "gebaeude_videosprechanlage": "Kontrollkästchen4.10",
+   "gebaeude_aufzug": "Kontrollkästchen4.12",
+   "gebaeude_schwellenarm": "Kontrollkästchen4.14",
+   "gebaeude_daemmung_gut": "Kontrollkästchen4.16",
+   "energie_plus_1": "Kontrollkästchen4.18",
+   "energie_plus_2": "Kontrollkästchen4.20",
+   "energie_plus_3": "Kontrollkästchen4.22",
+   "umfeld_vernachlaessigt": "Kontrollkästchen5.1",
+   "umfeld_laerm": "Kontrollkästchen5.3",
+   "umfeld_geruch": "Kontrollkästchen5.5",
+   "umfeld_keine_fahrradplaetze": "Kontrollkästchen5.7",
+   "umfeld_citylage": "Kontrollkästchen5.2",
+   "umfeld_ruhig": "Kontrollkästchen5.4",
+   "umfeld_gestaltet": "Kontrollkästchen5.6",
+   "umfeld_parkplatz": "Kontrollkästchen5.8",
+   "umfeld_garten": "Kontrollkästchen5.9"
+  }
+ },
+ "2026": {
+  "kind": "overlay",
+  "texts": {
+   "date": {
+    "page": 0,
+    "x": 478.0,
+    "base": 89.0,
+    "w": 88.9
+   },
+   "contractDate": {
+    "page": 0,
+    "x": 348.9,
+    "base": 598.7,
+    "w": 158.3
+   },
+   "buildYear": {
+    "page": 0,
+    "x": 191.5,
+    "base": 633.1,
+    "w": 305.7
+   },
+   "area": {
+    "page": 0,
+    "x": 176.5,
+    "base": 702.1,
+    "w": 61.2
+   },
+   "row": {
+    "page": 0,
+    "x": 127.1,
+    "base": 759.6,
+    "w": 69.4
+   },
+   "rent": {
+    "page": 1,
+    "x": 499.6,
+    "base": 64.2,
+    "w": 45
+   },
+   "floor": {
+    "page": 1,
+    "x": 386.3,
+    "base": 317.1,
+    "w": 27.8
+   },
+   "modernizedWhen": {
+    "page": 1,
+    "x": 269.7,
+    "base": 355.7,
+    "w": 83.4
+   },
+   "energyValue": {
+    "page": 1,
+    "x": 157.8,
+    "base": 436.2,
+    "w": 58.4
+   },
+   "name": {
+    "page": 1,
+    "x": 94.6,
+    "base": 556.9,
+    "w": 460
+   },
+   "address": {
+    "page": 1,
+    "x": 112.6,
+    "base": 591.5,
+    "w": 420
+   },
+   "email": {
+    "page": 1,
+    "x": 95.6,
+    "base": 625.9,
+    "w": 450
+   },
+   "phone": {
+    "page": 1,
+    "x": 161.5,
+    "base": 643.2,
+    "w": 140
+   },
+   "reachable": {
+    "page": 1,
+    "x": 445.8,
+    "base": 643.2,
+    "w": 102.8
+   },
+   "flatAddress": {
+    "page": 1,
+    "x": 28.3,
+    "base": 693.7,
+    "w": 515
+   },
+   "remarks": [
+    {
+     "page": 5,
+     "x": 25.6,
+     "base": 683.5,
+     "w": 500
+    },
+    {
+     "page": 5,
+     "x": 25.6,
+     "base": 706.5,
+     "w": 500
+    },
+    {
+     "page": 5,
+     "x": 25.6,
+     "base": 729.5,
+     "w": 500
+    },
+    {
+     "page": 5,
+     "x": 25.6,
+     "base": 752.5,
+     "w": 500
+    },
+    {
+     "page": 5,
+     "x": 25.6,
+     "base": 775.5,
+     "w": 500
+    },
+    {
+     "page": 5,
+     "x": 25.6,
+     "base": 798.5,
+     "w": 500
+    }
+   ]
+  },
+  "choices": {
+   "wohnlage.einfache": {
+    "page": 0,
+    "x": 100.0,
+    "top": 673.1,
+    "w": 37.7,
+    "h": 11.1
+   },
+   "wohnlage.mittlere": {
+    "page": 0,
+    "x": 151.6,
+    "top": 673.1,
+    "w": 32.8,
+    "h": 11.1
+   },
+   "wohnlage.gute": {
+    "page": 0,
+    "x": 198.2,
+    "top": 673.1,
+    "w": 19.5,
+    "h": 11.1
+   },
+   "equipment.aussenWC": {
+    "page": 0,
+    "x": 158.2,
+    "top": 780.5,
+    "w": 46.4,
+    "h": 11.1
+   },
+   "equipment.innenWC": {
+    "page": 0,
+    "x": 213.2,
+    "top": 780.5,
+    "w": 42.4,
+    "h": 11.1
+   },
+   "equipment.badWC": {
+    "page": 0,
+    "x": 263.9,
+    "top": 780.5,
+    "w": 34.2,
+    "h": 11.1
+   },
+   "equipment.sammelheizung": {
+    "page": 0,
+    "x": 306.5,
+    "top": 780.5,
+    "w": 69.1,
+    "h": 11.1
+   },
+   "equipment.ofenheizung": {
+    "page": 0,
+    "x": 383.8,
+    "top": 780.5,
+    "w": 54.6,
+    "h": 11.1
+   },
+   "equipment.fahrstuhl": {
+    "page": 0,
+    "x": 446.1,
+    "top": 780.5,
+    "w": 41.8,
+    "h": 11.1
+   },
+   "indexRent.ja": {
+    "page": 1,
+    "x": 239.4,
+    "top": 150.1,
+    "w": 7.8,
+    "h": 11.1
+   },
+   "indexRent.nein": {
+    "page": 1,
+    "x": 255.5,
+    "top": 150.1,
+    "w": 19.0,
+    "h": 11.1
+   },
+   "staffelRent.ja": {
+    "page": 1,
+    "x": 436.9,
+    "top": 150.1,
+    "w": 7.8,
+    "h": 11.1
+   },
+   "staffelRent.nein": {
+    "page": 1,
+    "x": 452.9,
+    "top": 150.1,
+    "w": 18.8,
+    "h": 11.1
+   },
+   "municipal.ja": {
+    "page": 1,
+    "x": 67.3,
+    "top": 219.1,
+    "w": 7.8,
+    "h": 11.1
+   },
+   "municipal.nein": {
+    "page": 1,
+    "x": 83.4,
+    "top": 219.1,
+    "w": 18.9,
+    "h": 11.1
+   },
+   "position.Vorderhaus": {
+    "page": 1,
+    "x": 139.6,
+    "top": 311.0,
+    "w": 51.8,
+    "h": 11.1
+   },
+   "position.Seitenflügel": {
+    "page": 1,
+    "x": 202.4,
+    "top": 311.0,
+    "w": 52.3,
+    "h": 11.1
+   },
+   "position.Hinterhaus": {
+    "page": 1,
+    "x": 265.8,
+    "top": 311.0,
+    "w": 48.3,
+    "h": 11.1
+   },
+   "attic.ja": {
+    "page": 1,
+    "x": 187.4,
+    "top": 328.3,
+    "w": 7.8,
+    "h": 11.1
+   },
+   "attic.nein": {
+    "page": 1,
+    "x": 209.0,
+    "top": 328.3,
+    "w": 18.9,
+    "h": 11.1
+   },
+   "modernizedOld.ja": {
+    "page": 1,
+    "x": 211.8,
+    "top": 349.5,
+    "w": 7.8,
+    "h": 11.1
+   },
+   "modernizedOld.nein": {
+    "page": 1,
+    "x": 179.0,
+    "top": 349.5,
+    "w": 18.9,
+    "h": 11.1
+   },
+   "smallHouse.ja": {
+    "page": 1,
+    "x": 266.8,
+    "top": 366.8,
+    "w": 7.8,
+    "h": 11.1
+   },
+   "smallHouse.nein": {
+    "page": 1,
+    "x": 282.9,
+    "top": 366.8,
+    "w": 18.8,
+    "h": 11.1
+   },
+   "wistg.ja": {
+    "page": 1,
+    "x": 248.3,
+    "top": 504.8,
+    "w": 8.4,
+    "h": 11.1,
+    "mark": "x"
+   },
+   "wistg.nein": {
+    "page": 1,
+    "x": 289.5,
+    "top": 504.8,
+    "w": 8.4,
+    "h": 11.1,
+    "mark": "x"
+   }
+  },
+  "merkmale": {
+   "bad_kein_waschbecken": {
+    "page": 2,
+    "x": 186.0,
+    "top": 193.2,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "bad_wc_keine_lueftung": {
+    "page": 2,
+    "x": 186.0,
+    "top": 254.6,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "bad_dielen": {
+    "page": 2,
+    "x": 186.0,
+    "top": 316.0,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "bad_nicht_beheizbar": {
+    "page": 2,
+    "x": 186.0,
+    "top": 356.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "bad_kein_warmwasser": {
+    "page": 2,
+    "x": 186.0,
+    "top": 397.5,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "bad_freistehende_wanne": {
+    "page": 2,
+    "x": 186.0,
+    "top": 448.6,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "bad_waende_nicht_gefliest": {
+    "page": 2,
+    "x": 186.0,
+    "top": 490.5,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "bad_ohne_fenster": {
+    "page": 2,
+    "x": 186.0,
+    "top": 541.6,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "bad_keine_dusche": {
+    "page": 2,
+    "x": 186.0,
+    "top": 592.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "bad_klein": {
+    "page": 2,
+    "x": 186.0,
+    "top": 654.2,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "bad_grosses_waschbecken": {
+    "page": 2,
+    "x": 214.7,
+    "top": 193.2,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "bad_hochwertig": {
+    "page": 2,
+    "x": 214.7,
+    "top": 254.6,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "bad_innen_lueftung": {
+    "page": 2,
+    "x": 214.7,
+    "top": 316.0,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "bad_zweites_wc": {
+    "page": 2,
+    "x": 214.7,
+    "top": 356.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "bad_gross": {
+    "page": 2,
+    "x": 214.7,
+    "top": 397.5,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "bad_fussbodenheizung": {
+    "page": 2,
+    "x": 214.7,
+    "top": 448.6,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "bad_fliesen_hochwertig": {
+    "page": 2,
+    "x": 214.7,
+    "top": 490.5,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "bad_wandhaengendes_wc": {
+    "page": 2,
+    "x": 214.7,
+    "top": 541.6,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "bad_strukturheizkoerper": {
+    "page": 2,
+    "x": 214.7,
+    "top": 592.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "bad_separate_dusche": {
+    "page": 2,
+    "x": 214.7,
+    "top": 654.2,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "bad_bodengleiche_dusche": {
+    "page": 2,
+    "x": 214.7,
+    "top": 685.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "kueche_ohne_fenster": {
+    "page": 3,
+    "x": 186.0,
+    "top": 113.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "kueche_kein_herd": {
+    "page": 3,
+    "x": 186.0,
+    "top": 176.4,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "kueche_keine_spuele": {
+    "page": 3,
+    "x": 186.0,
+    "top": 197.6,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "kueche_kein_warmwasser": {
+    "page": 3,
+    "x": 186.0,
+    "top": 218.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "kueche_nicht_beheizbar": {
+    "page": 3,
+    "x": 186.0,
+    "top": 260.7,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "kueche_kein_geschirrspueler": {
+    "page": 3,
+    "x": 186.0,
+    "top": 281.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "kueche_keine_wandfliesen": {
+    "page": 3,
+    "x": 186.0,
+    "top": 303.1,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "kueche_boden": {
+    "page": 3,
+    "x": 214.7,
+    "top": 113.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "kueche_gross": {
+    "page": 3,
+    "x": 214.7,
+    "top": 176.4,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "kueche_einbaukueche": {
+    "page": 3,
+    "x": 214.7,
+    "top": 197.6,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "kueche_ceran": {
+    "page": 3,
+    "x": 214.7,
+    "top": 218.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "kueche_dunstabzug": {
+    "page": 3,
+    "x": 214.7,
+    "top": 260.7,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "kueche_kuehlschrank": {
+    "page": 3,
+    "x": 214.7,
+    "top": 281.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "kueche_kochinsel": {
+    "page": 3,
+    "x": 214.7,
+    "top": 303.1,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "wohnung_einfachverglasung": {
+    "page": 3,
+    "x": 186.0,
+    "top": 448.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "wohnung_elektro_unzureichend": {
+    "page": 3,
+    "x": 186.0,
+    "top": 480.3,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "wohnung_elektro_aufputz": {
+    "page": 3,
+    "x": 186.0,
+    "top": 532.5,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "wohnung_leitungen_aufputz": {
+    "page": 3,
+    "x": 186.0,
+    "top": 553.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "wohnung_keine_waschmaschine": {
+    "page": 3,
+    "x": 186.0,
+    "top": 604.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "wohnung_schlechter_schnitt": {
+    "page": 3,
+    "x": 186.0,
+    "top": 636.3,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "wohnung_kein_balkon": {
+    "page": 3,
+    "x": 186.0,
+    "top": 699.4,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "wohnung_eg_kein_einbruchschutz": {
+    "page": 3,
+    "x": 186.0,
+    "top": 760.9,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "wohnung_einbauschrank": {
+    "page": 3,
+    "x": 214.7,
+    "top": 448.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "wohnung_balkon": {
+    "page": 3,
+    "x": 214.7,
+    "top": 480.3,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "wohnung_fussbodenheizung": {
+    "page": 3,
+    "x": 214.7,
+    "top": 532.5,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "wohnung_stuck": {
+    "page": 3,
+    "x": 214.7,
+    "top": 553.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "wohnung_heizungsrohre": {
+    "page": 3,
+    "x": 214.7,
+    "top": 604.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "wohnung_rolllaeden": {
+    "page": 3,
+    "x": 214.7,
+    "top": 636.3,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "wohnung_raum_40": {
+    "page": 3,
+    "x": 214.7,
+    "top": 678.2,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "wohnung_barrierearm": {
+    "page": 3,
+    "x": 214.7,
+    "top": 699.4,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "wohnung_parkett": {
+    "page": 3,
+    "x": 214.7,
+    "top": 760.9,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "wohnung_waermeschutzfenster": {
+    "page": 4,
+    "x": 214.7,
+    "top": 46.0,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "wohnung_einbruchschutz_tuer": {
+    "page": 4,
+    "x": 214.7,
+    "top": 98.4,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "gebaeude_treppenhaus_schlecht": {
+    "page": 4,
+    "x": 186.0,
+    "top": 264.7,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "gebaeude_kein_keller": {
+    "page": 4,
+    "x": 186.0,
+    "top": 327.2,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "gebaeude_haustuer_offen": {
+    "page": 4,
+    "x": 186.0,
+    "top": 379.5,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "gebaeude_instandhaltung_schlecht": {
+    "page": 4,
+    "x": 186.0,
+    "top": 452.5,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "gebaeude_seitenfluegel": {
+    "page": 4,
+    "x": 186.0,
+    "top": 515.0,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "gebaeude_kein_aufzug_ab5": {
+    "page": 4,
+    "x": 186.0,
+    "top": 546.6,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "gebaeude_keine_sprechanlage": {
+    "page": 4,
+    "x": 186.0,
+    "top": 588.4,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "gebaeude_daemmung_schlecht": {
+    "page": 4,
+    "x": 186.0,
+    "top": 630.3,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "energie_minus_1": {
+    "page": 4,
+    "x": 186.0,
+    "top": 733.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "energie_minus_2": {
+    "page": 4,
+    "x": 186.0,
+    "top": 744.6,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "energie_minus_3": {
+    "page": 4,
+    "x": 186.0,
+    "top": 755.4,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "gebaeude_fahrradraum": {
+    "page": 4,
+    "x": 214.7,
+    "top": 264.7,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "gebaeude_zusatzraeume": {
+    "page": 4,
+    "x": 214.7,
+    "top": 327.2,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "gebaeude_eingang_repraesentativ": {
+    "page": 4,
+    "x": 214.7,
+    "top": 379.5,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "gebaeude_instandhaltung_gut": {
+    "page": 4,
+    "x": 214.7,
+    "top": 452.5,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "gebaeude_videosprechanlage": {
+    "page": 4,
+    "x": 214.7,
+    "top": 515.0,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "gebaeude_aufzug": {
+    "page": 4,
+    "x": 214.7,
+    "top": 546.6,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "gebaeude_schwellenarm": {
+    "page": 4,
+    "x": 214.7,
+    "top": 588.4,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "gebaeude_daemmung_gut": {
+    "page": 4,
+    "x": 214.7,
+    "top": 630.3,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "energie_plus_1": {
+    "page": 4,
+    "x": 214.7,
+    "top": 733.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "energie_plus_2": {
+    "page": 4,
+    "x": 214.7,
+    "top": 744.6,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "energie_plus_3": {
+    "page": 4,
+    "x": 214.7,
+    "top": 755.4,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "umfeld_laerm": {
+    "page": 5,
+    "x": 186.0,
+    "top": 272.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "umfeld_geruch": {
+    "page": 5,
+    "x": 186.0,
+    "top": 396.4,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "umfeld_keine_fahrradplaetze": {
+    "page": 5,
+    "x": 186.0,
+    "top": 469.4,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "umfeld_ruhig": {
+    "page": 5,
+    "x": 214.7,
+    "top": 272.8,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "umfeld_gestaltet": {
+    "page": 5,
+    "x": 214.7,
+    "top": 396.4,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "umfeld_parkplatz": {
+    "page": 5,
+    "x": 214.7,
+    "top": 469.4,
+    "w": 8.6,
+    "h": 10.0
+   },
+   "umfeld_garten": {
+    "page": 5,
+    "x": 214.7,
+    "top": 501.0,
+    "w": 8.6,
+    "h": 10.0
+   }
+  }
+ }
+}

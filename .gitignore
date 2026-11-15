@@ -148,7 +148,7 @@ vite.config.ts.timestamp-*
 # Turbo Repo
 .turbo
 
-# Original-PDFs vom BMV – nur lokale Referenz, nicht weiterverbreiten
+# Arbeitskopien der BMV-PDFs (die App liefert public/forms/ aus)
 sources/
 
 # Vite / Editor / macOS

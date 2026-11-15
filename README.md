@@ -13,7 +13,7 @@ Auf der Startseite wählt man, was erstellt werden soll: Spanneneinordnung (Prü
 3. **Wohnung & Energie** – inkl. automatischer Einordnung des Energiekennwerts.
 4. **Merkmalgruppen 1–5** (Bad, Küche, Wohnung, Gebäude, Wohnumfeld): jedes Merkmal als verständliche Frage mit Erläuterung, Beispielbild und dem Originalwortlaut, Antwort ja / nein / weiß nicht. Negativ formulierte Merkmale werden positiv gefragt („Hat das Bad ein Fenster?“) und intern umgedreht. „Weiß nicht“ wird nicht angekreuzt, sondern im Prüfbogen unter den Bemerkungen aufgeführt. Merkmale, die für das Baujahr (bzw. 2015: wegen Sondermerkmalen) nicht gelten, werden ausgeblendet.
 5. **Ergebnis**: Übersicht pro Merkmalgruppe, Rüge-Frist (30 Monate ab Mietbeginn bei Verträgen ab 1.4.2020) und zwei PDFs:
-   - ausgefüllter **Prüfbogen 169A** zum Einsenden an den Berliner Mieterverein
+   - ausgefüllter **Prüfbogen 169A** zum Einsenden an den Berliner Mieterverein – das Original-PDF des BMV, nur ausgefüllt
    - **Rügeschreiben** nach § 556g Abs. 2 BGB mit Auskunftsverlangen nach Abs. 3
 
 Die PDFs lassen sich erst erstellen, wenn alle **Pflichtfragen** beantwortet sind – alles, was im Prüfbogen oder in der Rüge sonst leer bliebe oder falsch angekreuzt wäre (Vertragsdaten, Wohnungsangaben, Ja/Nein-Fragen des Bogens, Namen und Anschriften). Optional bleiben die Merkmale der Orientierungshilfe, Mietspiegelzeile, Ausstattung, Energiekennwert, Kontaktdaten und Bemerkungen.
@@ -59,7 +59,7 @@ Beispiel-PDFs aller Jahrgänge erzeugen: `PDF_OUT=/tmp/pdfs npx vitest run src/p
 | `src/data/mietspiegel.ts` | Mietspiegeltabellen (bisher Baujahr 1965–1972) und Berechnung der zulässigen Miete |
 | `src/i18n/features/{de,en,ar}.ts` | Fragen & Erläuterungen je Merkmal |
 | `src/i18n/ui/{de,en,ar}.ts` | Oberflächentexte |
-| `src/pdf/` | PDF-Erzeugung (pdf-lib): Prüfbogen und Rüge |
+| `src/pdf/` | PDFs (pdf-lib): Original-Prüfbogen ausfüllen (`original.ts`, Zuordnung in `original-fields.json`) und Rüge erzeugen |
 | `src/flow/` | Bildschirm-Modell (inkl. Pflichtfragen), Kapitel, Seitenaufteilung am Desktop |
 | `src/state/` | Antworten, Speicherung im Browser, abgeleitete Werte |
 | `src/house/` | Haus-Modus: Voreinstellungen je Gebäude, Aktivierung per `?haus=` |
@@ -69,7 +69,7 @@ Beispiel-PDFs aller Jahrgänge erzeugen: `PDF_OUT=/tmp/pdfs npx vitest run src/p
 
 Neuer Mietspiegel: Katalog in `src/data/forms.ts` ergänzen (neue `FormVersion`), neue Merkmal-IDs in allen drei `features`-Dateien übersetzen – die Tests prüfen das.
 
-Die Original-PDFs des BMV werden zur Referenz lokal unter `sources/` abgelegt (nicht im Repo).
+Die Original-Prüfbögen des BMV liegen unter `public/forms/` und werden von der App ausgefüllt: 2015–2024 sind PDF-Formulare (Felder werden gesetzt und eingebrannt), 2026 hat keine Felder (Kreuze und Text werden an die vermessenen Stellen gezeichnet, Nichtzutreffendes gestrichen). Welche Stelle zu welcher Angabe gehört, steht in `src/pdf/original-fields.json`; sie wurde einmalig aus den Feldpositionen und dem Text daneben (`pdftotext -bbox`) erzeugt und mit dem Wortlaut aus `forms.ts` abgeglichen. Bei einem neuen Bogen muss diese Zuordnung neu erstellt werden.
 
 ## Lizenzen
 

@@ -183,8 +183,8 @@ function Downloads({ form, missing }: { form: FormVersion; missing: ChapterId[] 
     const today = todayIso();
     try {
       if (kind === 'form') {
-        const { buildPruefbogen } = await import('../pdf/pruefbogen');
-        download(await buildPruefbogen(form, a, today, { remarks: !house?.brief }), `Pruefbogen-169A-Mietspiegel-${form.id}.pdf`);
+        const { fillPruefbogen, loadOriginal } = await import('../pdf/original');
+        download(await fillPruefbogen(await loadOriginal(form), form, a, today, { remarks: !house?.brief }), `Pruefbogen-169A-Mietspiegel-${form.id}.pdf`);
       } else {
         const { buildRuege } = await import('../pdf/ruege');
         download(await buildRuege(form, a, today, calc), `Ruege-556g-BGB-${today}.pdf`);
