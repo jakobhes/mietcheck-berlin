@@ -156,7 +156,7 @@ function LetterOptions({ form }: { form: FormVersion }) {
 /** `missing`: Kapitel mit offenen Pflichtfragen – solange es sie gibt, sind die PDFs gesperrt */
 function Downloads({ form, missing }: { form: FormVersion; missing: ChapterId[] }) {
   const { t } = useTranslation();
-  const { a } = useAnswers();
+  const { a, house } = useAnswers();
   const calc = useRentCalculation(form);
   const [busy, setBusy] = useState<'form' | 'ruege' | null>(null);
 
@@ -166,7 +166,7 @@ function Downloads({ form, missing }: { form: FormVersion; missing: ChapterId[] 
     try {
       if (kind === 'form') {
         const { buildPruefbogen } = await import('../pdf/pruefbogen');
-        download(await buildPruefbogen(form, a, today), `Pruefbogen-169A-Mietspiegel-${form.id}.pdf`);
+        download(await buildPruefbogen(form, a, today, { remarks: !house?.brief }), `Pruefbogen-169A-Mietspiegel-${form.id}.pdf`);
       } else {
         const { buildRuege } = await import('../pdf/ruege');
         download(await buildRuege(form, a, today, calc), `Ruege-556g-BGB-${today}.pdf`);

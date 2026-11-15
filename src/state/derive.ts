@@ -61,7 +61,7 @@ export function flatAddressLine(a: Answers): string {
 
 export function flatDetailLine(a: Answers): string {
   if (a.flatDiffers && a.flat.detail) return a.flat.detail;
-  const parts = [a.position, a.floor ? `${a.floor}. OG` : '', a.side].filter(Boolean);
+  const parts = [a.position, a.floor ? `${a.floor}. OG` : ''].filter(Boolean);
   return parts.join(', ');
 }
 
@@ -75,21 +75,6 @@ export function equipmentList(a: Answers): string[] {
     fahrstuhl: 'Fahrstuhl',
   };
   return (Object.keys(labels) as (keyof Answers['equipment'])[]).filter((k) => a.equipment[k]).map((k) => labels[k]);
-}
-
-/** Text der Folgefrage-Antwort inkl. Lärmart */
-export function followUpAnswer(m: Merkmal, a: Answers): string {
-  if (!m.followUp) return '';
-  const text = a.followUps[m.followUp]?.trim() ?? '';
-  if (m.followUp === 'laerm') {
-    const arten = [
-      a.laermArt.strasse && 'Straßenverkehrslärm',
-      a.laermArt.schiene && 'Schienenverkehrslärm',
-      a.laermArt.flug && 'Fluglärm',
-    ].filter(Boolean);
-    return [arten.length ? `Starke Beeinträchtigung durch ${arten.join(', ')}` : '', text].filter(Boolean).join('; ');
-  }
-  return text;
 }
 
 /**

@@ -22,7 +22,7 @@ function HouseNumber({ house }: { house: HousePreset }) {
             // Anschrift vorbelegen, solange sie leer ist oder noch zu diesem Haus gehört
             const own = !p.tenant.street || p.tenant.street.startsWith(house.street);
             const tenant = own ? { ...p.tenant, street: n ? `${house.street} ${n}` : '', zip: house.zip, city: house.city } : p.tenant;
-            return { houseNo: n, tenant, ...house.defaults(p) };
+            return { houseNo: n, tenant };
           })
         }
       />
@@ -56,7 +56,7 @@ function Variant({ house }: { house: HousePreset }) {
       <ChoiceField<HouseVariant>
         value={a.houseVariant}
         options={VARIANTS.map((v) => ({ value: v, label: t(`${key}.${v}`) }))}
-        onChange={(v) => set((p) => ({ houseVariant: v, ...house.defaults(p) }))}
+        onChange={(v) => set({ houseVariant: v })}
       />
     </Question>
   );

@@ -3,6 +3,8 @@ export interface FeatureText {
   q: string;
   /** Erläuterung, was genau gemeint ist */
   help: string;
+  /** Bitte um die Angabe zur Folgefrage (z. B. Räume); nur angezeigt, wenn die Folgefrage gestellt wird */
+  followUpHelp?: string;
 }
 
 export type FeatureTexts = Record<string, FeatureText>;

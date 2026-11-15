@@ -152,7 +152,8 @@ const es: FeatureTexts = {
   /* ---------------- Vivienda ---------------- */
   wohnung_einfachverglasung: {
     q: '¿Tienen la mayoría de las ventanas un solo cristal?',
-    help: 'Vidrio simple: un cristal por hoja de ventana. Ojo: no se refiere a las ventanas dobles de cajón (dos ventanas una detrás de otra). Indique en qué habitaciones, por favor.',
+    help: 'Vidrio simple: un cristal por hoja de ventana. Ojo: no se refiere a las ventanas dobles de cajón (dos ventanas una detrás de otra).',
+    followUpHelp: 'Indique en qué habitaciones, por favor.',
   },
   wohnung_elektro_unzureichend: {
     q: '¿Es la instalación eléctrica anticuada o insuficiente?',
@@ -160,11 +161,13 @@ const es: FeatureTexts = {
   },
   wohnung_elektro_aufputz: {
     q: '¿Van los cables eléctricos mayoritariamente vistos sobre la pared?',
-    help: 'Los cables o canaletas se ven sobre el revoque en lugar de ir dentro de la pared. Indique en qué habitaciones, por favor.',
+    help: 'Los cables o canaletas se ven sobre el revoque en lugar de ir dentro de la pared.',
+    followUpHelp: 'Indique en qué habitaciones, por favor.',
   },
   wohnung_leitungen_aufputz: {
     q: '¿Van las tuberías de agua y desagüe mayoritariamente vistas sobre la pared?',
-    help: 'Tuberías visibles en el baño, la cocina u otras habitaciones. Indique en qué habitaciones, por favor.',
+    help: 'Tuberías visibles en el baño, la cocina u otras habitaciones.',
+    followUpHelp: 'Indique en qué habitaciones, por favor.',
   },
   wohnung_keine_waschmaschine: {
     q: '¿Se puede conectar una lavadora en el baño o en la cocina, o ya hay una allí?',
@@ -196,11 +199,13 @@ const es: FeatureTexts = {
   },
   wohnung_fussbodenheizung: {
     q: '¿Se calienta la vivienda principalmente con suelo radiante?',
-    help: 'En la mayoría de las habitaciones. Indique en qué habitaciones, por favor.',
+    help: 'En la mayoría de las habitaciones.',
+    followUpHelp: 'Indique en qué habitaciones, por favor.',
   },
   wohnung_stuck: {
     q: '¿Tienen la mayoría de las habitaciones estucos o revestimientos de madera en buen estado?',
-    help: 'Decoraciones de techo elaboradas o paneles de pared. Indique en qué habitaciones, por favor.',
+    help: 'Decoraciones de techo elaboradas o paneles de pared.',
+    followUpHelp: 'Indique en qué habitaciones, por favor.',
   },
   wohnung_heizungsrohre: {
     q: '¿Van los tubos de calefacción mayoritariamente ocultos (en pared o suelo)?',
@@ -258,7 +263,8 @@ const es: FeatureTexts = {
   },
   gebaeude_seitenfluegel: {
     q: '¿Está la vivienda en un ala lateral o un edificio trasero de un patio densamente edificado?',
-    help: 'Típico de los edificios antiguos de Berlín con patios traseros. Indique qué habitaciones están allí, por favor.',
+    help: 'Típico de los edificios antiguos de Berlín con patios traseros.',
+    followUpHelp: 'Indique qué habitaciones están allí, por favor.',
   },
   gebaeude_kein_aufzug_ab5: {
     q: '¿Está la vivienda en la 5.ª planta o más arriba, sin ascensor?',
@@ -278,7 +284,8 @@ const es: FeatureTexts = {
   },
   gebaeude_zusatzraeume: {
     q: '¿Hay espacios comunes adicionales (p. ej. sala común, tendedero, vivienda de invitados)?',
-    help: 'Espacios utilizables fuera de la vivienda que puede usar compartidos. Indique cuáles, por favor.',
+    help: 'Espacios utilizables fuera de la vivienda que puede usar compartidos.',
+    followUpHelp: 'Indique cuáles, por favor.',
   },
   gebaeude_garage: {
     q: '¿Viene con la vivienda un garaje o plaza de aparcamiento sin coste adicional?',

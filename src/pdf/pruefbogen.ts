@@ -2,11 +2,10 @@
  * Erzeugt den ausgefüllten Prüfbogen 169A im Aufbau des BMV-Originals der jeweiligen Version.
  * Es wird kein Original-PDF verwendet; Struktur und Wortlaut stammen aus src/data/forms.ts.
  */
-import { rgb } from 'pdf-lib';
 import { formatDateDe } from '../data/logic';
 import type { FormVersion, Merkmal } from '../data/types';
 import type { Answers, YesNo } from '../state/answers';
-import { conditionContext, followUpAnswer, merkmalState } from '../state/derive';
+import { conditionContext, merkmalState } from '../state/derive';
 import { DARK, GREY, LIGHT, Layout, MM } from './layout';
 
 const SIZE = 9.5;
@@ -22,7 +21,8 @@ function value(v: string): string {
   return v.trim() || '______________';
 }
 
-export async function buildPruefbogen(form: FormVersion, a: Answers, today: string): Promise<Uint8Array> {
+/** `remarks: false` lässt „Weitere Bemerkungen“ leer (Haus-Modus mit kurzem Ablauf) */
+export async function buildPruefbogen(form: FormVersion, a: Answers, today: string, { remarks: withRemarks = true } = {}): Promise<Uint8Array> {
   const year = form.id;
   const l = await Layout.create();
 
@@ -130,7 +130,7 @@ export async function buildPruefbogen(form: FormVersion, a: Answers, today: stri
     qx + 8,
     SIZE,
   );
-  ans(`Stockwerk: ${value(a.floor)} Etage; ${a.side || 'links / rechts'}`);
+  ans(`Stockwerk: ${value(a.floor)} Etage; links / rechts`);
   ynLine('Dachgeschosswohnung?', a.attic);
   ynLine(`Modernisierter Altbau?${a.modernizedOld === 'ja' && a.modernizedWhen ? ` (wann? ${a.modernizedWhen})` : ''}`, a.modernizedOld);
   ynLine('1- bzw. 2-Familienhaus bzw. Reihenhaus?', a.smallHouse);
@@ -205,20 +205,9 @@ export async function buildPruefbogen(form: FormVersion, a: Answers, today: stri
   function cell(m: Merkmal | undefined, x: number, yTop: number, render: boolean): number {
     if (!m) return 0;
     const state = merkmalState(m, a, ctx);
-    const excluded = state === 'excluded';
-    const notes: string[] = [];
-    if (excluded) notes.push('entfällt für dieses Baujahr / wegen Sondermerkmal');
-    if (state === 'unsure') notes.push('Mieter:in unsicher – bitte prüfen');
-    const fu = state === 'yes' || state === 'unsure' ? followUpAnswer(m, a) : '';
-    if (fu) notes.push(`Angabe: ${fu}`);
+    // wie im Original: nur das Kreuz, ohne Notizen (nicht anwendbare und unsichere Merkmale bleiben leer)
     const tw = colW - cbW - 8;
-    const color = excluded ? rgb(0.55, 0.55, 0.55) : undefined;
-    let h = render ? l.textAt(m.de, x + cbW + 4, yTop - 3, tw, { size: 8, lineHeight: 9.6, color }) : l.measure(m.de, { size: 8, lineHeight: 9.6, width: tw });
-    for (const n of notes) {
-      h += render
-        ? l.textAt(n, x + cbW + 4, yTop - 3 - h, tw, { size: 7.5, italic: true, lineHeight: 9, color: rgb(0.1, 0.2, 0.55) })
-        : l.measure(n, { size: 7.5, italic: true, lineHeight: 9, width: tw });
-    }
+    const h = render ? l.textAt(m.de, x + cbW + 4, yTop - 3, tw, { size: 8, lineHeight: 9.6 }) : l.measure(m.de, { size: 8, lineHeight: 9.6, width: tw });
     if (render) l.checkbox(x + 4, yTop - 4, state === 'yes', 8);
     return h + 6;
   }
@@ -271,9 +260,9 @@ export async function buildPruefbogen(form: FormVersion, a: Answers, today: stri
   l.text('Weitere Bemerkungen:', { size: 13, bold: true });
   l.gap(2);
   const remarks: string[] = [];
-  if (a.remarks.trim()) remarks.push(a.remarks.trim());
+  if (withRemarks && a.remarks.trim()) remarks.push(a.remarks.trim());
   const unsure = form.groups.flatMap((g) => g.merkmale.filter((m) => merkmalState(m, a, ctx) === 'unsure'));
-  if (unsure.length) {
+  if (withRemarks && unsure.length) {
     remarks.push('Bei folgenden Merkmalen ist sich die Mieterin/der Mieter unsicher (nicht angekreuzt):\n' + unsure.map((m) => `- ${m.de}`).join('\n'));
   }
   if (remarks.length) {

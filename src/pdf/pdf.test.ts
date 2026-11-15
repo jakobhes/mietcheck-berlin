@@ -34,7 +34,6 @@ function sample(formId: string): Answers {
     equipment: { ...initialAnswers.equipment, badWC: true, sammelheizung: true },
     position: 'Seitenflügel',
     floor: '3',
-    side: 'links',
     attic: 'nein',
     modernizedOld: 'ja',
     modernizedWhen: '2019',

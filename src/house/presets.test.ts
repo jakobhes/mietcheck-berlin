@@ -33,9 +33,11 @@ describe('Excelsior', () => {
   it('unrenoviert: only the unblackened merkmale stay open', () => {
     const f = presetFeatures(excelsior, 'unrenoviert', '2026');
     const open = [...ids2026].filter((id) => !(id in f));
-    expect(open).toHaveLength(38);
+    expect(open).toHaveLength(36);
     expect(f.gebaeude_treppenhaus_schlecht).toBe('unsure');
     expect(f.gebaeude_fahrradraum).toBe('yes');
+    expect(f.wohnung_kein_balkon).toBe('yes');
+    expect(f.wohnung_schlechter_schnitt).toBe('no');
     expect(f.umfeld_keine_fahrradplaetze).toBe('no');
     expect(f.bad_hochwertig).toBe('no');
     expect(f.energie_minus_1).toBe('yes');
@@ -86,19 +88,11 @@ describe('Excelsior', () => {
     expect('bad_einhebelmischer' in f).toBe(false);
   });
 
-  it('only the Prüfbogen, central heating fixed', () => {
-    const fixed = applyHouse(a({ documents: 'beide', equipment: { ...initialAnswers.equipment, badWC: true } }), excelsior);
+  it('only the Prüfbogen, equipment fixed', () => {
+    const fixed = applyHouse(a({ documents: 'beide' }), excelsior);
     expect(fixed.documents).toBe('pruefbogen');
-    expect(fixed.equipment.sammelheizung).toBe(true);
-    expect(fixed.equipment.badWC).toBe(true);
-  });
-
-  it('noise: a window to Stresemannstraße means road traffic noise', () => {
-    const yes = applyHouse(a({ houseVariant: 'unrenoviert', features: { umfeld_laerm: 'yes' } }), excelsior);
-    expect(yes.laermArt.strasse).toBe(true);
-    expect(yes.followUps.laerm).toContain('Stresemannstraße');
-    const no = applyHouse(a({ houseVariant: 'unrenoviert', features: { umfeld_laerm: 'no' } }), excelsior);
-    expect(no.followUps.laerm).toBeUndefined();
+    expect(fixed.equipment).toEqual({ ...initialAnswers.equipment, badWC: true, sammelheizung: true, fahrstuhl: true });
+    expect(excelsior.hiddenScreens).toEqual(expect.arrayContaining(['flat.equipment', 'remarks.remarks']));
   });
 
   it('energy level follows the thresholds of the form', () => {

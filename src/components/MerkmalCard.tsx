@@ -25,8 +25,11 @@ export function MerkmalCard({ m, siblings }: { m: Merkmal; siblings: Merkmal[] }
   const [showOriginal, setShowOriginal] = useState(false);
   // im Haus-Modus kann ein Merkmal anders gefragt werden, dann ohne Folgefragen
   const houseQuestion = house?.questions[m.id];
-  const text = houseQuestion ? { q: t(`${houseQuestion}.title`), help: t(`${houseQuestion}.help`) } : featureText(i18n.language, m.id, m.de);
-  const followUp = houseQuestion ? undefined : m.followUp;
+  const followUp = houseQuestion || house?.brief ? undefined : m.followUp;
+  const feature = featureText(i18n.language, m.id, m.de);
+  const text = houseQuestion
+    ? { q: t(`${houseQuestion}.title`), help: t(`${houseQuestion}.help`) }
+    : { q: feature.q, help: house?.noHelp.includes(m.id) ? '' : [feature.help, followUp && feature.followUpHelp].filter(Boolean).join(' ') };
   const answer = a.features[m.id];
   const inverted = INVERTED.has(m.id);
   const shown = answer && inverted ? flip(answer) : answer;

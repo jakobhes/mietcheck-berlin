@@ -152,7 +152,8 @@ const en: FeatureTexts = {
   /* ---------------- Flat ---------------- */
   wohnung_einfachverglasung: {
     q: 'Do most windows have only a single pane of glass?',
-    help: 'Single glazing: one pane per window sash. Note: box windows (two windows one behind the other) are not meant. Please state which rooms.',
+    help: 'Single glazing: one pane per window sash. Note: box windows (two windows one behind the other) are not meant.',
+    followUpHelp: 'Please state which rooms.',
   },
   wohnung_elektro_unzureichend: {
     q: 'Is the electrical installation outdated or insufficient?',
@@ -160,11 +161,13 @@ const en: FeatureTexts = {
   },
   wohnung_elektro_aufputz: {
     q: 'Do the electric cables mostly run visibly on the wall surface?',
-    help: 'Cables or cable ducts are visible on the plaster instead of inside the wall. Please state which rooms.',
+    help: 'Cables or cable ducts are visible on the plaster instead of inside the wall.',
+    followUpHelp: 'Please state which rooms.',
   },
   wohnung_leitungen_aufputz: {
     q: 'Do the water and waste pipes mostly run visibly on the wall surface?',
-    help: 'Visible plumbing in bathroom, kitchen or other rooms. Please state which rooms.',
+    help: 'Visible plumbing in bathroom, kitchen or other rooms.',
+    followUpHelp: 'Please state which rooms.',
   },
   wohnung_keine_waschmaschine: {
     q: 'Can you connect a washing machine in the bathroom or kitchen – or is one already there?',
@@ -196,11 +199,13 @@ const en: FeatureTexts = {
   },
   wohnung_fussbodenheizung: {
     q: 'Is the flat mainly heated by underfloor heating?',
-    help: 'In most rooms. Please state which rooms.',
+    help: 'In most rooms.',
+    followUpHelp: 'Please state which rooms.',
   },
   wohnung_stuck: {
     q: 'Do most living rooms have stucco or wood panelling in good condition?',
-    help: 'Elaborate ceiling decorations or wall panelling. Please state which rooms.',
+    help: 'Elaborate ceiling decorations or wall panelling.',
+    followUpHelp: 'Please state which rooms.',
   },
   wohnung_heizungsrohre: {
     q: 'Are the heating pipes mostly hidden (in wall or floor)?',
@@ -258,7 +263,8 @@ const en: FeatureTexts = {
   },
   gebaeude_seitenfluegel: {
     q: 'Is the flat in a side wing or rear building of a densely built courtyard?',
-    help: 'Typical for Berlin old buildings with back courtyards. Please state which rooms are there.',
+    help: 'Typical for Berlin old buildings with back courtyards.',
+    followUpHelp: 'Please state which rooms are there.',
   },
   gebaeude_kein_aufzug_ab5: {
     q: 'Is the flat on the 5th floor or higher – without a lift?',
@@ -278,7 +284,8 @@ const en: FeatureTexts = {
   },
   gebaeude_zusatzraeume: {
     q: 'Are there additional shared rooms (e.g. common room, drying room, guest flat)?',
-    help: 'Usable rooms outside the flat that you may share. Please state which.',
+    help: 'Usable rooms outside the flat that you may share.',
+    followUpHelp: 'Please state which.',
   },
   gebaeude_garage: {
     q: 'Does a garage or parking space come with the flat at no extra cost?',

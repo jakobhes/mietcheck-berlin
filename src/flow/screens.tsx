@@ -18,7 +18,7 @@ import type { ChapterId, Screen } from './types';
 const PRUEFBOGEN_CHAPTERS = new Set<ChapterId>(['flat', 'energy', 'sonder', 'bad', 'kueche', 'wohnung', 'gebaeude', 'umfeld', 'remarks']);
 const PRUEFBOGEN_SCREENS = new Set(['contract.municipal']);
 /** Fragen, die nur die Rüge braucht */
-const RUEGE_SCREENS = new Set(['exceptions.disclosed', 'persons.landlord']);
+const RUEGE_SCREENS = new Set(['contract.rentStart', 'exceptions.disclosed', 'persons.landlord']);
 
 /** Alle Bildschirme in Reihenfolge. Ohne gültiges Vertragsdatum dient der neueste Bogen als Vorschau für den Fortschritt. */
 export function buildScreens(a: Answers, t: TFunction, house?: HousePreset): Screen[] {

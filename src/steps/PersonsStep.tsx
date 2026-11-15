@@ -40,12 +40,13 @@ function Tenant() {
 function Contact({ form }: { form: FormVersion }) {
   const { t } = useTranslation();
   const { a, tenant } = usePersons();
+  const { house } = useAnswers();
   return (
     <Question title={t('persons.contactQ')}>
       <Stack gap="md">
         <TextField type="email" label={t('persons.email')} autoComplete="email" value={a.tenant.email} onChange={tenant('email')} />
         <TextField type="tel" label={t('persons.phone')} autoComplete="tel" value={a.tenant.phone} onChange={tenant('phone')} />
-        <TextField label={t('persons.reachable')} value={a.tenant.reachable} onChange={tenant('reachable')} />
+        {!house?.brief && <TextField label={t('persons.reachable')} value={a.tenant.reachable} onChange={tenant('reachable')} />}
         {form.asksMemberNo && wantsPruefbogen(a) && <TextField label={t('persons.memberNo')} value={a.tenant.memberNo} onChange={tenant('memberNo')} />}
       </Stack>
     </Question>

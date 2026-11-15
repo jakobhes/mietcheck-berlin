@@ -152,7 +152,8 @@ const tr: FeatureTexts = {
   /* ---------------- Daire ---------------- */
   wohnung_einfachverglasung: {
     q: 'Pencerelerin çoğu yalnızca tek camlı mı?',
-    help: 'Tek cam: her pencere kanadında bir cam. Dikkat: kutu pencereler (arka arkaya iki pencere) kastedilmiyor. Lütfen hangi odalar olduğunu belirtin.',
+    help: 'Tek cam: her pencere kanadında bir cam. Dikkat: kutu pencereler (arka arkaya iki pencere) kastedilmiyor.',
+    followUpHelp: 'Lütfen hangi odalar olduğunu belirtin.',
   },
   wohnung_elektro_unzureichend: {
     q: 'Elektrik tesisatı eski veya yetersiz mi?',
@@ -160,11 +161,13 @@ const tr: FeatureTexts = {
   },
   wohnung_elektro_aufputz: {
     q: 'Elektrik kabloları çoğunlukla duvar üzerinden açıkta mı gidiyor?',
-    help: 'Kablolar veya kablo kanalları duvarın içinde değil, sıva üzerinde görünüyor. Lütfen hangi odalar olduğunu belirtin.',
+    help: 'Kablolar veya kablo kanalları duvarın içinde değil, sıva üzerinde görünüyor.',
+    followUpHelp: 'Lütfen hangi odalar olduğunu belirtin.',
   },
   wohnung_leitungen_aufputz: {
     q: 'Su ve atık su boruları çoğunlukla duvar üzerinden açıkta mı gidiyor?',
-    help: 'Banyo, mutfak veya diğer odalarda görünür tesisat. Lütfen hangi odalar olduğunu belirtin.',
+    help: 'Banyo, mutfak veya diğer odalarda görünür tesisat.',
+    followUpHelp: 'Lütfen hangi odalar olduğunu belirtin.',
   },
   wohnung_keine_waschmaschine: {
     q: 'Banyoda veya mutfakta çamaşır makinesi bağlayabilir misiniz – ya da orada zaten bir tane var mı?',
@@ -196,11 +199,13 @@ const tr: FeatureTexts = {
   },
   wohnung_fussbodenheizung: {
     q: 'Daire ağırlıklı olarak yerden ısıtmayla mı ısıtılıyor?',
-    help: 'Odaların çoğunda. Lütfen hangi odalar olduğunu belirtin.',
+    help: 'Odaların çoğunda.',
+    followUpHelp: 'Lütfen hangi odalar olduğunu belirtin.',
   },
   wohnung_stuck: {
     q: 'Oturma odalarının çoğunda iyi durumda alçı süsleme (Stuck) veya ahşap kaplama var mı?',
-    help: 'Özenli tavan süslemeleri veya duvar lambrileri. Lütfen hangi odalar olduğunu belirtin.',
+    help: 'Özenli tavan süslemeleri veya duvar lambrileri.',
+    followUpHelp: 'Lütfen hangi odalar olduğunu belirtin.',
   },
   wohnung_heizungsrohre: {
     q: 'Kalorifer boruları çoğunlukla gizli mi (duvarda veya zeminde)?',
@@ -258,7 +263,8 @@ const tr: FeatureTexts = {
   },
   gebaeude_seitenfluegel: {
     q: 'Daire, yoğun yapılaşmış bir avludaki yan kanatta veya arka binada mı?',
-    help: 'Arka avlulu Berlin eski binaları için tipiktir. Lütfen orada hangi odalar olduğunu belirtin.',
+    help: 'Arka avlulu Berlin eski binaları için tipiktir.',
+    followUpHelp: 'Lütfen orada hangi odalar olduğunu belirtin.',
   },
   gebaeude_kein_aufzug_ab5: {
     q: 'Daire 5. katta veya daha yukarıda mı – asansörsüz?',
@@ -278,7 +284,8 @@ const tr: FeatureTexts = {
   },
   gebaeude_zusatzraeume: {
     q: 'Ek ortak alanlar var mı (örn. ortak salon, çamaşır kurutma odası, misafir dairesi)?',
-    help: 'Daire dışında ortak kullanabileceğiniz alanlar. Lütfen hangileri olduğunu belirtin.',
+    help: 'Daire dışında ortak kullanabileceğiniz alanlar.',
+    followUpHelp: 'Lütfen hangileri olduğunu belirtin.',
   },
   gebaeude_garage: {
     q: 'Daireyle birlikte ek ücretsiz bir garaj veya park yeri var mı?',

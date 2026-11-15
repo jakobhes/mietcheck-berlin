@@ -57,7 +57,6 @@ export interface Answers {
   };
   position: '' | 'Vorderhaus' | 'Seitenflügel' | 'Hinterhaus';
   floor: string;
-  side: '' | 'links' | 'rechts' | 'mitte';
   attic: YesNo;
   modernizedOld: YesNo;
   modernizedWhen: string;
@@ -114,7 +113,6 @@ export const initialAnswers: Answers = {
   equipment: { aussenWC: false, innenWC: false, badWC: false, sammelheizung: false, ofenheizung: false, fahrstuhl: false },
   position: '',
   floor: '',
-  side: '',
   attic: '',
   modernizedOld: '',
   modernizedWhen: '',

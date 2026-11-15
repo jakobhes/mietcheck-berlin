@@ -16,15 +16,17 @@ Derzeit keine offenen Fragen.
 
 - Adresse: Stresemannstraße 68/70/72/74/76, 10963 Berlin
 - Baujahr 1966, Vorderhaus, kein Dachgeschoss, kein modernisierter Altbau, kein Ein- oder Zweifamilienhaus
-- Die App erstellt im Excelsior nur die Spanneneinordnung (Prüfbogen). Die Rügen schreibt der Anwalt. Die Auswahl der PDFs, die Frage nach den Ausnahmen und die Anschrift des Vermieters entfallen deshalb.
+- Die App erstellt im Excelsior nur die Spanneneinordnung (Prüfbogen). Die Rügen schreibt der Anwalt. Die Auswahl der PDFs, Mietbeginn, die Frage nach den Ausnahmen und die Anschrift des Vermieters entfallen deshalb.
 - Kein städtisches Wohnungsunternehmen, keine Index- oder Staffelmietverträge im Haus (beides fest auf „nein“, wird nicht gefragt)
 - Kein Neubau, keine Sozialwohnung (wird in der App gar nicht mehr gefragt)
+- Kurzer Ablauf: keine Zusatzfragen zu Merkmalen (z. B. „In welchen Räumen?“, „Zu welchen Zeiten?“), keine Frage nach Besonderheiten, keine Erreichbarkeit für Rückfragen. „Weitere Bemerkungen“ bleibt im Prüfbogen leer.
 - Renoviert oder unrenoviert erkennt die App an den Fenstern: neue Fenster öffnen an der Seite wie eine Tür (renoviert), alte Schwingfenster drehen sich um eine senkrechte Achse in der Mitte (unrenoviert). Zu beiden gibt es ein Foto.
 
 ### Wohnung und Ausstattung
 
-- Sammelheizung: Fernwärme, also immer „ja“. Wird nicht gefragt.
-- Bad mit WC: ist vorausgefüllt, lässt sich aber ändern.
+- Ausstattung: Bad mit WC, Sammelheizung (Fernwärme) und Fahrstuhl in allen Wohnungen. Wird nicht gefragt.
+- Kein Balkon (trifft zu) und kein schlechter Schnitt, renoviert wie unrenoviert. Wird nicht gefragt.
+- Bad ohne Fenster: wird gefragt, ohne den Hinweis zu Plattenbauten.
 - Aufzug in allen Aufgängen, auch in der 68 (mindestens 6 Stockwerke). „Aufzug bei weniger als fünf Obergeschossen“ trifft nicht zu.
 - Fahrradabstellmöglichkeit vorhanden (renoviert und unrenoviert)
 - Treppenhaus in schlechtem Zustand: ist als „weiß nicht“ eingetragen, ohne Fußnotentext. Wird nicht gefragt.

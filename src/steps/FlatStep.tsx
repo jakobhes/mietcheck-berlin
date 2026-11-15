@@ -1,7 +1,7 @@
 import { Group, Stack } from '@mantine/core';
 import type { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { CheckField, ChoiceField, ExtLink, OptionList, Question, TextField } from '../components/fields';
+import { CheckField, ChoiceField, ExtLink, Question, TextField } from '../components/fields';
 import { parseNumber, parseYear } from '../data/logic';
 import type { FormVersion } from '../data/types';
 import { TextQ, YesNoQ } from '../flow/generic';
@@ -78,22 +78,6 @@ function Position() {
   );
 }
 
-function FloorSide() {
-  const { t } = useTranslation();
-  const { a, set } = useAnswers();
-  return (
-    <Question title={`${t('flat.floor')} · ${t('flat.side')}`}>
-      <TextField label={t('flat.floor')} inputMode="numeric" value={a.floor} onChange={(v) => set({ floor: v })} />
-      <OptionList
-        label={t('flat.side')}
-        value={a.side}
-        onChange={(v) => set({ side: v === a.side ? '' : v })}
-        options={(['links', 'mitte', 'rechts'] as const).map((s) => ({ value: s, label: t(`flat.${s}`) }))}
-      />
-    </Question>
-  );
-}
-
 function ModernizedWhen() {
   const { t } = useTranslation();
   const { a, set } = useAnswers();
@@ -111,7 +95,7 @@ export function flatScreens(form: FormVersion, a: Answers, t: TFunction): Screen
     s('row', !!a.row, <RowColumn form={form} />, false),
     s('equipment', Object.values(a.equipment).some(Boolean), <Equipment />, false),
     s('position', !!a.position, <Position />),
-    s('floor', !!a.floor.trim(), <FloorSide />),
+    s('floor', !!a.floor.trim(), <TextQ k="floor" inputMode="numeric" title={t('flat.floor')} />),
     s('attic', !!a.attic, <YesNoQ k="attic" title={t('flat.attic')} />),
     s(
       'modernizedOld',

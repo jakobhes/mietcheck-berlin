@@ -24,8 +24,6 @@ export interface HousePreset {
   hiddenScreens: string[];
   /** Ausstattung, die für alle Wohnungen feststeht; das Kästchen wird nicht angezeigt */
   equipment: Partial<Answers['equipment']>;
-  /** Vorbelegung beim Auswählen von Aufgang/Zustand, bleibt änderbar */
-  defaults: (a: Answers) => Partial<Answers>;
   /**
    * Merkmale je Zustand der Wohnung, bezogen auf den Prüfbogen 2026:
    * `yes` = angekreuzt, `ask` = wird gefragt, alle übrigen Merkmale 2026 = „trifft nicht zu“.
@@ -40,11 +38,12 @@ export interface HousePreset {
   sonder: Record<HouseVariant, Partial<Record<SonderId, YesNo>>>;
   /** Energieverbrauchskennwert für die Einordnung; die Stufe ergibt sich je Bogen aus dessen Grenzen */
   energyValue: number;
-  /**
-   * Merkmal im Haus anders fragen: Übersetzungen unter `<i18n>.title|help`.
-   * Die Folgefragen entfallen; was daraus folgt, setzt `fixed`.
-   */
+  /** Merkmal im Haus anders fragen: Übersetzungen unter `<i18n>.title|help` */
   questions: Record<string, string>;
+  /** Merkmale, deren Erläuterung im Haus nicht passt und weggelassen wird */
+  noHelp: string[];
+  /** kurzer Ablauf: keine Zusatzfragen zu Merkmalen, keine Erreichbarkeit, „Weitere Bemerkungen“ im Prüfbogen leer */
+  brief?: boolean;
   /** zusätzliche Bilder zu Merkmalen, nur in diesem Haus (unter public/, Bildunterschrift als UI-Übersetzungsschlüssel) */
   media: Record<string, { src: string; caption: string }[]>;
   /**
@@ -54,7 +53,7 @@ export interface HousePreset {
   variantQuestion?: { i18n: string; images: Record<HouseVariant, string> };
 }
 
-const BOTH_YES = ['gebaeude_fahrradraum', 'gebaeude_kein_keller'];
+const BOTH_YES = ['gebaeude_fahrradraum', 'gebaeude_kein_keller', 'wohnung_kein_balkon'];
 
 /** Excelsior, Stresemannstraße 68–76 (Baujahr 1966) */
 const excelsior: HousePreset = {
@@ -82,11 +81,6 @@ const excelsior: HousePreset = {
     energyValue: a.houseNo === '72' ? '160' : '',
     energyKind: 'verbrauch',
     energyDecentralWater: false,
-    // gefragt wird nur, ob ein Fenster zur Stresemannstraße geht (siehe `questions`)
-    ...(a.features.umfeld_laerm === 'yes' && {
-      laermArt: { strasse: true, schiene: false, flug: false },
-      followUps: { ...a.followUps, laerm: 'Fenster zur Stresemannstraße (Hauptverkehrsstraße)' },
-    }),
   }),
   hiddenScreens: [
     'contract.indexRent',
@@ -97,6 +91,7 @@ const excelsior: HousePreset = {
     'flat.wohnlage',
     // Mietspiegelfeld ergibt sich aus Wohnfläche und Tabelle (siehe applyHouse), sonst ermittelt es der Mieterverein
     'flat.row',
+    'flat.equipment',
     'flat.position',
     'flat.attic',
     'flat.modernizedOld',
@@ -104,12 +99,10 @@ const excelsior: HousePreset = {
     'energy.intro',
     'energy.value',
     'energy.kind',
+    'remarks.remarks',
   ],
-  // Fernwärme
-  equipment: { sammelheizung: true },
-  defaults: (a) => ({
-    equipment: Object.values(a.equipment).some(Boolean) ? a.equipment : { ...a.equipment, badWC: true, fahrstuhl: true },
-  }),
+  // Sammelheizung = Fernwärme
+  equipment: { badWC: true, sammelheizung: true, fahrstuhl: true },
   variants: {
     unrenoviert: {
       yes: BOTH_YES,
@@ -142,8 +135,6 @@ const excelsior: HousePreset = {
         'wohnung_elektro_aufputz',
         'wohnung_leitungen_aufputz',
         'wohnung_keine_waschmaschine',
-        'wohnung_schlechter_schnitt',
-        'wohnung_kein_balkon',
         'wohnung_eg_kein_einbruchschutz',
         'wohnung_einbauschrank',
         'wohnung_heizungsrohre',
@@ -194,7 +185,11 @@ const excelsior: HousePreset = {
     renoviert: { sm_parkett: 'nein', sm_kueche: 'ja', sm_dusche: 'nein', sm_modernes_bad: 'ja', sm_isolierverglasung: 'ja', sm_aufzug: 'ja' },
   },
   energyValue: 160,
+  // gefragt wird nur, ob ein Fenster zur Stresemannstraße geht
   questions: { umfeld_laerm: 'house.excelsiorLaerm' },
+  // Hinweis zu Plattenbauten passt nicht (Baujahr 1966)
+  noHelp: ['bad_ohne_fenster'],
+  brief: true,
   media: { wohnung_kaltwasserzaehler: [{ src: 'media/house/excelsior-wasserzaehler.jpg', caption: 'house.excelsiorWaterMeter' }] },
   // renovierte Wohnungen haben neue Dreh-Fenster, unrenovierte noch die alten Schwingfenster
   variantQuestion: {

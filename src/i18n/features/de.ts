@@ -156,7 +156,8 @@ const de: FeatureTexts = {
   /* ---------------- Wohnung ---------------- */
   wohnung_einfachverglasung: {
     q: 'Haben die meisten Fenster nur eine einzige Glasscheibe?',
-    help: 'Einfachverglasung: nur eine Scheibe pro Fensterflügel. Achtung: Kastenfenster (zwei hintereinander liegende Fenster) sind nicht gemeint. Bitte angeben, in welchen Räumen.',
+    help: 'Einfachverglasung: nur eine Scheibe pro Fensterflügel. Achtung: Kastenfenster (zwei hintereinander liegende Fenster) sind nicht gemeint.',
+    followUpHelp: 'Bitte angeben, in welchen Räumen.',
   },
   wohnung_elektro_unzureichend: {
     q: 'Ist die Elektroinstallation veraltet oder unzureichend?',
@@ -164,11 +165,13 @@ const de: FeatureTexts = {
   },
   wohnung_elektro_aufputz: {
     q: 'Verlaufen die Stromleitungen überwiegend sichtbar auf der Wand?',
-    help: 'Kabel oder Kabelkanäle sind auf dem Putz sichtbar statt in der Wand. Bitte Räume angeben.',
+    help: 'Kabel oder Kabelkanäle sind auf dem Putz sichtbar statt in der Wand.',
+    followUpHelp: 'Bitte Räume angeben.',
   },
   wohnung_leitungen_aufputz: {
     q: 'Verlaufen Wasser- und Abwasserrohre überwiegend sichtbar auf der Wand?',
-    help: 'Sichtbare Sanitärleitungen in Bad, Küche oder anderen Räumen. Bitte Räume angeben.',
+    help: 'Sichtbare Sanitärleitungen in Bad, Küche oder anderen Räumen.',
+    followUpHelp: 'Bitte Räume angeben.',
   },
   wohnung_keine_waschmaschine: {
     q: 'Kann man in Bad oder Küche eine Waschmaschine anschließen – oder steht dort schon eine?',
@@ -200,11 +203,13 @@ const de: FeatureTexts = {
   },
   wohnung_fussbodenheizung: {
     q: 'Wird die Wohnung überwiegend über eine Fußbodenheizung beheizt?',
-    help: 'In der Mehrzahl der Räume. Bitte Räume angeben.',
+    help: 'In der Mehrzahl der Räume.',
+    followUpHelp: 'Bitte Räume angeben.',
   },
   wohnung_stuck: {
     q: 'Gibt es in den meisten Wohnräumen Stuck oder Holzvertäfelung in gutem Zustand?',
-    help: 'Aufwändige Deckenverzierungen oder Wandverkleidungen. Bitte Räume angeben.',
+    help: 'Aufwändige Deckenverzierungen oder Wandverkleidungen.',
+    followUpHelp: 'Bitte Räume angeben.',
   },
   wohnung_heizungsrohre: {
     q: 'Sind die Heizungsrohre überwiegend unsichtbar (in der Wand/im Boden)?',
@@ -262,7 +267,8 @@ const de: FeatureTexts = {
   },
   gebaeude_seitenfluegel: {
     q: 'Liegt die Wohnung im Seitenflügel oder Quergebäude eines eng bebauten Hofes?',
-    help: 'Typisch für Berliner Altbauten mit Hinterhöfen. Bitte angeben, welche Räume dort liegen.',
+    help: 'Typisch für Berliner Altbauten mit Hinterhöfen.',
+    followUpHelp: 'Bitte angeben, welche Räume dort liegen.',
   },
   gebaeude_kein_aufzug_ab5: {
     q: 'Liegt die Wohnung im 5. Obergeschoss oder höher – ohne Aufzug?',
@@ -282,7 +288,8 @@ const de: FeatureTexts = {
   },
   gebaeude_zusatzraeume: {
     q: 'Gibt es zusätzliche Gemeinschaftsräume (z. B. Gemeinschaftsraum, Trockenraum, Gästewohnung)?',
-    help: 'Nutzbare Räume außerhalb der Wohnung, die Sie mitbenutzen dürfen. Bitte angeben, welche.',
+    help: 'Nutzbare Räume außerhalb der Wohnung, die Sie mitbenutzen dürfen.',
+    followUpHelp: 'Bitte angeben, welche.',
   },
   gebaeude_garage: {
     q: 'Gehört eine Garage oder ein Stellplatz ohne Zusatzkosten zur Wohnung?',
