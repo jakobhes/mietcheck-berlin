@@ -5,7 +5,7 @@
  *   Nichtzutreffendes wird wie im Bogen verlangt gestrichen.
  * Welche Stelle zu welcher Angabe gehört, steht in original-fields.json (aus Feldpositionen und Wortlaut erzeugt).
  */
-import { PDFCheckBox, PDFDocument, PDFName, PDFRadioGroup, PDFRef, PDFTextField, StandardFonts, rgb, type PDFFont, type PDFPage } from 'pdf-lib';
+import { PDFCheckBox, PDFDocument, PDFRadioGroup, PDFRef, PDFTextField, StandardFonts, rgb, type PDFFont, type PDFPage } from 'pdf-lib';
 import { formatDateDe } from '../data/logic';
 import type { FormId, FormVersion, SonderId } from '../data/types';
 import type { Answers } from '../state/answers';
@@ -168,6 +168,15 @@ function wrap(font: PDFFont, text: string, width: number, size: number): string[
   return lines;
 }
 
+/** Schwarzes X mittig in ein Kästchen (PDF-Koordinaten: x/y unten links) */
+function drawCross(page: PDFPage, x: number, y: number, w: number, h: number) {
+  const s = Math.min(w, h) * 0.7;
+  const cx = x + w / 2;
+  const cy = y + h / 2;
+  page.drawLine({ start: { x: cx - s / 2, y: cy - s / 2 }, end: { x: cx + s / 2, y: cy + s / 2 }, thickness: 1.2, color: INK });
+  page.drawLine({ start: { x: cx - s / 2, y: cy + s / 2 }, end: { x: cx + s / 2, y: cy - s / 2 }, thickness: 1.2, color: INK });
+}
+
 function fillAcro(pdf: PDFDocument, map: AcroMapping, a: Filled, values: Record<TextKey, string>, font: PDFFont, clean: (s: string) => string) {
   const form = pdf.getForm();
   // Vorbelegungen im Original (z. B. ausgewählte Optionsfelder) entfernen
@@ -176,10 +185,16 @@ function fillAcro(pdf: PDFDocument, map: AcroMapping, a: Filled, values: Record<
     else if (f instanceof PDFRadioGroup) f.clear();
     else if (f instanceof PDFTextField) f.setText('');
   }
+  // statt der Häkchen/Punkte des Originals ein schwarzes X an die Stelle des Kästchens zeichnen (nach dem Einbrennen)
+  const crosses: { page: PDFPage; rect: { x: number; y: number; width: number; height: number } }[] = [];
   const set = (ref: FieldRef) => {
-    if (typeof ref === 'string') form.getCheckBox(ref).check();
-    // Wert des Kästchens setzen: in manchen Originalen haben alle Optionen denselben Exportwert („Ja“)
-    else form.getRadioGroup(ref.radio).acroField.setValue(PDFName.of(ref.value));
+    const widgets = typeof ref === 'string' ? form.getCheckBox(ref).acroField.getWidgets() : form.getRadioGroup(ref.radio).acroField.getWidgets();
+    // bei Optionsfeldern das Kästchen der Option (über seinen Wert, nicht den Exportwert – der ist in manchen Originalen überall „Ja“)
+    const widget = typeof ref === 'string' ? widgets[0] : widgets.find((w) => w.getOnValue()?.decodeText() === ref.value);
+    if (!widget) throw new Error(`Option ${JSON.stringify(ref)} fehlt im Original`);
+    const page = pdf.findPageForAnnotationRef(pdf.context.getObjectRef(widget.dict)!);
+    if (!page) throw new Error(`Seite für ${JSON.stringify(ref)} nicht gefunden`);
+    crosses.push({ page, rect: widget.getRectangle() });
   };
   const write = (name: string, text: string, multiline = false) => {
     const field = form.getTextField(name);
@@ -217,19 +232,12 @@ function fillAcro(pdf: PDFDocument, map: AcroMapping, a: Filled, values: Record<
       if (ref instanceof PDFRef && !pdf.context.lookup(ref)) annots!.remove(i);
     }
   }
+  for (const { page, rect } of crosses) drawCross(page, rect.x, rect.y, rect.width, rect.height);
 }
 
 function fillOverlay(pages: PDFPage[], map: OverlayMapping, a: Filled, values: Record<TextKey, string>, font: PDFFont, clean: (s: string) => string) {
   const at = (b: { page: number }) => pages[b.page];
-  const cross = (b: Box) => {
-    const page = at(b);
-    const H = page.getHeight();
-    const s = Math.min(b.w, b.h) * 0.7;
-    const cx = b.x + b.w / 2;
-    const cy = H - (b.top + b.h / 2);
-    page.drawLine({ start: { x: cx - s / 2, y: cy - s / 2 }, end: { x: cx + s / 2, y: cy + s / 2 }, thickness: 1, color: INK });
-    page.drawLine({ start: { x: cx - s / 2, y: cy + s / 2 }, end: { x: cx + s / 2, y: cy - s / 2 }, thickness: 1, color: INK });
-  };
+  const cross = (b: Box) => drawCross(at(b), b.x, at(b).getHeight() - b.top - b.h, b.w, b.h);
   const strike = (b: Box) => {
     const page = at(b);
     const y = page.getHeight() - (b.top + b.h * 0.55);
