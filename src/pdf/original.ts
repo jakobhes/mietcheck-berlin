@@ -288,6 +288,8 @@ async function addSummaryPage(pdf: PDFDocument, form: FormVersion, a: Answers, c
     ['Name der Mieterin/des Mieters:', a.tenant.name.trim()],
     ['Mietvertrag vom:', formatDateDe(a.contractDate)],
     ['Mietspiegel (Jahr):', form.id],
+    ['Mietspiegelfeld:', calc ? (calc.table ? `Tabelle ${calc.table}, Zeile ${calc.field.row}` : `Zeile ${calc.field.row}, Spalte ${calc.column}`) : ''],
+    ['Spanne (Unter-/Mittel-/Oberwert):', calc ? `${euro(calc.field.lower)} / ${euro(calc.field.mean)} / ${euro(calc.field.upper)} pro m²` : ''],
     ['Ortsübliche Vergleichsmiete pro qm:', calc ? `${euro(calc.ovmPerSqm)}/m²` : ''],
     ['Wohnungsgröße:', area !== undefined ? `${area.toLocaleString('de-DE')} m²` : ''],
     ['Ortsübliche Vergleichsmiete pro Monat:', calc ? euro(calc.ovm) : ''],
