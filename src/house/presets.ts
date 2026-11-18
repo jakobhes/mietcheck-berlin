@@ -44,6 +44,8 @@ export interface HousePreset {
   noHelp: string[];
   /** kurzer Ablauf: keine Erreichbarkeit, „Weitere Bemerkungen“ im Prüfbogen leer */
   brief?: boolean;
+  /** Prüfbogen per E-Mail an diese Adresse schicken (Teilen-Menü bzw. Mailentwurf) statt an den Mieterverein */
+  email?: string;
   /** zusätzliche Bilder zu Merkmalen, nur in diesem Haus (unter public/, Bildunterschrift als UI-Übersetzungsschlüssel) */
   media: Record<string, { src: string; caption: string }[]>;
   /**
@@ -190,6 +192,7 @@ const excelsior: HousePreset = {
   // Hinweis zu Plattenbauten passt nicht (Baujahr 1966)
   noHelp: ['bad_ohne_fenster'],
   brief: true,
+  email: 'excelsior@systemli.org',
   media: { wohnung_kaltwasserzaehler: [{ src: 'media/house/excelsior-wasserzaehler.jpg', caption: 'house.excelsiorWaterMeter' }] },
   // renovierte Wohnungen haben neue Dreh-Fenster, unrenovierte noch die alten Schwingfenster
   variantQuestion: {

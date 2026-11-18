@@ -1,7 +1,7 @@
 import { Accordion, Anchor, Badge, Button, Group, List, Paper, SimpleGrid, Stack, Text, ThemeIcon, Timeline, Title } from '@mantine/core';
-import { IconDownload, IconFileText, IconMail, IconMinus, IconPlus } from '@tabler/icons-react';
+import { IconDownload, IconFileText, IconMail, IconMinus, IconPlus, IconSend } from '@tabler/icons-react';
 import type { TFunction } from 'i18next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CheckField, Help, Notice, Question, TextField } from '../components/fields';
 import { formatDateDe, parseNumber, refundRule, todayIso } from '../data/logic';
@@ -26,6 +26,25 @@ function download(bytes: Uint8Array, filename: string) {
   link.click();
   link.remove();
   setTimeout(() => URL.revokeObjectURL(url), 10_000);
+}
+
+/**
+ * Schickt ein PDF per E-Mail: über das Teilen-Menü mit Anhang (v. a. Handy, Empfänger trägt man selbst ein),
+ * sonst Download und Mailentwurf an `to`, in den man das PDF selbst anhängt. Betreff und Text auf Deutsch (für den Empfänger).
+ */
+async function send(bytes: Uint8Array, filename: string, to: string, subject: string, body: string) {
+  const file = new File([bytes as BlobPart], filename, { type: 'application/pdf' });
+  if (navigator.canShare?.({ files: [file] })) {
+    try {
+      await navigator.share({ files: [file], title: subject, text: `An: ${to}\n\n${body}` });
+      return;
+    } catch (e) {
+      // abgebrochen; bei anderen Fehlern (z. B. Nutzeraktion abgelaufen) weiter mit Mailentwurf
+      if (e instanceof DOMException && e.name === 'AbortError') return;
+    }
+  }
+  download(bytes, filename);
+  window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 function Deadline() {
@@ -176,15 +195,39 @@ function Downloads({ form, missing }: { form: FormVersion; missing: ChapterId[] 
   const { t } = useTranslation();
   const { a, house } = useAnswers();
   const calc = useRentCalculation(form);
-  const [busy, setBusy] = useState<'form' | 'ruege' | null>(null);
+  const [busy, setBusy] = useState<'form' | 'ruege' | 'send' | null>(null);
+  const email = house?.email;
+  const formFile = pdfFileName(a, `Pruefbogen-169A-Mietspiegel-${form.id}.pdf`);
 
-  async function make(kind: 'form' | 'ruege') {
+  async function buildForm() {
+    const { fillPruefbogen, loadOriginal } = await import('../pdf/original');
+    return fillPruefbogen(await loadOriginal(form), form, a, todayIso(), { remarks: !house?.brief, calc });
+  }
+
+  // Prüfbogen zum Verschicken schon vorab erstellen: Das Teilen-Menü öffnet sich nur direkt nach dem Klick
+  const [prepared, setPrepared] = useState<Uint8Array>();
+  useEffect(() => {
+    if (!email || missing.length > 0) return;
+    let current = true;
+    setPrepared(undefined);
+    void buildForm().then((bytes) => current && setPrepared(bytes));
+    return () => {
+      current = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- buildForm und calc ergeben sich aus a und form
+  }, [email, missing.length, a, form]);
+
+  async function make(kind: 'form' | 'ruege' | 'send') {
     setBusy(kind);
     const today = todayIso();
     try {
-      if (kind === 'form') {
-        const { fillPruefbogen, loadOriginal } = await import('../pdf/original');
-        download(await fillPruefbogen(await loadOriginal(form), form, a, today, { remarks: !house?.brief, calc }), pdfFileName(a, `Pruefbogen-169A-Mietspiegel-${form.id}.pdf`));
+      if (kind === 'send' && email) {
+        const name = a.tenant.name.trim();
+        const subject = `Prüfbogen 169A (Mietspiegel ${form.id})${name ? ` – ${name}` : ''}${a.houseNo ? `, ${house?.street} ${a.houseNo}` : ''}`;
+        const body = `Hallo,\n\nanbei mein ausgefüllter Prüfbogen 169A (Mietspiegel ${form.id}).\n\nViele Grüße\n${name}`;
+        await send(prepared ?? (await buildForm()), formFile, email, subject, body);
+      } else if (kind === 'form') {
+        download(await buildForm(), formFile);
       } else {
         const { buildRuege } = await import('../pdf/ruege');
         download(await buildRuege(form, a, today, calc), pdfFileName(a, `Ruege-556g-BGB-${today}.pdf`));
@@ -208,7 +251,12 @@ function Downloads({ form, missing }: { form: FormVersion; missing: ChapterId[] 
             {text}
           </Text>
         </div>
-        <Button fullWidth size="md" leftSection={<IconDownload size={18} />} loading={busy === kind} disabled={missing.length > 0 || (busy !== null && busy !== kind)} onClick={() => void make(kind)}>
+        {kind === 'form' && email && (
+          <Button fullWidth size="md" leftSection={<IconSend size={18} />} loading={busy === 'send'} disabled={missing.length > 0 || (busy !== null && busy !== 'send')} onClick={() => void make('send')}>
+            {t('summary.send')}
+          </Button>
+        )}
+        <Button fullWidth size="md" variant={kind === 'form' && email ? 'light' : 'filled'} leftSection={<IconDownload size={18} />} loading={busy === kind} disabled={missing.length > 0 || (busy !== null && busy !== kind)} onClick={() => void make(kind)}>
           PDF
         </Button>
       </Stack>
@@ -216,10 +264,10 @@ function Downloads({ form, missing }: { form: FormVersion; missing: ChapterId[] 
   );
 
   return (
-    <Question title={t('summary.downloadTitle')} lead={t(a.documents === 'beide' ? 'summary.downloadLead' : 'summary.downloadLeadOne')}>
+    <Question title={t('summary.downloadTitle')} lead={email ? t('summary.sendLead', { email }) : t(a.documents === 'beide' ? 'summary.downloadLead' : 'summary.downloadLeadOne')}>
       {missing.length > 0 && <Notice kind="warn">{t('summary.missing', { fields: missing.map((c) => t(`steps.${c}`)).join(' · ') })}</Notice>}
       <SimpleGrid cols={{ base: 1, xs: a.documents === 'beide' ? 2 : 1 }} spacing="md">
-        {wantsPruefbogen(a) && card('form', IconFileText, t('summary.downloadForm', { year: form.id }), t('summary.formCardText'))}
+        {wantsPruefbogen(a) && card('form', IconFileText, t('summary.downloadForm', { year: form.id }), email ? t('summary.sendCardText', { email }) : t('summary.formCardText'))}
         {wantsRuege(a) && card('ruege', IconMail, t('summary.downloadRuege'), t('summary.ruegeCardText'))}
       </SimpleGrid>
     </Question>
@@ -228,15 +276,15 @@ function Downloads({ form, missing }: { form: FormVersion; missing: ChapterId[] 
 
 function NextSteps({ form }: { form: FormVersion }) {
   const { t } = useTranslation();
-  const { a } = useAnswers();
+  const { a, house } = useAnswers();
   const credits = photoCredits();
-  const steps = [...(wantsPruefbogen(a) ? ['next1'] : []), ...(wantsRuege(a) ? ['next2', 'next3'] : []), 'next4'];
+  const steps = [...(wantsPruefbogen(a) ? [house?.email ? 'next1Send' : 'next1'] : []), ...(wantsRuege(a) ? ['next2', 'next3'] : []), 'next4'];
   return (
     <Question title={t('summary.nextTitle')}>
       <Timeline active={-1} bulletSize={28} lineWidth={2}>
         {steps.map((k, i) => (
           <Timeline.Item key={k} bullet={<Text size="xs" fw={700}>{i + 1}</Text>}>
-            <Text>{t(`summary.${k}`, { address: form.sendTo.post.join(', '), email: form.sendTo.email ? ` · ${form.sendTo.email}` : '' })}</Text>
+            <Text>{t(`summary.${k}`, { address: form.sendTo.post.join(', '), email: k === 'next1Send' ? house?.email : form.sendTo.email ? ` · ${form.sendTo.email}` : '' })}</Text>
           </Timeline.Item>
         ))}
       </Timeline>
